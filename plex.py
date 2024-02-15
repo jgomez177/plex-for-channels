@@ -97,7 +97,7 @@ class Client:
 
     def channels(self, country_code = "local"):
         token, error = self.token(country_code)
-        plex_tmsid_url = "https://raw.githubusercontent.com/jgomez177/plex-for-channels/main/plex_data/plex_tmsid.csv"
+        plex_tmsid_url = "https://raw.githubusercontent.com/jgomez177/plex-for-channels/main/plex_tmsid.csv"
         plex_custom_tmsid = 'plex_data/plex_custom_tmsid.csv'
 
         print (country_code)
@@ -170,7 +170,7 @@ class Client:
             # Use local cache instead
             print("Failed to fetch the CSV file. Status code:", response.status_code)
             print("Using local cached file.")
-            with open('plex_data/plex_tmsid.csv', mode='r') as file:
+            with open('plex_tmsid.csv', mode='r') as file:
                 reader = csv.DictReader(file)
        
         for row in reader:

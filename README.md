@@ -30,6 +30,7 @@ You can retrieve the playlist and EPG via the status page.
 ## Optional Custom Gracenote ID Matching
 
 Adding a docker volume to /app/plex_data will allow you to add a custom comma delimited csv file to add or change any of the default gracenote matching for any plex channel
+
     docker run -d --restart unless-stopped --network=host -e PLEX_PORT=[your_port_number_here] -v [your_file_location_here]:/app/plex_data --name  plex-for-channels ghcr.io/jgomez177/plex-for-channels
 
 Create a file called `plex_custom_tmsid.csv` with the following headers (case-sensitive):
