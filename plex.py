@@ -1,6 +1,7 @@
-import secrets, requests, json, time, pytz, gzip, csv
+import secrets, requests, json, time, pytz, gzip, csv, os
 from datetime import datetime, timedelta
-from urllib.parse import quote
+# from urllib.parse import quote
+from io import StringIO
 import xml.etree.ElementTree as ET
 
 class Client:
@@ -96,6 +97,8 @@ class Client:
 
     def channels(self, country_code = "local"):
         token, error = self.token(country_code)
+        plex_tmsid_url = "https://raw.githubusercontent.com/jgomez177/plex-for-channels/main/plex_data/plex_tmsid.csv"
+        plex_custom_tmsid = 'plex_data/plex_custom_tmsid.csv'
 
         print (country_code)
 
@@ -154,10 +157,33 @@ class Client:
                                     })
                 
         tmsid_dict = {}
-        with open('plex_data/plex_tmsid.csv', mode='r') as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                tmsid_dict[row['id']] = row
+        tmsid_custom_dict = {}
+
+        # Fetch the CSV file from the URL
+        response = requests.get(plex_tmsid_url)
+
+        # Check if request was successful
+        if response.status_code == 200:
+            # Read in the CSV data
+            reader = csv.DictReader(response.text.splitlines())
+        else:
+            # Use local cache instead
+            print("Failed to fetch the CSV file. Status code:", response.status_code)
+            print("Using local cached file.")
+            with open('plex_data/plex_tmsid.csv', mode='r') as file:
+                reader = csv.DictReader(file)
+       
+        for row in reader:
+            tmsid_dict[row['id']] = row
+
+        if os.path.exists(plex_custom_tmsid):
+            # File exists, open it
+            with open(plex_custom_tmsid, mode='r') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    tmsid_custom_dict[row['id']] = row
+
+        tmsid_dict.update(tmsid_custom_dict)
 
         #self.stations = {key: {**value, 'tmsid': tmsid_dict[key]['tmsid'], 'time_shift': tmsid_dict[key]['time_shift']} 
         #                 if key in tmsid_dict else value for key, value in self.stations.items()}

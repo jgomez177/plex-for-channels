@@ -51,10 +51,10 @@ url = f'<!DOCTYPE html>\
             <div class="container">\
               <h1 class="title">\
                 {provider.capitalize()} Playlist\
-                <span class="tag">v1.04</span>\
+                <span class="tag">v1.05</span>\
               </h1>\
               <p class="subtitle">\
-                Last Updated: Feb 13, 2024\
+                Last Updated: Feb 15, 2024\
               '
 
 @app.route("/")
@@ -86,15 +86,15 @@ def index_mjh_compatible():
         pl = f"http://{host}/mjh_compatible/{provider}/{code}/playlist.m3u"
         ul += f"<li>{provider.upper()} {code.upper()}: <a href='{pl}'>{pl}</a></li>\n"
         if code in ['us_east', 'us_west']:
-            pl = f"http://{host}/{provider}/{code}/playlist.m3u?gracenote=include"
+            pl = f"http://{host}/mjh_compatible/{provider}/{code}/playlist.m3u?gracenote=include"
             ul += f"<li>{provider.upper()} {code.upper()} Gracenote Playlist: <a href='{pl}'>{pl}</a></li>\n"
-            pl = f"http://{host}/{provider}/{code}/playlist.m3u?gracenote=exclude"
+            pl = f"http://{host}/mjh_compatible/{provider}/{code}/playlist.m3u?gracenote=exclude"
             ul += f"<li>{provider.upper()} {code.upper()} EPG Only Playlist: <a href='{pl}'>{pl}</a></li>\n"
         # pl = f"http://{host}/{provider}/epg/{code}/epg-{code}.xml"
         # ul += f"<li>{provider.upper()} {code.upper()} EPG: <a href='{pl}'>{pl}</a></li>\n"
         # pl = f"http://{host}/{provider}/epg/{code}/epg-{code}.xml.gz"
         # ul += f"<li>{provider.upper()} {code.upper()} EPG GZ: <a href='{pl}'>{pl}</a></li>\n"
-        # ul += f"<br>\n"
+        ul += f"<br>\n"
 
     return f"{url}<ul>{ul}</ul></div></section></body></html>"
 
