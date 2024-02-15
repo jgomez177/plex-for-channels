@@ -10,6 +10,7 @@ The recommended way of running is to pull the image from [GitHub](https://github
 
     docker run -d --restart unless-stopped --network=host -e PLEX_PORT=[your_port_number_here] --name  plex-for-channels ghcr.io/jgomez177/plex-for-channels
 or
+
     docker run -d --restart unless-stopped -p [your_port_number_here]:7777 --name  plex-for-channels ghcr.io/jgomez177/plex-for-channels
 
 You can retrieve the playlist and EPG via the status page.
@@ -36,7 +37,8 @@ Create a file called `plex_custom_tmsid.csv` with the following headers (case-se
 |---|---|---|---|
 | (required) id of the Plex channel (more on obtaining this ID below) | (optional) Easy to read name | (required) New/Updated Gracenote TMSID number for the channel | (optional) Shifting EPG data for the channel in hours. Ex: To shift the EPG 5 hours earlier, value would be -5 | 
 
-Example:
+Example
+
     id,name,tmsid,time_shift
     5e20b730f2f8d5003d739db7-63c1ec0e0aa23f984207af82,Ax Men by History,123425,-5
 
