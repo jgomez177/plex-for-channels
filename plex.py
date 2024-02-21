@@ -1,7 +1,7 @@
-import secrets, requests, json, time, pytz, gzip, csv, os
+import secrets, requests, json, pytz, gzip, csv, os, re, time
 from datetime import datetime, timedelta
 # from urllib.parse import quote
-from io import StringIO
+# from io import StringIO
 import xml.etree.ElementTree as ET
 
 class Client:
@@ -9,7 +9,7 @@ class Client:
 
         # self.sessionID = ""
         # self.sessionToken = ""
-        # self.sessionAt = 0
+        self.sessionAt = {}
         self.session = requests.Session()
         self.device = None
         self.load_device()
@@ -19,6 +19,8 @@ class Client:
         self.country_stations = {}
         self.sessionToken_list = {}
         self.sessionID_list = {}
+        self.epg_data = {}
+        self.epgLastUpdatedAt = {}
 
         self.headers = {
                     'authority': 'clients.plex.tv',
@@ -63,7 +65,10 @@ class Client:
                 json.dump(self.device, f)
 
     def token(self, country_code):
-        if (self.sessionID_list.get(country_code) is not None) and (time.time() - self.sessionAt) < 4 * 60 * 60:
+        desired_timezone = pytz.timezone('UTC')
+        current_date = datetime.now(desired_timezone)
+        # if (self.sessionID_list.get(country_code) is not None) and (time.time() - self.sessionAt.get(country_code, 0)) < 4 * 60 * 60:
+        if (self.sessionID_list.get(country_code) is not None) and (current_date - self.sessionAt.get(country_code, datetime.now())) < timedelta(hours=4):
             # print(f'Returning valid token for {country_code}')
             return self.sessionID_list[country_code], None
         
@@ -90,17 +95,15 @@ class Client:
         self.sessionToken_list.update({country_code: token})
 
         self.sessionID_list.update({country_code: token})
-        self.sessionAt = time.time()
+        self.sessionAt.update({country_code: current_date})
 
-        print(f"New token for {country_code} generated at {datetime.fromtimestamp(self.sessionAt).strftime('%Y-%m-%d %H:%M.%S %z')}")
+        print(f"New token for {country_code} generated at {(self.sessionAt.get(country_code)).strftime('%Y-%m-%d %H:%M.%S %z')}")
         return token, None
 
     def channels(self, country_code = "local"):
         token, error = self.token(country_code)
         plex_tmsid_url = "https://raw.githubusercontent.com/jgomez177/plex-for-channels/main/plex_tmsid.csv"
         plex_custom_tmsid = 'plex_data/plex_custom_tmsid.csv'
-
-        print (country_code)
 
         if country_code in self.x_forward.keys():
             self.headers.update(self.x_forward.get(country_code))
@@ -114,10 +117,6 @@ class Client:
 
         # print (len(resp))
         channels = resp.get("MediaContainer").get("Channel")
-        # print (len(channels))
-
-        #if len(channels) > 0:
-        #    print(json.dumps(channels[0], indent=2))
 
         for elem in channels:
             callSign = elem.get('callSign')
@@ -223,18 +222,158 @@ class Client:
         
         return response.json(), None
 
+    def read_epg_from_api(self, run_datetime, start_datetime, range_val, id_values, country_code, verbose = False):
+        token, error = self.token(country_code)
+        if error: return error
+        epg_headers =   {
+                        'authority': 'epg.provider.plex.tv',
+                        'accept': 'application/json, text/javascript, */*; q=0.01',
+                        'accept-language': 'en',
+                        'origin': 'https://app.plex.tv',
+                        'referer': 'https://app.plex.tv/',
+                        'x-plex-client-identifier': self.device,
+                        'x-plex-text-format': 'plain',
+                        'x-plex-token': token,
+                        'x-plex-version': '4.122.0',
+                        'x-plex-provider-version': '6.5'
+                    }
+
+        print(f'Retrieving {country_code} EPG data for {start_datetime.strftime("%Y-%m-%d")} through {(start_datetime + timedelta(days=range_val)).strftime("%Y-%m-%d")}')
+
+        j = 0
+        k = 0
+        for id in id_values:
+            k += 1
+            if verbose:
+                print(f"Retriving data {k} for {id}")
+            id_data = []
+            for i in range(range_val + 1):
+                resp_metadata = {}
+                range_datetime = start_datetime + timedelta(days=i)
+                # start_time = quote(start_datetime.strftime("%Y-%m-%d %H:00:00.000Z"))
+                range_time = range_datetime.strftime("%Y-%m-%d")
+
+                params =    {'channelGridKey': id.split("-", 1)[1] if "-" in id else id,
+                             'date': range_time
+                            }
+                resp, error = self.api(country_code, 'grid', params, epg_headers)
+                if error: return(None, error)
+                j += 1
+                match j:
+                    case _ if j % 1200 == 0:
+                        if verbose: print("Pause 30 seconds for API throttling")
+                        time.sleep(30)
+                    case _ if j % 600 == 0:
+                        if verbose: print("Pause 15 seconds for API throttling")
+                        time.sleep(15)
+                    case _ if j % 100 == 0:
+                        if verbose: print("Pause 5 seconds for API throttling")
+                        time.sleep(5)
+
+                resp_metadata.update({"Metadata": resp["MediaContainer"]["Metadata"],
+                                      "date": range_time,
+                                      "id": id})
+                id_data.append(resp_metadata)
+
+            #id_data_old = self.epg_data.get(country_code, {}).get(id, [])
+            #id_data_dict = {id: id_data + id_data_old}
+                
+            country_data = self.epg_data.get(country_code, {})
+            country_data.update({id: country_data.get(id, []) + id_data})
+
+            self.epg_data.update({country_code: country_data})
+            self.epgLastUpdatedAt.update({country_code: run_datetime})
+        print(f"Retrieving {country_code} EPG data complete")
+        return None
+
+
+    def update_epg(self, country_code):
+        # print("Running EPG")
+        epg_update_value = 4 # Value for updating EPG data in hours 
+        range_val = 3         # Number of EPG dates to pull range_val + 1 times
+
+        # Set desired timezone as 'UTC'
+        desired_timezone = pytz.timezone('UTC')
+
+        # Get the current time in the desired timezone
+        start_datetime = datetime.now(desired_timezone)
+        # start_time = quote(start_datetime.strftime("%Y-%m-%d %H:00:00.000Z"))
+        # start_time = start_datetime.strftime("%Y-%m-%d")
+
+        if country_code in self.x_forward.keys():
+            self.headers.update(self.x_forward.get(country_code))
+
+        station_list = self.country_stations.get(country_code, [])
+
+        if len(station_list) == 0:
+            print("Run channels to load self.channel_list")
+            station_list, token, error = self.channels(country_code)
+
+        # Extracting all 'id' values
+        id_values = [d['id'] for d in station_list]
+        # id_values = [id_values[0],id_values[1]]
+
+        if self.epg_data.get(country_code):
+            # print('Returning cached data')
+            today = start_datetime.date()
+            if (start_datetime - self.epgLastUpdatedAt.get(country_code, start_datetime)) >= timedelta(hours=epg_update_value):
+                print(f"{start_datetime - self.epgLastUpdatedAt.get(country_code, start_datetime)}: Updating data for {country_code}")
+                for key, value_list in self.epg_data.get(country_code).items():
+                    filtered_list = [item for item in value_list if datetime.strptime(item["date"], "%Y-%m-%d").date() > today]
+                    self.epg_data.get(country_code)[key] = filtered_list
+
+            # Using the first entry in self.epg_data, pull dates 
+            first_entry_dates = [datetime.strptime(item["date"], "%Y-%m-%d").date() for item in self.epg_data[country_code][list(self.epg_data[country_code].keys())[0]]]
+
+            # List of pulled EPG data between now and range_val + 1 
+            dates_between_now_and_x_days = [(start_datetime + timedelta(days=i)).date() for i in range(range_val + 1)]
+
+            # Check if each date is present in the list of dates from the first entry
+            dates_not_present = [pytz.utc.localize(datetime.combine(date, datetime.min.time())) for date in dates_between_now_and_x_days if date not in first_entry_dates]
+
+            # Pull data for any missing date
+            if len(dates_not_present) > 0:
+                error = self.read_epg_from_api(start_datetime, dates_not_present[0], 0, id_values, country_code)
+                if error: return error
+            return None
+        else:
+            print("Day One Initialization of EPG data")
+            error = self.read_epg_from_api(start_datetime, start_datetime, 0, id_values, country_code, True)
+            if error: return error
+
+        return None
+
+    def epg_json(self, country_code):
+        error_code = self.update_epg(country_code)
+        if error_code:
+            print("error") 
+            return None, error_code
+        return self.epg_data, None
+
+    def strip_illegal_characters(self, xml_string):
+        # Define a regular expression pattern to match illegal characters
+        illegal_char_pattern = re.compile(r'[\x00-\x08\x0b\x0c\x0e-\x1f]')
+
+        # Replace illegal characters with an empty string
+        clean_xml_string = illegal_char_pattern.sub('', xml_string)
+
+        return clean_xml_string
+
     def parse_date(self, date_str):
+        if date_str == '': return date_str
         formats = ["%Y-%m-%dT%H:%M:%S.%fZ", "%Y-%m-%dT%H:%M:%SZ"]
+
 
         for fmt in formats:
             try:
                 return datetime.strptime(date_str, fmt)
             except ValueError:
                 pass
+        print(f"Error: Could not parse date: {date_str}")
+        return ''
+        
 
-        return ""
-        raise ValueError(f"Could not parse date: {date_str}")
-    
+
     def create_programme_element(self, timeline, media, channel_id, root):
         epoch_begin_time = int(media['beginsAt'])
         start_datetime = datetime.utcfromtimestamp(epoch_begin_time).replace(tzinfo=pytz.utc)
@@ -249,15 +388,14 @@ class Client:
         # Add sub-elements to programme
         originallyAvailableAt = self.parse_date(timeline.get('originallyAvailableAt', ''))
 
-
         if timeline.get('grandparentType') is None:
             title = ET.SubElement(programme, "title")
-            title.text = timeline.get('title','')
+            title.text = self.strip_illegal_characters(timeline.get('title',''))
         else:
             title = ET.SubElement(programme, "title")
-            title.text = timeline.get('grandparentTitle','')
+            title.text = self.strip_illegal_characters(timeline.get('grandparentTitle',''))
             sub_title = ET.SubElement(programme, "sub-title")
-            sub_title.text = timeline.get('title','')
+            sub_title.text = self.strip_illegal_characters(timeline.get('title',''))
 
         if originallyAvailableAt != '':
             # "originallyAvailableAt": "2016-04-05T12:00:00Z",
@@ -276,7 +414,7 @@ class Client:
 
         if timeline.get('desc') != '':
             desc = ET.SubElement(programme, "desc")
-            desc.text = timeline.get('summary','')
+            desc.text = self.strip_illegal_characters(timeline.get('summary',''))
 
         image_list = timeline.get('Image', [])
         order = {"coverPoster": 0, "coverArt": 1, "snapshot": float('inf')}
@@ -318,12 +456,7 @@ class Client:
 
         return root
 
-    def read_epg_data(self, resp, channel_id, root):
-
-        # for entry in resp["MediaContainer"]:
-        metadata = resp.get("MediaContainer").get("Metadata")
-        # print(json.dumps(metadata, indent=2))            
-
+    def read_epg_data_for_xml(self, metadata, channel_id, root):
         for timeline in metadata:
             # Create programme element
             for media in timeline['Media']:
@@ -331,90 +464,32 @@ class Client:
 
         return root
 
-    def epg(self, country_code = "local"):
-        print("Running EPG")
+    def create_xml_file(self, country_code):
+        error_code = self.update_epg(country_code)
+        if error_code: return error_code
+
         xml_file_path        = f"epg-{country_code}.xml"
         compressed_file_path = f"{xml_file_path}.gz"
-        token, error = self.token(country_code)
-
-        # Set your desired timezone, for example, 'UTC'
-        desired_timezone = pytz.timezone('UTC')
-
-        epg_headers =   {
-                        'authority': 'epg.provider.plex.tv',
-                        'accept': 'application/json, text/javascript, */*; q=0.01',
-                        'accept-language': 'en',
-                        'origin': 'https://app.plex.tv',
-                        'referer': 'https://app.plex.tv/',
-                        'x-plex-client-identifier': self.device,
-                        'x-plex-text-format': 'plain',
-                        'x-plex-token': token,
-                        'x-plex-version': '4.122.0',
-                        'x-plex-provider-version': '6.5'
-                    }
-
-        # Get the current time in the desired timezone
-        start_datetime = datetime.now(desired_timezone)
-        # start_time = quote(start_datetime.strftime("%Y-%m-%d %H:00:00.000Z"))
-        start_time = start_datetime.strftime("%Y-%m-%d")
-
-
-        if country_code in self.x_forward.keys():
-            self.headers.update(self.x_forward.get(country_code))
 
         station_list = self.country_stations.get(country_code, [])
 
         if len(station_list) == 0:
             print("Run channels to load self.channel_list")
-            station_list, token, error = self.channels(country_code)
-
-        # Extracting all 'id' values
-        id_values = [d['id'] for d in station_list]
-        group_size = 100
-        grouped_id_values = [id_values[i:i + group_size] for i in range(0, len(id_values), group_size)]
+            station_list, token, error_code = self.channels(country_code)
+            if error_code: return None, error_code
 
         root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
-
-
 
         # Create Channel Elements from list of Stations
         for station in station_list:
             channel = ET.SubElement(root, "channel", attrib={"id": station["id"]})
             display_name = ET.SubElement(channel, "display-name")
-            display_name.text = station["name"]
+            display_name.text = self.strip_illegal_characters(station["name"])
             icon = ET.SubElement(channel, "icon", attrib={"src": station["logo"]})
 
-        # id_values = ['5e20b730f2f8d5003d739db7-644c4bc17472b186783f35a0',]
-        # Create Programme Elements
-        for i in range(2):
-            # Add one day to the current datetime
-            range_datetime = start_datetime + timedelta(days=i)
-
-            # start_time = quote(start_datetime.strftime("%Y-%m-%d %H:00:00.000Z"))
-            start_time = range_datetime.strftime("%Y-%m-%d")
-
-            print(f"Day {i} run for {start_time}")
-            for id in id_values:
-                # print("Initial Run")
-                params =    {'channelGridKey': id.split("-", 1)[1] if "-" in id else id,
-                             'date': start_time
-                            }
-                # print(params['channelGridKey'])
-                resp, error = self.api(country_code, 'grid', params, epg_headers)
-                if error:
-                    print(error)
-                    return(None, error)        
-
-                # print(json.dumps(resp["meta"]))
-                # json_filename = f'{id.split("-", 1)[1] if "-" in id else id}-{start_time}.json'
-                # with open(json_filename, 'w') as the_file:
-                #     the_file.write(json.dumps(resp, indent=2, sort_keys=True))
-
-
-                root = self.read_epg_data(resp, id, root)
-
-
-
+        for key, value_list in self.epg_data.get(country_code).items():
+            for entry in value_list:
+                root = self.read_epg_data_for_xml(entry["Metadata"], key, root)
 
         # Sort the <programme> elements by channel and then by start
         sorted_programmes = sorted(root.findall('.//programme'), key=lambda x: (x.get('channel'), x.get('start')))
@@ -427,7 +502,6 @@ class Client:
         # Append the sorted <programme> elements to the root
         for element in sorted_programmes:
             root.append(element)
-
 
         # Create an ElementTree object
         tree = ET.ElementTree(root)
@@ -452,4 +526,12 @@ class Client:
             with gzip.open(compressed_file_path, 'wb') as compressed_file:
                 compressed_file.writelines(file)
 
-        return(xml_file_path, None)
+        return None
+
+                
+
+
+
+
+
+

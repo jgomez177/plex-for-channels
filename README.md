@@ -1,14 +1,20 @@
 # Plex for Channels
 
-Current version: **1.05**
+Current version: **1.06**
 
 # About
 This takes Plex Live TV Channels and generates an M3U playlist and EPG XMLTV file.
 
+# Changes
+ - Version 1.06: 
+    - Updates to how EPG data is pulled. XML files are initialized with the current day's EPG data. Then gradually added over the course of the next 30 min. to reduce number of API calls. 
+    - Illegal character XML handling has been added.
+    - PLEX_CODE env variable has been added. Controls which country(ies) this session will utilize
+
 # Running
 The recommended way of running is to pull the image from [GitHub](https://github.com/jgomez177/plex-for-channels/pkgs/container/plex-for-channels).
 
-    docker run -d --restart unless-stopped --network=host -e PLEX_PORT=[your_port_number_here] --name  plex-for-channels ghcr.io/jgomez177/plex-for-channels
+    docker run -d --restart unless-stopped --network=host -e PLEX_PORT=[your_port_number_here] -e PLEX_CODE=local[,us_west,etc.] --name  plex-for-channels ghcr.io/jgomez177/plex-for-channels
 or
 
     docker run -d --restart unless-stopped -p [your_port_number_here]:7777 --name  plex-for-channels ghcr.io/jgomez177/plex-for-channels
@@ -21,6 +27,7 @@ You can retrieve the playlist and EPG via the status page.
 | Environment Variable | Description | Default |
 |---|---|---|
 | PLEX_PORT | Port the API will be served on. You can set this if it conflicts with another service in your environment. | 7777 |
+| PLEX_CODE | What country streams will be hosted. <br>Multiple can be hosted using comma separation<p><p>ALLOWED_COUNTRY_CODES:<br>**us_east** - United States East Coast,<br>**us_west** - United States West Coast,<br>**local** - Local IP address Geolocation,<br>**ca** - Canada,<br>**uk** - United Kingdom,<br>**nz** - New Zealand,<br>**au** - Australia,<br>**mx** - Mexico,<br>**es**  - Spain  | local |
 
 ## Additional URL Parameters
 | Parameter | Description |

@@ -15,14 +15,11 @@ else:
     except:
         port = 7777
 
-offset = os.environ.get("OFFSET")
-if offset is None:
-    offset = 0
+plex_country_code = os.environ.get("PLEX_CODE")
+if plex_country_code:
+   plex_country_list = plex_country_code.split(',')
 else:
-    try:
-        offset = int(offset)
-    except:
-        offset = 0
+   plex_country_list = ['local']
 
 
 ALLOWED_COUNTRY_CODES = ['us_east', 'us_west', 'local', 'ca', 'uk', 'nz', 'au', 'mx', 'es']
@@ -51,51 +48,37 @@ url = f'<!DOCTYPE html>\
             <div class="container">\
               <h1 class="title">\
                 {provider.capitalize()} Playlist\
-                <span class="tag">v1.05</span>\
+                <span class="tag">v1.06</span>\
               </h1>\
               <p class="subtitle">\
-                Last Updated: Feb 15, 2024\
+                Last Updated: Feb 20, 2024\
               '
 
 @app.route("/")
 def index():
     host = request.host
-    pl = f"http://{host}/mjh_compatible"
-    ul = f'<p class="subtitle">channel-id by "provider"-"id" (i.mjh.nz compatibility): <a href="{pl}">{pl}</a><br></p><ul>'
-    for code in ALLOWED_COUNTRY_CODES:
-        pl = f"http://{host}/{provider}/{code}/playlist.m3u"
-        ul += f"<li>{provider.upper()} {code.upper()}: <a href='{pl}'>{pl}</a></li>\n"
-        if code in ['us_east', 'us_west']:
-            pl = f"http://{host}/{provider}/{code}/playlist.m3u?gracenote=include"
-            ul += f"<li>{provider.upper()} {code.upper()} Gracenote Playlist: <a href='{pl}'>{pl}</a></li>\n"
-            pl = f"http://{host}/{provider}/{code}/playlist.m3u?gracenote=exclude"
-            ul += f"<li>{provider.upper()} {code.upper()} EPG Only Playlist: <a href='{pl}'>{pl}</a></li>\n"
-        pl = f"http://{host}/{provider}/epg/{code}/epg-{code}.xml"
-        ul += f"<li>{provider.upper()} {code.upper()} EPG: <a href='{pl}'>{pl}</a></li>\n"
-        pl = f"http://{host}/{provider}/epg/{code}/epg-{code}.xml.gz"
-        ul += f"<li>{provider.upper()} {code.upper()} EPG GZ: <a href='{pl}'>{pl}</a></li>\n"
-        ul += f"<br>\n"
-
-    return f"{url}<ul>{ul}</ul></div></section></body></html>"
-
-@app.route("/mjh_compatible")
-def index_mjh_compatible():
-    host = request.host
-    ul = "<ul>"
-    for code in ALLOWED_COUNTRY_CODES:
-        pl = f"http://{host}/mjh_compatible/{provider}/{code}/playlist.m3u"
-        ul += f"<li>{provider.upper()} {code.upper()}: <a href='{pl}'>{pl}</a></li>\n"
-        if code in ['us_east', 'us_west']:
-            pl = f"http://{host}/mjh_compatible/{provider}/{code}/playlist.m3u?gracenote=include"
-            ul += f"<li>{provider.upper()} {code.upper()} Gracenote Playlist: <a href='{pl}'>{pl}</a></li>\n"
-            pl = f"http://{host}/mjh_compatible/{provider}/{code}/playlist.m3u?gracenote=exclude"
-            ul += f"<li>{provider.upper()} {code.upper()} EPG Only Playlist: <a href='{pl}'>{pl}</a></li>\n"
-        # pl = f"http://{host}/{provider}/epg/{code}/epg-{code}.xml"
-        # ul += f"<li>{provider.upper()} {code.upper()} EPG: <a href='{pl}'>{pl}</a></li>\n"
-        # pl = f"http://{host}/{provider}/epg/{code}/epg-{code}.xml.gz"
-        # ul += f"<li>{provider.upper()} {code.upper()} EPG GZ: <a href='{pl}'>{pl}</a></li>\n"
-        ul += f"<br>\n"
-
+    ul = ""
+    if all(item in ALLOWED_COUNTRY_CODES for item in plex_country_list):
+        pl = f"http://{host}/mjh_compatible"
+        # ul = f'<p class="subtitle">channel-id by "provider"-"id" (i.mjh.nz compatibility): <a href="{pl}">{pl}</a><br></p><ul>'
+        for code in plex_country_list:
+            pl = f"http://{host}/{provider}/{code}/playlist.m3u"
+            ul += f"<li>{provider.upper()} {code.upper()}: <a href='{pl}'>{pl}</a></li>\n"
+            pl = f"http://{host}/mjh_compatible/{provider}/{code}/playlist.m3u"
+            ul += f"<li>{provider.upper()} {code.upper()} MJH Compatible: <a href='{pl}'>{pl}</a></li>\n"
+            if code in ['us_east', 'us_west']:
+                pl = f"http://{host}/{provider}/{code}/playlist.m3u?gracenote=include"
+                ul += f"<li>{provider.upper()} {code.upper()} Gracenote Playlist: <a href='{pl}'>{pl}</a></li>\n"
+                pl = f"http://{host}/{provider}/{code}/playlist.m3u?gracenote=exclude"
+                ul += f"<li>{provider.upper()} {code.upper()} EPG Only Playlist: <a href='{pl}'>{pl}</a></li>\n"
+            ul += f"<br>\n"
+            pl = f"http://{host}/{provider}/epg/{code}/epg-{code}.xml"
+            ul += f"<li>{provider.upper()} {code.upper()} EPG: <a href='{pl}'>{pl}</a></li>\n"
+            pl = f"http://{host}/{provider}/epg/{code}/epg-{code}.xml.gz"
+            ul += f"<li>{provider.upper()} {code.upper()} EPG GZ: <a href='{pl}'>{pl}</a></li>\n"
+            ul += f"<br>\n"
+    else:
+        ul += f"<li>INVALID COUNTRY CODE in \"{', '.join(plex_country_list).upper()}\"</li>\n"
     return f"{url}<ul>{ul}</ul></div></section></body></html>"
 
 @app.route("/token/<country_code>")
@@ -162,6 +145,11 @@ def channels_json(provider, country_code):
         stations, token, err = providers[provider].channels(country_code)
         return (stations)
 
+@app.get("/<provider>/<country_code>/epg.json")
+def epg_json(provider, country_code):
+        epg, err = providers[provider].epg_json(country_code)
+        if err: return err
+        return epg
 
 
 @app.get("/mjh_compatible/<provider>/<country_code>/playlist.m3u")
@@ -238,19 +226,9 @@ def epg_xml(provider, country_code, filename):
             return send_file(file_path, as_attachment=False, download_name=file_path, mimetype='text/plain')
         elif filename in ALLOWED_GZ_FILENAMES:
             return send_file(file_path, as_attachment=True, download_name=file_path)
-
     except FileNotFoundError:
         # Handle the case where the file is not found
-        xml_data, error = providers[provider].epg(country_code)
-        if error:
-            return "XML file not found", 404
-        else:
-            if filename in ALLOWED_EPG_FILENAMES: 
-                return send_file(file_path, as_attachment=False, download_name=file_path, mimetype='text/plain')
-            elif filename in ALLOWED_GZ_FILENAMES:
-                return send_file(file_path, as_attachment=True, download_name=file_path)
-
-
+        return "XML file not found", 404
     except Exception as e:
         # Handle other unexpected errors
         return f"An error occurred: {str(e)}", 500
@@ -258,12 +236,14 @@ def epg_xml(provider, country_code, filename):
 
 # Define the function you want to execute every four hours
 def epg_scheduler():
-    for code in ALLOWED_COUNTRY_CODES:
-        epg, error = providers[provider].epg(code)
-        print("Scheduled EPG Data Update")
+    if all(item in ALLOWED_COUNTRY_CODES for item in plex_country_list):
+        for code in plex_country_list:
+            # print("Scheduled EPG Data Update")
+            error = providers[provider].create_xml_file(code)
+            if error: print(f"{error}")
 
 # Schedule the function to run every four hours
-schedule.every(4).hours.do(epg_scheduler)
+schedule.every(10).minutes.do(epg_scheduler)
 
 # Define a function to run the scheduler in a separate thread
 def scheduler_thread():
@@ -272,6 +252,12 @@ def scheduler_thread():
         time.sleep(1)
 
 if __name__ == '__main__':
+    if all(item in ALLOWED_COUNTRY_CODES for item in plex_country_list):
+        for code in plex_country_list:
+            print("Initialize XML File")
+            error = providers[provider].create_xml_file(code)
+            if error: 
+                print(f"{error}")
     sys.stdout.write(f"⇨ http server started on [::]:{port}\n")
     try:
         # Start the scheduler thread
