@@ -56,4 +56,8 @@ Plex occasionally duplicates a name of a channel, therefore the easiest way to e
 
     http://127.0.0.1:[your_port_number_here]/plex/[playlist_location]/channels.json
 
+***
 
+If you like this and other linear containers for Channels that I have created, please consider supporting my work.
+
+[![](https://pics.paypal.com/00/s/MDY0MzZhODAtNGI0MC00ZmU5LWI3ODYtZTY5YTcxOTNlMjRm/file.PNG)](https://www.paypal.com/donate/?hosted_button_id=BBUTPEU8DUZ6J)
