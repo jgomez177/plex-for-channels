@@ -77,10 +77,8 @@ class Client:
 
         try:
             response = self.session.post('https://clients.plex.tv/api/v2/users/anonymous', params=self.params, headers=self.headers)
-        except requests.ConnectionError as e:
-            print("Connection Error.")
-            print(str(e))
-            return None, f"Connection Error. {str(e)}"
+        except Exception as e:
+            return None, (f"Exception type Error: {type(e).__name__}")    
         
         if (200 <= response.status_code <= 201):
             # print('Return for sign-in')
@@ -213,9 +211,15 @@ class Client:
         # print(headers)
         url = f"https://epg.provider.plex.tv/{cmd}"
         if data:
-            response = self.session.put(url, data=data, params=api_params, headers=api_headers)
+            try:
+                response = self.session.put(url, data=data, params=api_params, headers=api_headers, timeout=60)
+            except Exception as e:
+                return None, (f"Exception type Error: {type(e).__name__}")    
         else:
-            response = self.session.get(url, params=api_params, headers=api_headers)
+            try:
+                response = self.session.get(url, params=api_params, headers=api_headers, timeout=60)
+            except Exception as e:
+                return None, (f"Exception type Error: {type(e).__name__}")    
         if response.status_code != 200:
             return None, f"HTTP failure {response.status_code}: {response.text}"
         # print(response.text)
