@@ -235,17 +235,37 @@ class Client:
                         'accept-language': 'en',
                         'origin': 'https://app.plex.tv',
                         'referer': 'https://app.plex.tv/',
+                        'sec-ch-ua': '"Chromium";v="122", "Not(A:Brand";v="24", "Google Chrome";v="122"',
+                        'sec-ch-ua-mobile': '?0',
+                        'sec-ch-ua-platform': '"Linux"',
+                        'sec-fetch-dest': 'empty',
+                        'sec-fetch-mode': 'cors',
+                        'sec-fetch-site': 'same-site',
+                        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
                         'x-plex-client-identifier': self.device,
+                        'x-plex-device': 'Linux',
+                        'x-plex-device-screen-resolution': '1098x1265,2560x1440',
+                        'x-plex-drm': 'widevine',
+                        'x-plex-features': 'external-media,indirect-media,hub-style-list',
+                        'x-plex-language': 'en',
+                        'x-plex-model': 'hosted',
+                        'x-plex-platform': 'Chrome',
+                        'x-plex-platform-version': '122.0',
+                        'x-plex-product': 'Plex Web',
+                        'x-plex-provider-version': '6.5',
+                        'x-plex-restriction-profile': 'undefined',
                         'x-plex-text-format': 'plain',
                         'x-plex-token': token,
-                        'x-plex-version': '4.122.0',
-                        'x-plex-provider-version': '6.5'
+                        'x-plex-version': '4.125.1',
                     }
 
         print(f'Retrieving {country_code} EPG data for {start_datetime.strftime("%Y-%m-%d")} through {(start_datetime + timedelta(days=range_val)).strftime("%Y-%m-%d")}')
 
         j = 0
         k = 0
+        # Start time
+        start_time = time.time()
+
         for id in id_values:
             k += 1
             if verbose:
@@ -264,15 +284,17 @@ class Client:
                 if error: return(None, error)
                 j += 1
                 match j:
-                    case _ if j % 1200 == 0:
-                        if verbose: print("Pause 30 seconds for API throttling")
-                        time.sleep(30)
-                    case _ if j % 600 == 0:
-                        if verbose: print("Pause 15 seconds for API throttling")
-                        time.sleep(15)
-                    case _ if j % 100 == 0:
-                        if verbose: print("Pause 5 seconds for API throttling")
-                        time.sleep(5)
+                    case _ if j % 300 == 0:
+                        time.sleep(16)
+                        elapsed_time = time.time() - start_time
+                        print(f"Continuing to retrive {country_code} EPG data....Elapsed time: {elapsed_time:.2f} seconds. {j} Channels parsed. Please wait")
+                    case _ if j % 150 == 0:
+                        time.sleep(8)
+                        elapsed_time = time.time() - start_time
+                        print(f"Continuing to retrive {country_code} EPG data....Elapsed time: {elapsed_time:.2f} seconds. {j} Channels parsed")
+                    case _ if j % 20 == 0:
+                        # print("Loading EPG data...")
+                        time.sleep(1)
 
                 resp_metadata.update({"Metadata": resp["MediaContainer"]["Metadata"],
                                       "date": range_time,
@@ -287,7 +309,9 @@ class Client:
 
             self.epg_data.update({country_code: country_data})
             self.epgLastUpdatedAt.update({country_code: run_datetime})
-        print(f"Retrieving {country_code} EPG data complete")
+
+        elapsed_time = time.time() - start_time
+        print(f"Retrieving {country_code} EPG data complete. Elapsed time: {elapsed_time:.2f} seconds. {j} Channels parsed.")
         return None
 
 
@@ -342,7 +366,7 @@ class Client:
             return None
         else:
             print("Day One Initialization of EPG data")
-            error = self.read_epg_from_api(start_datetime, start_datetime, 0, id_values, country_code, True)
+            error = self.read_epg_from_api(start_datetime, start_datetime, 0, id_values, country_code)
             if error: return error
 
         return None
@@ -531,6 +555,7 @@ class Client:
                 compressed_file.writelines(file)
 
         return None
+        
 
                 
 

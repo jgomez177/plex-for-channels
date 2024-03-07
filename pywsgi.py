@@ -6,6 +6,9 @@ import subprocess, os, sys, importlib, schedule, time
 from gevent import monkey
 monkey.patch_all()
 
+version = "1.08"
+updated_date = "Mar 7, 2024"
+
 port = os.environ.get("PLEX_PORT")
 if port is None:
     port = 7777
@@ -48,10 +51,10 @@ url = f'<!DOCTYPE html>\
             <div class="container">\
               <h1 class="title">\
                 {provider.capitalize()} Playlist\
-                <span class="tag">v1.07a</span>\
+                <span class="tag">v{version}</span>\
               </h1>\
               <p class="subtitle">\
-                Last Updated: Mar 7, 2024\
+                Last Updated: {updated_date}\
               '
 
 @app.route("/")
@@ -234,7 +237,7 @@ def epg_xml(provider, country_code, filename):
         return f"An error occurred: {str(e)}", 500
 
 
-# Define the function you want to execute every four hours
+# Define the function you want to execute with scheduler
 def epg_scheduler():
     if all(item in ALLOWED_COUNTRY_CODES for item in plex_country_list):
         for code in plex_country_list:
@@ -242,16 +245,25 @@ def epg_scheduler():
             error = providers[provider].create_xml_file(code)
             if error: print(f"{error}")
 
-# Schedule the function to run every four hours
-schedule.every(10).minutes.do(epg_scheduler)
 
 # Define a function to run the scheduler in a separate thread
 def scheduler_thread():
     while True:
-        schedule.run_pending()
-        time.sleep(1)
+        try:
+            schedule.run_pending()
+            time.sleep(1)
+        except Exception as e:
+            print(f"Scheduler crashed: {e}. Restarting...")
+            # Restart scheduler
+            schedule.clear()
+            # Schedule the function to run every thirty minutes
+            schedule.every(30).minutes.do(epg_scheduler)
+
 
 if __name__ == '__main__':
+    # Schedule the function to run every thirty minutes
+    schedule.every(30).minutes.do(epg_scheduler)
+
     if all(item in ALLOWED_COUNTRY_CODES for item in plex_country_list):
         for code in plex_country_list:
             print("Initialize XML File")
