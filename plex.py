@@ -212,12 +212,12 @@ class Client:
         url = f"https://epg.provider.plex.tv/{cmd}"
         if data:
             try:
-                response = self.session.put(url, data=data, params=api_params, headers=api_headers, timeout=60)
+                response = self.session.put(url, data=data, params=api_params, headers=api_headers, timeout=300)
             except Exception as e:
                 return None, (f"Exception type Error: {type(e).__name__}")    
         else:
             try:
-                response = self.session.get(url, params=api_params, headers=api_headers, timeout=60)
+                response = self.session.get(url, params=api_params, headers=api_headers, timeout=300)
             except Exception as e:
                 return None, (f"Exception type Error: {type(e).__name__}")    
         if response.status_code != 200:
