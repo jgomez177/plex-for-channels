@@ -307,8 +307,8 @@ class Client:
             country_data = self.epg_data.get(country_code, {})
             country_data.update({id: country_data.get(id, []) + id_data})
 
-            self.epg_data.update({country_code: country_data})
-            self.epgLastUpdatedAt.update({country_code: run_datetime})
+        self.epg_data.update({country_code: country_data})
+        self.epgLastUpdatedAt.update({country_code: run_datetime})
 
         elapsed_time = time.time() - start_time
         print(f"Retrieving {country_code} EPG data complete. Elapsed time: {elapsed_time:.2f} seconds. {j} Channels parsed.")
