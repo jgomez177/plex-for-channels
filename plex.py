@@ -336,6 +336,7 @@ class Client:
         if len(station_list) == 0:
             print("Run channels to load self.channel_list")
             station_list, token, error = self.channels(country_code)
+            if error: return error
 
         # Extracting all 'id' values
         id_values = [d['id'] for d in station_list]
