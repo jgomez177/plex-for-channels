@@ -109,7 +109,7 @@ class Client:
         #    gracenoteID = self.load_gracenote()
         resp, error = self.api(country_code, "lineups/plex/channels")
         if error:
-            return None, error
+            return None, token, error
 
         self.stations = []
 
