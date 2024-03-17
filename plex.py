@@ -100,16 +100,16 @@ class Client:
 
     def channels(self, country_code = "local"):
         token, error = self.token(country_code)
+        if error: return None, token, error
+
         plex_tmsid_url = "https://raw.githubusercontent.com/jgomez177/plex-for-channels/main/plex_tmsid.csv"
         plex_custom_tmsid = 'plex_data/plex_custom_tmsid.csv'
 
         if country_code in self.x_forward.keys():
             self.headers.update(self.x_forward.get(country_code))
 
-        #    gracenoteID = self.load_gracenote()
         resp, error = self.api(country_code, "lineups/plex/channels")
-        if error:
-            return None, token, error
+        if error: return None, token, error
 
         self.stations = []
 
