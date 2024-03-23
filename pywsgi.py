@@ -6,8 +6,8 @@ import subprocess, os, sys, importlib, schedule, time
 from gevent import monkey
 monkey.patch_all()
 
-version = "1.08"
-updated_date = "Mar 7, 2024"
+version = "1.08b"
+updated_date = "Mar 23, 2024"
 
 port = os.environ.get("PLEX_PORT")
 if port is None:
@@ -69,7 +69,7 @@ def index():
             ul += f"<li>{provider.upper()} {code.upper()}: <a href='{pl}'>{pl}</a></li>\n"
             pl = f"http://{host}/mjh_compatible/{provider}/{code}/playlist.m3u"
             ul += f"<li>{provider.upper()} {code.upper()} MJH Compatible: <a href='{pl}'>{pl}</a></li>\n"
-            if code in ['us_east', 'us_west']:
+            if code in ['local', 'us_east', 'us_west']:
                 pl = f"http://{host}/{provider}/{code}/playlist.m3u?gracenote=include"
                 ul += f"<li>{provider.upper()} {code.upper()} Gracenote Playlist: <a href='{pl}'>{pl}</a></li>\n"
                 pl = f"http://{host}/{provider}/{code}/playlist.m3u?gracenote=exclude"
