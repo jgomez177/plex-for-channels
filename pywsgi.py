@@ -6,8 +6,8 @@ import subprocess, os, sys, importlib, schedule, time
 from gevent import monkey
 monkey.patch_all()
 
-version = "1.08b"
-updated_date = "Mar 23, 2024"
+version = "1.09"
+updated_date = "Mar 26, 2024"
 
 port = os.environ.get("PLEX_PORT")
 if port is None:
@@ -89,15 +89,6 @@ def token(country_code):
     # host = request.host
     token = providers[provider].token(country_code)
     return(token)
-
-@app.route("/channels/<country_code>")
-def channels(country_code):
-    # host = request.host
-    channel, token, error = providers[provider].channels(country_code)
-    if error is not None:
-        return(channel)
-    else:
-        return(error)
 
 @app.get("/<provider>/<country_code>/playlist.m3u")
 def playlist(provider, country_code):

@@ -23,18 +23,31 @@ class Client:
         self.epgLastUpdatedAt = {}
 
         self.headers = {
-                    'authority': 'clients.plex.tv',
                     'accept': 'application/json, text/javascript, */*; q=0.01',
                     'accept-language': 'en',
                     # 'content-length': '0',
                     'origin': 'https://app.plex.tv',
                     'referer': 'https://app.plex.tv/',
+                    'sec-ch-ua-mobile': '?0',
+                    'sec-ch-ua-platform': '"Linux"',
+                    'sec-fetch-dest': 'empty',
+                    'sec-fetch-mode': 'cors',
+                    'sec-fetch-site': 'same-site',
+                    'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
                 }
 
         self.params = {
             'X-Plex-Product': 'Plex Web',
-            'X-Plex-Version': '4.120.1',
+            'X-Plex-Version': '4.126.1',
             'X-Plex-Client-Identifier': self.device,
+            'X-Plex-Language': 'en',
+            'X-Plex-Platform': 'Chrome',
+            'X-Plex-Platform-Version': '123.0',
+            'X-Plex-Features': 'external-media,indirect-media,hub-style-list',
+            'X-Plex-Model': 'hosted',
+            'X-Plex-Device': 'Linux',
+            'X-Plex-Device-Name': 'Chrome',
+            'X-Plex-Device-Screen-Resolution': '1282x929,1920x1080',
             'X-Plex-Language': 'en',
                 }
         
