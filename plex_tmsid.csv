@@ -17,6 +17,7 @@ time_shift,name,id,slug,tmsid
 ,CBC News International,5e20b730f2f8d5003d739db7-64c91830ea7db2f52688c52c,cbc-news-international,124721
 ,Celebrity Name Game,5e20b730f2f8d5003d739db7-640205c40e1daf16b299567e,celebrity-name-game,135168
 ,Cheddar,5e20b730f2f8d5003d739db7-5f6b8e5900b0950040d0f2af,cheddar-news,107241
+,Combat War Channel,5e20b730f2f8d5003d739db7-65e87f35335524a69e8e0ce1,combat-war-channel,147642
 ,Comedy Dynamics,5e20b730f2f8d5003d739db7-5efe1de5e0b3f5003f5d9f76,comedy-dynamics,115447
 ,Court TV,5e20b730f2f8d5003d739db7-6245d867ddf1ba983d5b8bf8,court-tv,123605
 ,Court TV Legendary Trials,5e20b730f2f8d5003d739db7-648095ad190e97d15c3470e9,court-tv-legendary-trials,137506
@@ -65,7 +66,10 @@ time_shift,name,id,slug,tmsid
 ,MotorTrend VELOZ TV,5e20b730f2f8d5003d739db7-65b28dd28f05102bce4a790e,motortrend-veloz-tv,152864
 ,NBC News NOW,5e20b730f2f8d5003d739db7-5fc70600dd53a6002d8f93ca,nbc-news-now,114174
 ,Nashville,5e20b730f2f8d5003d739db7-6087ff3ae99ff1002ce1465b,nashville,118859
+,Non-Stop '90s,5e20b730f2f8d5003d739db7-65bd5a538314c24e11553543,non-stop-90s,151830
+,Paranormal Files,5e20b730f2f8d5003d739db7-65e87f35335524a69e8e0ce0,paranormal-files,147639
 ,Qello Concerts,5e20b730f2f8d5003d739db7-5fe27da28c198b002d179199,qello-concerts,113296
+,REVOLT Mixtape,5e20b730f2f8d5003d739db7-634aa92e543c280baa13d91d,revolt-mixtape-2,129774
 ,RetroCrush,5e20b730f2f8d5003d739db7-5ef4e1b40d9ad000423c442a,retrocrush,119355
 ,Scares by Shudder,5e20b730f2f8d5003d739db7-650b38f490baad1963ad96f9,scares-by-shudder-3,145846
 ,Screambox TV,5e20b730f2f8d5003d739db7-641db53c2f7a0fca29488c99,screambox-tv,116607
@@ -81,6 +85,7 @@ time_shift,name,id,slug,tmsid
 ,TODAY All Day,5e20b730f2f8d5003d739db7-5fc70600598c41002da3dd39,today-all-day,114138
 ,Tastemade,5e20b730f2f8d5003d739db7-5ef51c802ddee5003f1c0225,tastemade,107076
 ,The Ed Sullivan Show,5e20b730f2f8d5003d739db7-640205c68ecb41f2d89d5814,the-ed-sullivan-show,135306
+,The FBI Files,5e20b730f2f8d5003d739db7-6582a024a90606db3c841b1b,the-fbi-files,151234
 ,The Film Detective,5e20b730f2f8d5003d739db7-5eea605674085f0040ddc7a3,the-film-detective,112484
 ,The Grio,5e20b730f2f8d5003d739db7-5fe27da18cdd46002d85efed,grio-ott,116018
 ,The Walking Dead Universe,5e20b730f2f8d5003d739db7-5fc705ff2f220e002d5e6bce,the-walking-dead-universe-2,115540
