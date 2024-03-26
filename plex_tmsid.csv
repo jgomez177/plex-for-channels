@@ -98,6 +98,7 @@ time_shift,name,id,slug,tmsid
 ,Vevo Hip-Hop,5e20b730f2f8d5003d739db7-632997b7f79ba3e1368f8b97,vevo-hip-hop,120900
 ,Vevo Pop,5e20b730f2f8d5003d739db7-616743c63727d6d85751802a,vevo-pop,115694
 ,Weather Channel Español,5e20b730f2f8d5003d739db7-627121c4210f4a174062e5c5,weather-channel-espanol,123478
+,World's Most Evil Killers,5e20b730f2f8d5003d739db7-65829ef26b91be4547aa153a,worlds-most-evil-killers,151232
 ,123GO!,5e20b730f2f8d5003d739db7-63eecb32ac23d1ee072087cb,123go,
 ,24 Hour Free Movies,5e20b730f2f8d5003d739db7-5fd115bab7ef8d002dcf181d,24-hour-free-movies,
 ,4UV,5e20b730f2f8d5003d739db7-64149a3c238e21f260e7844c,4uv,126373
@@ -155,6 +156,10 @@ time_shift,name,id,slug,tmsid
 -5,BritBox Mysteries,5e20b730f2f8d5003d739db7-639a0b83812b6c1429f7acd1,britbox-mysteries,135385
 ,Butaca TV,5e20b730f2f8d5003d739db7-64f0dad7c2bc9b9001d46ea8,butaca-tv,144964
 ,C4 en Alerta,5e20b730f2f8d5003d739db7-65b1568052aa31b8f64da064,c4-en-alerta,
+,CBS News,5e20b730f2f8d5003d739db7-6571f43a1d2aae780d597196,cbs-news,104846
+,CBS News Colorado,5e20b730f2f8d5003d739db7-6571f5b31d2aae780d597198,cbs-news-colorado-2,123120
+,CBS Sports Golazo Network,5e20b730f2f8d5003d739db7-6571186d9a46917c0a8f2ddd,cbs-sports-golazo-network-2,133691
+,CBS Sports HQ,5e20b730f2f8d5003d739db7-657107dc56226238740fcc2d,cbs-sports-hq-2,108919
 ,CINEPRIDE,5e20b730f2f8d5003d739db7-62167144ab2095ca85353ad6,cinepride-2,
 ,COMMUNE,5e20b730f2f8d5003d739db7-618adcbb6769b2b0bcc4c17f,commune,
 ,Camp Spoopy,5e20b730f2f8d5003d739db7-6164a963766ab4f9f57e81b1,camp-spoopy,
@@ -465,7 +470,6 @@ time_shift,name,id,slug,tmsid
 ,The Bob Ross Channel en Español,5e20b730f2f8d5003d739db7-636442f69aabc8029c6d6b8d,the-bob-ross-channel-en-espanol,
 ,The Carol Burnett Show,5e20b730f2f8d5003d739db7-60d4edd6b2fdec002c141125,the-carol-burnett-show,122609
 ,The Design Network,5e20b730f2f8d5003d739db7-5f0641d3e8ffda004033b16e,the-design-network,118087
-,The FBI Files,5e20b730f2f8d5003d739db7-6582a024a90606db3c841b1b,the-fbi-files,
 ,The Grid,5e20b730f2f8d5003d739db7-614b690391ca6324200844fc,the-grid,
 ,The Hill TV,5e20b730f2f8d5003d739db7-62c4a65788737d6edc1a3626,the-hill-tv,128492
 ,The Jamie Oliver Channel,5e20b730f2f8d5003d739db7-64b7170c4612b1f48e9ad31e,the-jamie-oliver-channel,124329
@@ -530,7 +534,6 @@ time_shift,name,id,slug,tmsid
 ,Women Behind Bars,5e20b730f2f8d5003d739db7-6502891e8ebe90c9ed73f7a0,women-behind-bars,
 ,Women's Sports Network,5e20b730f2f8d5003d739db7-630fa9e577ec3866def38fa2,womens-sports-network,124636
 ,Wonder,5e20b730f2f8d5003d739db7-5f74cf83ffbe690040689f4d,wonder,131073
-,World's Most Evil Killers,5e20b730f2f8d5003d739db7-65829ef26b91be4547aa153a,worlds-most-evil-killers,
 ,World's Wildest Police Videos,5e20b730f2f8d5003d739db7-64f124818d44f2871135a907,worlds-wildest-police-videos,
 ,Wu Tang Collection,5e20b730f2f8d5003d739db7-5eea605474085f0040ddc770,wu-tang-collection,
 ,XFC TV,5e20b730f2f8d5003d739db7-621670feab2095ca85353ad4,xfc-tv,
