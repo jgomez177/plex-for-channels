@@ -1,4 +1,5 @@
 time_shift,name,id,slug,tmsid
+,123GO!,5e20b730f2f8d5003d739db7-63eecb32ac23d1ee072087cb,123go,156196
 ,21 Jump Street,5e20b730f2f8d5003d739db7-6449369eb3ff17382cae5800,21-jump-street,137066
 ,4Adventure,5e20b730f2f8d5003d739db7-64a88594273b89c4e7396540,4adventure,147515
 ,4Emergency,5e20b730f2f8d5003d739db7-64a884a1273b89c4e739653e,4emergency,147645
@@ -21,6 +22,7 @@ time_shift,name,id,slug,tmsid
 ,Comedy Dynamics,5e20b730f2f8d5003d739db7-5efe1de5e0b3f5003f5d9f76,comedy-dynamics,115447
 ,Court TV,5e20b730f2f8d5003d739db7-6245d867ddf1ba983d5b8bf8,court-tv,123605
 ,Court TV Legendary Trials,5e20b730f2f8d5003d739db7-648095ad190e97d15c3470e9,court-tv-legendary-trials,137506
+,Crime Scene TV,5e20b730f2f8d5003d739db7-6615360a8423b8d7e61a099c,crime-scene-tv,154612
 ,Curiosity NOW,5e20b730f2f8d5003d739db7-64831c8be3541c909e96d240,curiosity-now-5,123667
 ,Dick Van Dyke,5e20b730f2f8d5003d739db7-6449369eb3ff17382cae5801,dick-van-dyke,137069
 ,Dove,5e20b730f2f8d5003d739db7-5efe1de8e0b3f5003f5d9f91,dove-channel,110480
@@ -45,6 +47,7 @@ time_shift,name,id,slug,tmsid
 ,FilmRise Western,5e20b730f2f8d5003d739db7-6449369eb3ff17382cae57fd,filmrise-western,137085
 ,Forensic Files,5e20b730f2f8d5003d739db7-6449369f243fbe342a9c0b4d,forensic-files,137072
 ,Fubo Sports Network,5e20b730f2f8d5003d739db7-5fc705f68aba71002d8b7b37,fubo-sports-network,106100
+,Go Wild,5e20b730f2f8d5003d739db7-6615360a8423b8d7e61a099b,go-wild,154613
 ,GUSTOTV,5e20b730f2f8d5003d739db7-5f8746eabd529300418246d9,gusto-tv,111140
 ,Grit Xtra,5e20b730f2f8d5003d739db7-62b45f15b4508e0eedacdf25,grit-xtra,124040
 ,HBCUGO SPORTS,5e20b730f2f8d5003d739db7-631a212e82b744e0309aa56e,hbcugo-sports,128535
@@ -66,6 +69,7 @@ time_shift,name,id,slug,tmsid
 ,MotorTrend VELOZ TV,5e20b730f2f8d5003d739db7-65b28dd28f05102bce4a790e,motortrend-veloz-tv,152864
 ,NBC News NOW,5e20b730f2f8d5003d739db7-5fc70600dd53a6002d8f93ca,nbc-news-now,114174
 ,Nashville,5e20b730f2f8d5003d739db7-6087ff3ae99ff1002ce1465b,nashville,118859
+,NFL Channel,5e20b730f2f8d5003d739db7-61e805952502a7a6fa84d70f,nfl-channel,121705
 ,Non-Stop '90s,5e20b730f2f8d5003d739db7-65bd5a538314c24e11553543,non-stop-90s,151830
 ,Paranormal Files,5e20b730f2f8d5003d739db7-65e87f35335524a69e8e0ce0,paranormal-files,147639
 ,Qello Concerts,5e20b730f2f8d5003d739db7-5fe27da28c198b002d179199,qello-concerts,113296
@@ -76,14 +80,18 @@ time_shift,name,id,slug,tmsid
 ,Scripps News,5e20b730f2f8d5003d739db7-5fc705dda2236e002d69f211,newsy,120010
 ,Slightly Off IFC,5e20b730f2f8d5003d739db7-5fc705eea2236e002d69f5ae,slightly-off-ifc,116019
 ,So... Real,5e20b730f2f8d5003d739db7-5f0ff262d71dcb00449ec012,so-real,114871
+,Sonic The Hedgehog,5e20b730f2f8d5003d739db7-6615522e50e81fa51eb0df60,sonic-the-hedgehog,154621
 ,SportsGrid,5e20b730f2f8d5003d739db7-5ef11485d33ab9004048a1ca,sportsgrid,112732
 ,Stingray Classica Stream,5e20b730f2f8d5003d739db7-62d7f68fb19cbf65dc7bef7d,stingray-classica-stream,122326
 ,Stingray Greatest Hits,5e20b730f2f8d5003d739db7-61aa97d4113e1e5137fd5325,greatest-holiday-hits-2,113306
 ,Stingray Karaoke,5e20b730f2f8d5003d739db7-5fc705daa2236e002d69f108,stingray-karaoke-5,110657
 ,Stingray Naturescape,5e20b730f2f8d5003d739db7-60d324f59adce5002c41dbc5,stingray-naturescape,130248
 ,Stories by AMC,5e20b730f2f8d5003d739db7-5fc705e2a2236e002d69f3ba,stories-by-amc,115539
+,Strawberry Shortcake,5e20b730f2f8d5003d739db7-6615522e50e81fa51eb0df62,strawberry-shortcake,154622
 ,TODAY All Day,5e20b730f2f8d5003d739db7-5fc70600598c41002da3dd39,today-all-day,114138
 ,Tastemade,5e20b730f2f8d5003d739db7-5ef51c802ddee5003f1c0225,tastemade,107076
+,Teletubbies,5e20b730f2f8d5003d739db7-6615522e50e81fa51eb0df61,teletubbies,154623
+,The Asylum,5e20b730f2f8d5003d739db7-6627ab12580825e8a7bc4f04,the-asylum,156201
 ,The Ed Sullivan Show,5e20b730f2f8d5003d739db7-640205c68ecb41f2d89d5814,the-ed-sullivan-show,135306
 ,The FBI Files,5e20b730f2f8d5003d739db7-6582a024a90606db3c841b1b,the-fbi-files,151234
 ,The Film Detective,5e20b730f2f8d5003d739db7-5eea605674085f0040ddc7a3,the-film-detective,112484
