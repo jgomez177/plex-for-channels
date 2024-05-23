@@ -6,8 +6,8 @@ import subprocess, os, sys, importlib, schedule, time
 from gevent import monkey
 monkey.patch_all()
 
-version = "1.09"
-updated_date = "Mar 26, 2024"
+version = "1.10"
+updated_date = "May 23, 2024"
 
 port = os.environ.get("PLEX_PORT")
 if port is None:
