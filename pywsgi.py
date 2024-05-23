@@ -101,9 +101,14 @@ def playlist(provider, country_code):
     host = request.host
 
     stations, token, err = providers[provider].channels(country_code)
+    if err is not None: return err, 500
+
     # Filter out Hidden items or items without Hidden Attribute
-    tmsid_stations = list(filter(lambda d: d.get('tmsid'), stations))
-    no_tmsid_stations = list(filter(lambda d: d.get('tmsid', None) is None, stations))
+    tmsid_stations = []
+    no_tmsid_stations = []
+    if stations:
+        tmsid_stations = list(filter(lambda d: d.get('tmsid'), stations))
+        no_tmsid_stations = list(filter(lambda d: d.get('tmsid', None) is None, stations))
 
     if 'unfiltered' not in request.args and gracenote == 'include':
         data_group = tmsid_stations
