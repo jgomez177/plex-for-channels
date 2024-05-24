@@ -260,7 +260,7 @@ if __name__ == '__main__':
     # Schedule the function to run every thirty minutes
     schedule.every(30).minutes.do(epg_scheduler)
 
-    if all(item in ALLOWED_COUNTRY_CODES for item.lower() in plex_country_list):
+    if all(item.lower() in ALLOWED_COUNTRY_CODES for item in plex_country_list):
         for code in plex_country_list:
             print("Initialize XML File")
             error = providers[provider].create_xml_file(code)
