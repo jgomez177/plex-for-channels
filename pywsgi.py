@@ -260,7 +260,7 @@ if __name__ == '__main__':
     # Schedule the function to run every thirty minutes
     schedule.every(30).minutes.do(epg_scheduler)
 
-    if all(item in ALLOWED_COUNTRY_CODES for item in plex_country_list):
+    if all(item in ALLOWED_COUNTRY_CODES for item.lower() in plex_country_list):
         for code in plex_country_list:
             print("Initialize XML File")
             error = providers[provider].create_xml_file(code)
@@ -268,7 +268,6 @@ if __name__ == '__main__':
                 print(f"{error}")
     else:
         print(f"Invalid PLEX_CODE: {plex_country_list}")
-        sys.exit()
     sys.stdout.write(f"⇨ http server started on [::]:{port}\n")
     try:
         # Start the scheduler thread
