@@ -6,7 +6,7 @@ import subprocess, os, sys, importlib, schedule, time
 from gevent import monkey
 monkey.patch_all()
 
-version = "1.10"
+version = "1.10a"
 updated_date = "May 23, 2024"
 
 port = os.environ.get("PLEX_PORT")
@@ -266,6 +266,9 @@ if __name__ == '__main__':
             error = providers[provider].create_xml_file(code)
             if error: 
                 print(f"{error}")
+    else:
+        print(f"Invalid PLEX_CODE: {plex_country_list}")
+        sys.exit()
     sys.stdout.write(f"⇨ http server started on [::]:{port}\n")
     try:
         # Start the scheduler thread
