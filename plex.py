@@ -212,7 +212,7 @@ class Client:
         for genre in genres.keys():
             resp, error = self.api(country_code, f"lineups/plex/channels?genre={genre}")
             if error: return None, token, error
-            self.generate_channels(resp, genre)
+            self.generate_channels(resp, genres.get(genre))
         
         if len(self.stations) == 0:
             print("No channels match genres")
