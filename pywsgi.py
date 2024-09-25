@@ -6,8 +6,8 @@ import subprocess, os, sys, importlib, schedule, time
 from gevent import monkey
 monkey.patch_all()
 
-version = "1.10a"
-updated_date = "May 23, 2024"
+version = "1.11"
+updated_date = "Sept. 25, 2024"
 
 port = os.environ.get("PLEX_PORT")
 if port is None:
@@ -144,6 +144,12 @@ def channels_json(provider, country_code):
         stations, token, err = providers[provider].channels(country_code)
         return (stations)
 
+@app.get("/<provider>/<country_code>/genre.json")
+def genre_json(provider, country_code):
+        resp, err = providers[provider].genre(country_code)
+        if err: return err
+        return (resp)
+
 @app.get("/<provider>/<country_code>/epg.json")
 def epg_json(provider, country_code):
         epg, err = providers[provider].epg_json(country_code)
@@ -189,6 +195,7 @@ def playlist_mjh_compatible(provider, country_code):
         if gracenote == 'include':
             m3u += f" tvg-shift=\"{s.get('time_shift')}\"" if s.get('time_shift') else ""
             m3u += f" tvc-guide-stationid=\"{s.get('tmsid')}\"" if s.get('tmsid') else ""
+        m3u += f" group-title=\"{''.join(map(str, s.get('group', [])))}\"" if s.get('group') else ""
         m3u += f",{s.get('name') or s.get('call_sign')}\n"
         m3u += f"https://epg.provider.plex.tv{s.get('key')}?X-Plex-Token={token}\n\n"
 
@@ -264,8 +271,7 @@ if __name__ == '__main__':
         for code in plex_country_list:
             print("Initialize XML File")
             error = providers[provider].create_xml_file(code)
-            if error: 
-                print(f"{error}")
+            if error: print(f"{error}")
     else:
         print(f"Invalid PLEX_CODE: {plex_country_list}")
     sys.stdout.write(f"⇨ http server started on [::]:{port}\n")

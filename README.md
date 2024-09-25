@@ -1,11 +1,21 @@
 # Plex for Channels
 
-Current version: **1.09**
+Current version: **1.11**
 
 # About
 This takes Plex Live TV Channels and generates an M3U playlist and EPG XMLTV file.
 
 # Changes
+ - Version 1.11
+    - Added genre group data in playlists
+    - Added optimizations 
+        - Use Alpine Python image
+        - Use pip instead of pip3 (alias exists in image)
+        - Add --no-cache-dir flag to pip install
+        - Add --disable-pip-version-check flag to pip install
+        - Add --no-compile flag to pip install
+        - Remove redundant $PATH code
+        - Reorder commands for optimal layer caching
  - Version 1.10b
     - More Error Handling
  - Version 1.10

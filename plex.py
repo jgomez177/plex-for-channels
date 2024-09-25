@@ -20,6 +20,7 @@ class Client:
         self.sessionToken_list = {}
         self.sessionID_list = {}
         self.epg_data = {}
+        self.genres = {}
         self.epgLastUpdatedAt = {}
 
         self.headers = {
@@ -38,11 +39,12 @@ class Client:
 
         self.params = {
             'X-Plex-Product': 'Plex Web',
-            'X-Plex-Version': '4.126.1',
+            'X-Plex-Version': '4.139.0',
+            'X-Plex-Provider-Version': '6.5',
             'X-Plex-Client-Identifier': self.device,
             'X-Plex-Language': 'en',
             'X-Plex-Platform': 'Chrome',
-            'X-Plex-Platform-Version': '123.0',
+            'X-Plex-Platform-Version': '129.0',
             'X-Plex-Features': 'external-media,indirect-media,hub-style-list',
             'X-Plex-Model': 'hosted',
             'X-Plex-Device': 'Linux',
@@ -111,23 +113,44 @@ class Client:
         print(f"New token for {country_code} generated at {(self.sessionAt.get(country_code)).strftime('%Y-%m-%d %H:%M.%S %z')}")
         return token, None
 
-    def channels(self, country_code = "local"):
+    def genre(self, country_code = "local"):
         token, error = self.token(country_code)
         if error: return None, token, error
-
-        plex_tmsid_url = "https://raw.githubusercontent.com/jgomez177/plex-for-channels/main/plex_tmsid.csv"
-        plex_custom_tmsid = 'plex_data/plex_custom_tmsid.csv'
 
         if country_code in self.x_forward.keys():
             self.headers.update(self.x_forward.get(country_code))
 
-        resp, error = self.api(country_code, "lineups/plex/channels")
-        if error: return None, token, error
+        resp, error = self.api(country_code, "")
+        if error: return None, error
 
-        self.stations = []
+        genres_temp = {}
 
+
+        feature = resp.get('MediaProvider', {}).get('Feature',[])
+        for elem in feature:
+            if 'GridChannelFilter' in elem:
+                genres_temp = elem.get('GridChannelFilter')
+                break
+        # GridChannelFilter = feature.get('GridChannelFilter',[])
+
+        # print(genres_temp)
+
+        genres = {}
+
+        for genre in genres_temp:
+            genres.update({genre.get('identifier'): genre.get('title')})
+
+        self.genres.update({country_code: genres})
+
+        return genres, None
+
+    def generate_channels(self, resp, genre = None):
         # print (len(resp))
         channels = resp.get("MediaContainer").get("Channel")
+
+        if channels is None:
+            print(f"No items found for {genre}")
+            return 
 
         for elem in channels:
             callSign = elem.get('callSign')
@@ -135,6 +158,7 @@ class Client:
             slug = elem.get('slug')
             title = elem.get('title')
             id = elem.get('id')
+
             # Accessing all key values inside the Media/Part arrays
             key_values = [part["key"] for media in elem["Media"] for part in media["Part"]]
 
@@ -158,13 +182,43 @@ class Client:
                 note = f"Note: DRM is set to True in at least one item in {slug}"
                 print(note)
             else:
-                self.stations.append({'call_sign': callSign,
+                new_item = {'call_sign': callSign,
                                       'slug': slug,
                                       'name': title,
                                       'logo': logo,
                                       'id': id,
-                                      'key': plex_key
-                                    })
+                                      'key': plex_key,
+                                    }
+                if genre is not None:
+                    new_item.update({'group': [genre]})
+                self.stations.append(new_item)
+        return
+
+    def channels(self, country_code = "local"):
+        token, error = self.token(country_code)
+        if error: return None, token, error
+
+        plex_tmsid_url = "https://raw.githubusercontent.com/jgomez177/plex-for-channels/main/plex_tmsid.csv"
+        plex_custom_tmsid = 'plex_data/plex_custom_tmsid.csv'
+
+        if country_code in self.x_forward.keys():
+            self.headers.update(self.x_forward.get(country_code))
+
+        genres, error = self.genre(country_code)
+        if error: return None, token, error
+
+        self.stations = []
+
+        for genre in genres.keys():
+            resp, error = self.api(country_code, f"lineups/plex/channels?genre={genre}")
+            if error: return None, token, error
+            self.generate_channels(resp, genre)
+        
+        if len(self.stations) == 0:
+            print("No channels match genres")
+            resp, error = self.api(country_code, f"lineups/plex/channels")
+            if error: return None, token, error
+            self.generate_channels(resp)
                 
         tmsid_dict = {}
         tmsid_custom_dict = {}
