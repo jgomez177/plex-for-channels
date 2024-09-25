@@ -9,21 +9,19 @@ monkey.patch_all()
 version = "1.11"
 updated_date = "Sept. 25, 2024"
 
-port = os.environ.get("PLEX_PORT")
-if port is None:
+# Retrieve the port number from env variables
+# Fallback to default if invalid or unspecified
+try:
+    port = int(os.environ.get("PLEX_PORT", 7777))
+except:
     port = 7777
-else:
-    try:
-        port = int(port)
-    except:
-        port = 7777
 
+# Retrieve the country codes from env variables
 plex_country_code = os.environ.get("PLEX_CODE")
 if plex_country_code:
-   plex_country_list = plex_country_code.split(',')
+   plex_country_list = [item.strip().lower() for item in plex_country_code.split(',')]
 else:
    plex_country_list = ['local']
-
 
 ALLOWED_COUNTRY_CODES = ['us_east', 'us_west', 'local', 'ca', 'uk', 'nz', 'au', 'mx', 'es']
 # instance of flask application
