@@ -192,13 +192,10 @@ class Client:
                 if genre is not None:
                     new_item.update({'group': [genre]})
 
-                # check_callSign = next(filter(lambda d: d.get('title','') == provider.get('default_station'), from_m3u_json), {}).get('url','')
                 check_callSign = next(filter(lambda d: d.get('slug','') == slug, self.stations), None)
                 if check_callSign is not None:
-                    # new_item = check_callSign
                     new_group = check_callSign.get('group')
                     new_group.append(genre)
-                    # print (new_group)
                     check_callSign.update({'group': new_group})
                 else:
                     self.stations.append(new_item)
