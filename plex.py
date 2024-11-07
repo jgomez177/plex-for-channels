@@ -52,10 +52,10 @@ class Client:
             'X-Plex-Device-Screen-Resolution': '1282x929,1920x1080',
             'X-Plex-Language': 'en',
                 }
-        
+
         self.x_forward = {"local": {"X-Forwarded-For":""},
                           "uk": {"X-Forwarded-For":"178.238.11.6"},
-                          "ca": {"X-Forwarded-For":"192.206.151.131"}, 
+                          "ca": {"X-Forwarded-For":"192.206.151.131"},
                           "us_clt": {"X-Forwarded-For":"108.82.206.181"},
                           "us_sea": {"X-Forwarded-For":"159.148.218.183"},
                           "us_nyc": {"X-Forwarded-For":"85.254.181.50"},
@@ -86,15 +86,15 @@ class Client:
         if (self.sessionID_list.get(country_code) is not None) and (current_date - self.sessionAt.get(country_code, datetime.now())) < timedelta(hours=4):
             # print(f'Returning valid token for {country_code}')
             return self.sessionID_list[country_code], None
-        
+
         if country_code in self.x_forward.keys():
             self.headers.update(self.x_forward.get(country_code))
 
         try:
             response = self.session.post('https://clients.plex.tv/api/v2/users/anonymous', params=self.params, headers=self.headers)
         except Exception as e:
-            return None, (f"Exception type Error: {type(e).__name__}")    
-        
+            return None, (f"Exception type Error: {type(e).__name__}")
+
         if (200 <= response.status_code <= 201):
             # print('Return for sign-in')
             resp = response.json()
@@ -150,7 +150,7 @@ class Client:
 
         if channels is None:
             print(f"No items found for {genre}")
-            return 
+            return
 
         for elem in channels:
             callSign = elem.get('callSign')
@@ -220,13 +220,13 @@ class Client:
             resp, error = self.api(country_code, f"lineups/plex/channels?genre={genre}")
             if error: return None, token, error
             self.generate_channels(resp, genres.get(genre))
-        
+
         if len(self.stations) == 0:
             print("No channels match genres")
             resp, error = self.api(country_code, f"lineups/plex/channels")
             if error: return None, token, error
             self.generate_channels(resp)
-                
+
         tmsid_dict = {}
         tmsid_custom_dict = {}
 
@@ -243,7 +243,7 @@ class Client:
             print("Using local cached file.")
             with open('plex_tmsid.csv', mode='r') as file:
                 reader = csv.DictReader(file)
-       
+
         for row in reader:
             tmsid_dict[row['id']] = row
 
@@ -256,7 +256,7 @@ class Client:
 
         tmsid_dict.update(tmsid_custom_dict)
 
-        #self.stations = {key: {**value, 'tmsid': tmsid_dict[key]['tmsid'], 'time_shift': tmsid_dict[key]['time_shift']} 
+        #self.stations = {key: {**value, 'tmsid': tmsid_dict[key]['tmsid'], 'time_shift': tmsid_dict[key]['time_shift']}
         #                 if key in tmsid_dict else value for key, value in self.stations.items()}
 
         self.stations = [{**entry, 'tmsid': tmsid_dict[entry["id"]]['tmsid'], 'time_shift': tmsid_dict[entry["id"]]['time_shift']}
@@ -276,7 +276,7 @@ class Client:
             api_params = self.params
         if api_headers is None:
             api_headers = self.headers
-        
+
         if error:
             return None, error
 
@@ -288,16 +288,16 @@ class Client:
             try:
                 response = self.session.put(url, data=data, params=api_params, headers=api_headers, timeout=300)
             except Exception as e:
-                return None, (f"Exception type Error: {type(e).__name__}")    
+                return None, (f"Exception type Error: {type(e).__name__}")
         else:
             try:
                 response = self.session.get(url, params=api_params, headers=api_headers, timeout=300)
             except Exception as e:
-                return None, (f"Exception type Error: {type(e).__name__}")    
+                return None, (f"Exception type Error: {type(e).__name__}")
         if response.status_code != 200:
             return None, f"HTTP failure {response.status_code}: {response.text}"
         # print(response.text)
-        
+
         return response.json(), None
 
     def read_epg_from_api(self, run_datetime, start_datetime, range_val, id_values, country_code, verbose = False):
@@ -370,14 +370,18 @@ class Client:
                         # print("Loading EPG data...")
                         time.sleep(1)
 
-                resp_metadata.update({"Metadata": resp["MediaContainer"]["Metadata"],
+                try:
+                    resp_metadata.update({"Metadata": resp["MediaContainer"]["Metadata"],
                                       "date": range_time,
                                       "id": id})
-                id_data.append(resp_metadata)
+                    id_data.append(resp_metadata)
+                except KeyError as e:
+                    print(f"Error accessing response data. Response keys: {resp.keys() if resp else 'None'}")
+                    return f"Failed to access EPG data: {e}"
 
             #id_data_old = self.epg_data.get(country_code, {}).get(id, [])
             #id_data_dict = {id: id_data + id_data_old}
-                
+
             country_data = self.epg_data.get(country_code, {})
             country_data.update({id: country_data.get(id, []) + id_data})
 
@@ -391,7 +395,7 @@ class Client:
 
     def update_epg(self, country_code):
         # print("Running EPG")
-        epg_update_value = 4 # Value for updating EPG data in hours 
+        epg_update_value = 4 # Value for updating EPG data in hours
         range_val = 3         # Number of EPG dates to pull range_val + 1 times
 
         # Set desired timezone as 'UTC'
@@ -425,10 +429,10 @@ class Client:
                     filtered_list = [item for item in value_list if datetime.strptime(item["date"], "%Y-%m-%d").date() > today]
                     self.epg_data.get(country_code)[key] = filtered_list
 
-            # Using the first entry in self.epg_data, pull dates 
+            # Using the first entry in self.epg_data, pull dates
             first_entry_dates = [datetime.strptime(item["date"], "%Y-%m-%d").date() for item in self.epg_data[country_code][list(self.epg_data[country_code].keys())[0]]]
 
-            # List of pulled EPG data between now and range_val + 1 
+            # List of pulled EPG data between now and range_val + 1
             dates_between_now_and_x_days = [(start_datetime + timedelta(days=i)).date() for i in range(range_val + 1)]
 
             # Check if each date is present in the list of dates from the first entry
@@ -449,7 +453,7 @@ class Client:
     def epg_json(self, country_code):
         error_code = self.update_epg(country_code)
         if error_code:
-            print("error") 
+            print("error")
             return None, error_code
         return self.epg_data, None
 
@@ -474,7 +478,7 @@ class Client:
                 pass
         print(f"Error: Could not parse date: {date_str}")
         return ''
-        
+
 
 
     def create_programme_element(self, timeline, media, channel_id, root):
@@ -524,9 +528,9 @@ class Client:
         sorted_image_list = sorted(image_list, key=lambda x: (order.get(x["type"], float('inf')), x["type"]))
         # print(sorted_timeline_items)
         art = next((item["url"] for item in sorted_image_list), '')
-        if art != '':    
+        if art != '':
             icon_programme = ET.SubElement(programme, "icon", attrib={"src": art})
-        
+
         if originallyAvailableAt != '':
             date = ET.SubElement(programme, "date")
             # originallyAvailableAt = self.parse_date(timeline.get('originallyAvailableAt', ''))
@@ -536,7 +540,7 @@ class Client:
         categories = []
         for genres in timeline.get('Genre', []):
             categories.append(genres.get('tag', ''))
-            
+
 
         unique_list = []
         for item in categories:
@@ -630,12 +634,91 @@ class Client:
                 compressed_file.writelines(file)
 
         return None
-        
 
-                
+    def analyze_channels_across_countries(self, country_list, allowed_countries):
+        """Debug function to analyze channel identification across all countries"""
+        channel_map = {
+            'by_slug': {},  # slug -> {country: {key, id, name}}
+            'by_id': {},    # id -> {country: {key, slug, name}}
+        }
 
+        # Add counters for each country
+        country_stats = {}
 
+        for country_code in country_list:
+            if country_code not in allowed_countries:
+                continue
 
+            print(f"\nFetching channels for {country_code}...")
+            stations, token, err = self.channels(country_code)
+            if err:
+                print(f"Error getting channels for {country_code}: {err}")
+                continue
 
+            # Track stats for this country
+            country_stats[country_code] = {
+                'total_channels': len(stations)
+            }
 
+            for station in stations:
+                slug = station.get('slug')
+                id = station.get('id')
+                key = station.get('key')
+                name = station.get('name')
 
+                # Track by slug
+                if slug not in channel_map['by_slug']:
+                    channel_map['by_slug'][slug] = {}
+                channel_map['by_slug'][slug][country_code] = {
+                    'key': key,
+                    'id': id,
+                    'name': name
+                }
+
+                # Track by ID
+                if id not in channel_map['by_id']:
+                    channel_map['by_id'][id] = {}
+                channel_map['by_id'][id][country_code] = {
+                    'key': key,
+                    'slug': slug,
+                    'name': name
+                }
+
+        # Count duplicates
+        duplicate_slugs = [slug for slug, countries in channel_map['by_slug'].items() if len(countries) > 1]
+        duplicate_ids = [id for id, countries in channel_map['by_id'].items() if len(countries) > 1]
+
+        # Print analysis results
+        print("\n=== Analysis of channels by slug ===")
+        for slug, countries in channel_map['by_slug'].items():
+            if len(countries) > 1:
+                print(f"\nSlug: {slug} appears in {len(countries)} countries:")
+                for country, data in countries.items():
+                    print(f"  {country}: name='{data['name']}', id='{data['id']}', key='{data['key']}'")
+
+        print("\n=== Analysis of channels by ID ===")
+        for id, countries in channel_map['by_id'].items():
+            if len(countries) > 1:
+                print(f"\nID: {id} appears in {len(countries)} countries:")
+                for country, data in countries.items():
+                    print(f"  {country}: name='{data['name']}', slug='{data['slug']}', key='{data['key']}'")
+
+        # Print summary statistics
+        print("\n=== Summary Statistics ===")
+        print(f"Total unique slugs: {len(channel_map['by_slug'])}")
+        print(f"Total unique IDs: {len(channel_map['by_id'])}")
+        print(f"Number of duplicate slugs: {len(duplicate_slugs)}")
+        print(f"Number of duplicate IDs: {len(duplicate_ids)}")
+        print("\nChannels per country:")
+        for country, stats in country_stats.items():
+            print(f"  {country}: {stats['total_channels']} channels")
+
+        channel_map['summary'] = {
+            'total_unique_slugs': len(channel_map['by_slug']),
+            'total_unique_ids': len(channel_map['by_id']),
+            'duplicate_slugs_count': len(duplicate_slugs),
+            'duplicate_ids_count': len(duplicate_ids),
+            'country_stats': country_stats
+        }
+
+        return channel_map

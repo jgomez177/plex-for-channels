@@ -1,0 +1,17 @@
+services:
+  plex-for-channels-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: plex-for-channels-dev
+    ports:
+      - 29102:7777
+    environment:
+      # - PLEX_CODE=us_east,us_west,ca,uk,nz,au
+      - PLEX_CODE=nz,uk
+      - TZ=Europe/London
+    restart: unless-stopped
+
+networks:
+  default:
+    name: m3u-network-dev

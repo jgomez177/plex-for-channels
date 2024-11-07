@@ -1,5 +1,5 @@
 from gevent.pywsgi import WSGIServer
-from flask import Flask, redirect, request, Response, send_file
+from flask import Flask, redirect, request, Response, send_file, jsonify
 from threading import Thread
 import subprocess, os, sys, importlib, schedule, time
 # import flask module
@@ -62,6 +62,16 @@ def index():
     if all(item in ALLOWED_COUNTRY_CODES for item in plex_country_list):
         pl = f"http://{host}/mjh_compatible"
         # ul = f'<p class="subtitle">channel-id by "provider"-"id" (i.mjh.nz compatibility): <a href="{pl}">{pl}</a><br></p><ul>'
+
+        # Add all-channels playlist links
+        pl = f"http://{host}/{provider}/all/playlist.m3u"
+        ul += f"<li>{provider.upper()} ALL CHANNELS: <a href='{pl}'>{pl}</a></li>\n"
+        pl = f"http://{host}/{provider}/all/playlist.m3u?gracenote=include"
+        ul += f"<li>{provider.upper()} ALL CHANNELS GRACENOTE: <a href='{pl}'>{pl}</a></li>\n"
+        pl = f"http://{host}/{provider}/all/playlist.m3u?gracenote=exclude"
+        ul += f"<li>{provider.upper()} ALL CHANNELS EPG ONLY: <a href='{pl}'>{pl}</a></li>\n"
+        ul += f"<br>\n"
+
         for code in plex_country_list:
             pl = f"http://{host}/{provider}/{code}/playlist.m3u"
             ul += f"<li>{provider.upper()} {code.upper()}: <a href='{pl}'>{pl}</a></li>\n"
@@ -87,6 +97,61 @@ def token(country_code):
     # host = request.host
     token = providers[provider].token(country_code)
     return(token)
+
+@app.get("/plex/all/playlist.m3u")
+def playlist_all():
+    gracenote = request.args.get('gracenote')
+    host = request.host
+
+    # Collect unique channels by slug
+    all_stations = {}
+    for country_code in plex_country_list:
+        if country_code not in ALLOWED_COUNTRY_CODES:
+            continue
+
+        stations, token, err = providers[provider].channels(country_code)
+        if err is not None:
+            continue
+
+        for station in stations:
+            slug = station.get('slug')
+            if slug in all_stations:
+                # Merge genres if the channel already exists
+                existing_groups = set(all_stations[slug].get('group', []))
+                new_groups = set(station.get('group', []))
+                all_stations[slug]['group'] = list(existing_groups | new_groups)
+            else:
+                all_stations[slug] = station.copy()
+
+    # Convert to list and handle Gracenote filtering
+    stations = list(all_stations.values())
+    tmsid_stations = list(filter(lambda d: d.get('tmsid'), stations))
+    no_tmsid_stations = list(filter(lambda d: d.get('tmsid', None) is None, stations))
+
+    if 'unfiltered' not in request.args and gracenote == 'include':
+        data_group = tmsid_stations
+    elif 'unfiltered' not in request.args and gracenote == 'exclude':
+        data_group = no_tmsid_stations
+    else:
+        data_group = stations
+
+    # Generate M3U content using same format as existing playlist
+    m3u = "#EXTM3U\r\n\r\n"
+    for s in data_group:
+        m3u += f"#EXTINF:-1 channel-id=\"{provider}-{s.get('slug')}\""
+        m3u += f" tvg-id=\"{s.get('id')}\""
+        m3u += f" tvg-chno=\"{''.join(map(str, s.get('number', [])))}\"" if s.get('number') else ""
+        m3u += f" group-title=\"{';'.join(map(str, s.get('group', [])))}\"" if s.get('group') else ""
+        m3u += f" tvg-logo=\"{''.join(map(str, s.get('logo', [])))}\"" if s.get('logo') else ""
+        m3u += f" tvg-name=\"{s.get('call_sign')}\"" if s.get('call_sign') else ""
+        if gracenote == 'include':
+            m3u += f" tvg-shift=\"{s.get('time_shift')}\"" if s.get('time_shift') else ""
+            m3u += f" tvc-guide-stationid=\"{s.get('tmsid')}\"" if s.get('tmsid') else ""
+        m3u += f",{s.get('name') or s.get('call_sign')}\n"
+        m3u += f"https://epg.provider.plex.tv{s.get('key')}?X-Plex-Token={token}\n\n"
+
+    response = Response(m3u, content_type='audio/x-mpegurl')
+    return response
 
 @app.get("/<provider>/<country_code>/playlist.m3u")
 def playlist(provider, country_code):
@@ -179,7 +244,7 @@ def playlist_mjh_compatible(provider, country_code):
 
     if err is not None:
         return err, 500
-    
+
     stations = sorted(stations, key = lambda i: i.get('name', ''))
 
     m3u = "#EXTM3U\r\n\r\n"
@@ -221,12 +286,12 @@ def epg_xml(provider, country_code, filename):
         # Check if the provided filename is allowed
         # if filename not in ALLOWED_EPG_FILENAMES:
             return "Invalid filename", 400
-        
+
         # Specify the file path based on the provider and filename
         file_path = f'{filename}'
 
         # Return the file without explicitly opening it
-        if filename in ALLOWED_EPG_FILENAMES: 
+        if filename in ALLOWED_EPG_FILENAMES:
             return send_file(file_path, as_attachment=False, download_name=file_path, mimetype='text/plain')
         elif filename in ALLOWED_GZ_FILENAMES:
             return send_file(file_path, as_attachment=True, download_name=file_path)
@@ -236,6 +301,11 @@ def epg_xml(provider, country_code, filename):
     except Exception as e:
         # Handle other unexpected errors
         return f"An error occurred: {str(e)}", 500
+
+@app.get("/debug/analyze-channels")
+def analyze_channels():
+    results = providers[provider].analyze_channels_across_countries(plex_country_list, ALLOWED_COUNTRY_CODES)
+    return jsonify(results)
 
 
 # Define the function you want to execute with scheduler
