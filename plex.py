@@ -370,14 +370,14 @@ class Client:
                         # print("Loading EPG data...")
                         time.sleep(1)
 
-                try:
+                metadata = resp.get('MediaContainer', {})
+                if metadata.get('size', 0) != 0:
                     resp_metadata.update({"Metadata": resp["MediaContainer"]["Metadata"],
-                                      "date": range_time,
-                                      "id": id})
+                                          "date": range_time,
+                                          "id": id})
                     id_data.append(resp_metadata)
-                except KeyError as e:
-                    print(f"Error accessing response data. Response keys: {resp.keys() if resp else 'None'}")
-                    return f"Failed to access EPG data: {e}"
+                #else:
+                #    print(metadata)
 
             #id_data_old = self.epg_data.get(country_code, {}).get(id, [])
             #id_data_dict = {id: id_data + id_data_old}
