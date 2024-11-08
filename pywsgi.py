@@ -312,7 +312,7 @@ def playlist_mjh_compatible(provider, country_code):
     for s in data_group:
         groups = s.get('group', [''])
         for group in groups:
-            m3u += f"#EXTINF:-1 channel-id=\"{provider}-{s.get('slug')}\""
+            m3u += f"#EXTINF:-1 channel-id=\"{provider}-{s.get('id')}\""
             m3u += f" tvg-id=\"{s.get('id')}\""
             m3u += f" tvg-chno=\"{''.join(map(str, s.get('number', [])))}\"" if s.get('number') else ""
             m3u += f" group-title=\"{group}\"" if group else ""
