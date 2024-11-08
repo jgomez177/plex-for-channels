@@ -363,11 +363,6 @@ def epg_xml(provider, country_code, filename):
         # Handle other unexpected errors
         return f"An error occurred: {str(e)}", 500
 
-@app.get("/debug/analyze-channels")
-def analyze_channels():
-    results = providers[provider].analyze_channels_across_countries(plex_country_list, ALLOWED_COUNTRY_CODES)
-    return jsonify(results)
-
 # Define the function you want to execute with scheduler
 def epg_scheduler():
     if all(item in ALLOWED_COUNTRY_CODES for item in plex_country_list):
