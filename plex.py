@@ -392,7 +392,6 @@ class Client:
         print(f"Retrieving {country_code} EPG data complete. Elapsed time: {elapsed_time:.2f} seconds. {j} Channels parsed.")
         return None
 
-
     def update_epg(self, country_code):
         # print("Running EPG")
         epg_update_value = 4 # Value for updating EPG data in hours
@@ -478,8 +477,6 @@ class Client:
                 pass
         print(f"Error: Could not parse date: {date_str}")
         return ''
-
-
 
     def create_programme_element(self, timeline, media, channel_id, root):
         epoch_begin_time = int(media['beginsAt'])
@@ -571,14 +568,33 @@ class Client:
 
         return root
 
-    def create_xml_file(self, country_code):
-        error_code = self.update_epg(country_code)
-        if error_code: return error_code
+    def create_xml_file(self, country_code, country_list, allowed_codes, is_all=False):
+        if not is_all:
+            error_code = self.update_epg(country_code)
+            if error_code: return error_code
 
-        xml_file_path        = f"epg-{country_code}.xml"
+        xml_file_path = f"epg-{country_code}.xml"
         compressed_file_path = f"{xml_file_path}.gz"
 
-        station_list = self.country_stations.get(country_code, [])
+        if is_all:
+            all_stations = {}
+            all_epg_data = {}
+            for code in country_list:
+                if code not in allowed_codes:
+                    continue
+                # Collect stations
+                stations = self.country_stations.get(code, [])
+                for station in stations:
+                    slug = station.get('slug')
+                    if slug not in all_stations:
+                        all_stations[slug] = station.copy()
+                # Collect EPG data
+                epg_data = self.epg_data.get(code, {})
+                all_epg_data.update(epg_data)
+            station_list = list(all_stations.values())
+            self.epg_data["all"] = all_epg_data
+        else:
+            station_list = self.country_stations.get(country_code, [])
 
         if len(station_list) == 0:
             print("Run channels to load self.channel_list")
@@ -592,7 +608,6 @@ class Client:
             channel = ET.SubElement(root, "channel", attrib={"id": station["id"]})
             display_name = ET.SubElement(channel, "display-name")
             display_name.text = self.strip_illegal_characters(station["name"])
-            icon = ET.SubElement(channel, "icon", attrib={"src": station["logo"]})
 
         for key, value_list in self.epg_data.get(country_code).items():
             for entry in value_list:

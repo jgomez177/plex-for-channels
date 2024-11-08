@@ -55,7 +55,6 @@ url = f'<!DOCTYPE html>\
                 Last Updated: {updated_date}\
               '
 
-
 @app.route("/")
 def index():
     host = request.host
@@ -66,9 +65,14 @@ def index():
 
         # Add all-channels playlist links
         pl = f"http://{host}/{provider}/all/playlist.m3u"
-        ul += f"<li>{provider.upper()} ALL CHANNELS: <a href='{pl}'>{pl}</a></li>\n"
+        ul += f"<li>{provider.upper()} COMBINED: <a href='{pl}'>{pl}</a></li>\n"
         pl = f"http://{host}/mjh_compatible/{provider}/all/playlist.m3u"
-        ul += f"<li>{provider.upper()} ALL CHANNELS MJH Compatible: <a href='{pl}'>{pl}</a></li>\n"
+        ul += f"<li>{provider.upper()} COMBINED MJH Compatible: <a href='{pl}'>{pl}</a></li>\n"
+        ul += f"<br>\n"
+        pl = f"http://{host}/plex/epg/all/epg-all.xml"
+        ul += f"<li>{provider.upper()} COMBINED EPG: <a href='{pl}'>{pl}</a></li>\n"
+        pl = f"http://{host}/plex/epg/all/epg-all.xml.gz"
+        ul += f"<li>{provider.upper()} COMBINED EPG GZ: <a href='{pl}'>{pl}</a></li>\n"
         ul += f"<br>\n"
 
         for code in plex_country_list:
@@ -91,12 +95,10 @@ def index():
         ul += f"<li>INVALID COUNTRY CODE in \"{', '.join(plex_country_list).upper()}\"</li>\n"
     return f"{url}<ul>{ul}</ul></div></section></body></html>"
 
-
 @app.route("/token/<country_code>")
 def token(country_code):
     token = providers[provider].token(country_code)
     return(token)
-
 
 @app.get("/plex/all/playlist.m3u")
 def playlist_all():
@@ -156,7 +158,6 @@ def playlist_all():
     response = Response(m3u, content_type='audio/x-mpegurl')
     return response
 
-
 @app.get("/mjh_compatible/plex/all/playlist.m3u")
 def playlist_mjh_compatible_all():
     gracenote = request.args.get('gracenote')
@@ -215,7 +216,6 @@ def playlist_mjh_compatible_all():
     response = Response(m3u, content_type='audio/x-mpegurl')
     return response
 
-
 @app.get("/<provider>/<country_code>/playlist.m3u")
 def playlist(provider, country_code):
     gracenote = request.args.get('gracenote')
@@ -261,12 +261,10 @@ def playlist(provider, country_code):
     response = Response(m3u, content_type='audio/x-mpegurl')
     return (response)
 
-
 @app.get("/<provider>/<country_code>/channels.json")
 def channels_json(provider, country_code):
         stations, token, err = providers[provider].channels(country_code)
         return (stations)
-
 
 @app.get("/<provider>/<country_code>/genre.json")
 def genre_json(provider, country_code):
@@ -274,13 +272,11 @@ def genre_json(provider, country_code):
         if err: return err
         return (resp)
 
-
 @app.get("/<provider>/<country_code>/epg.json")
 def epg_json(provider, country_code):
         epg, err = providers[provider].epg_json(country_code)
         if err: return err
         return epg
-
 
 @app.get("/mjh_compatible/<provider>/<country_code>/playlist.m3u")
 def playlist_mjh_compatible(provider, country_code):
@@ -324,18 +320,19 @@ def playlist_mjh_compatible(provider, country_code):
     response = Response(m3u, content_type='audio/x-mpegurl')
     return (response)
 
-
 @app.get("/<provider>/epg/<country_code>/<filename>")
 def epg_xml(provider, country_code, filename):
 
     # Generate ALLOWED_FILENAMES and ALLOWED_GZ_FILENAMES based on ALLOWED_COUNTRY_CODES
     ALLOWED_EPG_FILENAMES = {f'epg-{code}.xml' for code in ALLOWED_COUNTRY_CODES}
     ALLOWED_GZ_FILENAMES = {f'epg-{code}.xml.gz' for code in ALLOWED_COUNTRY_CODES}
+    ALLOWED_EPG_FILENAMES.add('epg-all.xml')
+    ALLOWED_GZ_FILENAMES.add('epg-all.xml.gz')
 
     # Specify the file path
     # file_path = 'epg.xml'
     try:
-        if country_code not in ALLOWED_COUNTRY_CODES:
+        if country_code not in ALLOWED_COUNTRY_CODES and country_code != "all":
             return "Invalid country code", 400
 
         # Check if the provided filename is allowed in either format
@@ -359,21 +356,20 @@ def epg_xml(provider, country_code, filename):
         # Handle other unexpected errors
         return f"An error occurred: {str(e)}", 500
 
-
 @app.get("/debug/analyze-channels")
 def analyze_channels():
     results = providers[provider].analyze_channels_across_countries(plex_country_list, ALLOWED_COUNTRY_CODES)
     return jsonify(results)
-
 
 # Define the function you want to execute with scheduler
 def epg_scheduler():
     if all(item in ALLOWED_COUNTRY_CODES for item in plex_country_list):
         for code in plex_country_list:
             # print("Scheduled EPG Data Update")
-            error = providers[provider].create_xml_file(code)
+            error = providers[provider].create_xml_file(code, plex_country_list, ALLOWED_COUNTRY_CODES)
             if error: print(f"{error}")
-
+        error = providers[provider].create_xml_file("all", plex_country_list, ALLOWED_COUNTRY_CODES, is_all=True)
+        if error: print(f"{error}")
 
 # Define a function to run the scheduler in a separate thread
 def scheduler_thread():
@@ -388,7 +384,6 @@ def scheduler_thread():
             # Schedule the function to run every thirty minutes
             schedule.every(30).minutes.do(epg_scheduler)
 
-
 if __name__ == '__main__':
     # Schedule the function to run every thirty minutes
     schedule.every(30).minutes.do(epg_scheduler)
@@ -396,8 +391,10 @@ if __name__ == '__main__':
     if all(item.lower() in ALLOWED_COUNTRY_CODES for item in plex_country_list):
         for code in plex_country_list:
             print("Initialize XML File")
-            error = providers[provider].create_xml_file(code)
+            error = providers[provider].create_xml_file(code, plex_country_list, ALLOWED_COUNTRY_CODES)
             if error: print(f"{error}")
+        error = providers[provider].create_xml_file("all", plex_country_list, ALLOWED_COUNTRY_CODES, is_all=True)
+        if error: print(f"{error}")
     else:
         print(f"Invalid PLEX_CODE: {plex_country_list}")
     sys.stdout.write(f"⇨ http server started on [::]:{port}\n")
