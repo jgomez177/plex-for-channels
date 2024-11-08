@@ -66,10 +66,6 @@ def index():
         # Add all-channels playlist links
         pl = f"http://{host}/{provider}/all/playlist.m3u"
         ul += f"<li>{provider.upper()} ALL CHANNELS: <a href='{pl}'>{pl}</a></li>\n"
-        pl = f"http://{host}/{provider}/all/playlist.m3u?gracenote=include"
-        ul += f"<li>{provider.upper()} ALL CHANNELS GRACENOTE: <a href='{pl}'>{pl}</a></li>\n"
-        pl = f"http://{host}/{provider}/all/playlist.m3u?gracenote=exclude"
-        ul += f"<li>{provider.upper()} ALL CHANNELS EPG ONLY: <a href='{pl}'>{pl}</a></li>\n"
         ul += f"<br>\n"
 
         for code in plex_country_list:
