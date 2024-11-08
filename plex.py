@@ -370,10 +370,15 @@ class Client:
                         # print("Loading EPG data...")
                         time.sleep(1)
 
-                resp_metadata.update({"Metadata": resp["MediaContainer"]["Metadata"],
-                                      "date": range_time,
-                                      "id": id})
-                id_data.append(resp_metadata)
+                metadata = resp.get('MediaContainer', {})
+                if metadata.get('size', 0) != 0:
+                    resp_metadata.update({"Metadata": resp["MediaContainer"]["Metadata"],
+                                          "date": range_time,
+                                          "id": id})
+                    id_data.append(resp_metadata)
+                #else:
+                #    print(metadata)
+
 
             #id_data_old = self.epg_data.get(country_code, {}).get(id, [])
             #id_data_dict = {id: id_data + id_data_old}
