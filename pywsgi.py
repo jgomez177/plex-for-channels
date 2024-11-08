@@ -1,5 +1,5 @@
 from gevent.pywsgi import WSGIServer
-from flask import Flask, request, Response, send_file, jsonify
+from flask import Flask, request, Response, send_file
 from threading import Thread
 import subprocess, os, sys, importlib, schedule, time
 # import flask module

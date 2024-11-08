@@ -501,11 +501,6 @@ class Client:
             sub_title = ET.SubElement(programme, "sub-title")
             sub_title.text = self.strip_illegal_characters(timeline.get('title',''))
 
-        if originallyAvailableAt != '':
-            # "originallyAvailableAt": "2016-04-05T12:00:00Z",
-            if timeline.get('originallyAvailableAt') == start_datetime.strftime("%Y-%m-%dT%H:%M:00Z"):
-                live = ET.SubElement(programme, "live")
-
         if timeline.get('type') == 'movie':
             category_elem = ET.SubElement(programme, "category")
             category_elem.text = timeline.get('type').capitalize()
@@ -519,14 +514,6 @@ class Client:
         if timeline.get('desc') != '':
             desc = ET.SubElement(programme, "desc")
             desc.text = self.strip_illegal_characters(timeline.get('summary',''))
-
-        image_list = timeline.get('Image', [])
-        order = {"coverPoster": 0, "coverArt": 1, "snapshot": float('inf')}
-        sorted_image_list = sorted(image_list, key=lambda x: (order.get(x["type"], float('inf')), x["type"]))
-        # print(sorted_timeline_items)
-        art = next((item["url"] for item in sorted_image_list), '')
-        if art != '':
-            icon_programme = ET.SubElement(programme, "icon", attrib={"src": art})
 
         if originallyAvailableAt != '':
             date = ET.SubElement(programme, "date")
@@ -639,9 +626,6 @@ class Client:
         # Write the concatenated content to the output file
         with open(xml_file_path, "w", encoding='utf-8') as f:
             f.write(output_content)
-
-        with open(xml_file_path, 'r') as file:
-            xml_data = file.read()
 
         # Compress the XML file
         with open(xml_file_path, 'rb') as file:
