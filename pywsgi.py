@@ -143,17 +143,19 @@ def playlist_all():
     # Generate M3U content using same format as existing playlist
     m3u = "#EXTM3U\r\n\r\n"
     for s in data_group:
-        m3u += f"#EXTINF:-1 channel-id=\"{provider}-{s.get('slug')}\""
-        m3u += f" tvg-id=\"{s.get('id')}\""
-        m3u += f" tvg-chno=\"{''.join(map(str, s.get('number', [])))}\"" if s.get('number') else ""
-        m3u += f" group-title=\"{';'.join(map(str, s.get('group', [])))}\"" if s.get('group') else ""
-        m3u += f" tvg-logo=\"{''.join(map(str, s.get('logo', [])))}\"" if s.get('logo') else ""
-        m3u += f" tvg-name=\"{s.get('call_sign')}\"" if s.get('call_sign') else ""
-        if gracenote == 'include':
-            m3u += f" tvg-shift=\"{s.get('time_shift')}\"" if s.get('time_shift') else ""
-            m3u += f" tvc-guide-stationid=\"{s.get('tmsid')}\"" if s.get('tmsid') else ""
-        m3u += f",{s.get('name') or s.get('call_sign')}\n"
-        m3u += f"https://epg.provider.plex.tv{s.get('key')}?X-Plex-Token={token}\n\n"
+        groups = s.get('group', [''])
+        for group in groups:
+            m3u += f"#EXTINF:-1 channel-id=\"{provider}-{s.get('slug')}\""
+            m3u += f" tvg-id=\"{s.get('id')}\""
+            m3u += f" tvg-chno=\"{''.join(map(str, s.get('number', [])))}\"" if s.get('number') else ""
+            m3u += f" group-title=\"{group}\"" if group else ""
+            m3u += f" tvg-logo=\"{''.join(map(str, s.get('logo', [])))}\"" if s.get('logo') else ""
+            m3u += f" tvg-name=\"{s.get('call_sign')}\"" if s.get('call_sign') else ""
+            if gracenote == 'include':
+                m3u += f" tvg-shift=\"{s.get('time_shift')}\"" if s.get('time_shift') else ""
+                m3u += f" tvc-guide-stationid=\"{s.get('tmsid')}\"" if s.get('tmsid') else ""
+            m3u += f",{s.get('name') or s.get('call_sign')}\n"
+            m3u += f"https://epg.provider.plex.tv{s.get('key')}?X-Plex-Token={token}\n\n"
 
     response = Response(m3u, content_type='audio/x-mpegurl')
     return response
@@ -201,17 +203,19 @@ def playlist_mjh_compatible_all():
     # Generate M3U content using MJH compatible format
     m3u = "#EXTM3U\r\n\r\n"
     for s in data_group:
-        m3u += f"#EXTINF:-1 channel-id=\"{provider}-{s.get('id')}\""
-        m3u += f" tvg-id=\"{s.get('id')}\""
-        m3u += f" tvg-chno=\"{s.get('number')}\"" if s.get('number') else ""
-        m3u += f" tvg-logo=\"{''.join(map(str, s.get('logo', [])))}\"" if s.get('logo') else ""
-        m3u += f" tvg-name=\"{s.get('call_sign')}\"" if s.get('call_sign') else ""
-        if gracenote == 'include':
-            m3u += f" tvg-shift=\"{s.get('time_shift')}\"" if s.get('time_shift') else ""
-            m3u += f" tvc-guide-stationid=\"{s.get('tmsid')}\"" if s.get('tmsid') else ""
-        m3u += f" group-title=\"{''.join(map(str, s.get('group', [])))}\"" if s.get('group') else ""
-        m3u += f",{s.get('name') or s.get('call_sign')}\n"
-        m3u += f"https://epg.provider.plex.tv{s.get('key')}?X-Plex-Token={token}\n\n"
+        groups = s.get('group', [''])
+        for group in groups:
+            m3u += f"#EXTINF:-1 channel-id=\"{provider}-{s.get('id')}\""
+            m3u += f" tvg-id=\"{s.get('id')}\""
+            m3u += f" tvg-chno=\"{s.get('number')}\"" if s.get('number') else ""
+            m3u += f" tvg-logo=\"{''.join(map(str, s.get('logo', [])))}\"" if s.get('logo') else ""
+            m3u += f" tvg-name=\"{s.get('call_sign')}\"" if s.get('call_sign') else ""
+            if gracenote == 'include':
+                m3u += f" tvg-shift=\"{s.get('time_shift')}\"" if s.get('time_shift') else ""
+                m3u += f" tvc-guide-stationid=\"{s.get('tmsid')}\"" if s.get('tmsid') else ""
+            m3u += f" group-title=\"{group}\"" if group else ""
+            m3u += f",{s.get('name') or s.get('call_sign')}\n"
+            m3u += f"https://epg.provider.plex.tv{s.get('key')}?X-Plex-Token={token}\n\n"
 
     response = Response(m3u, content_type='audio/x-mpegurl')
     return response
@@ -246,17 +250,19 @@ def playlist(provider, country_code):
         return err, 500
     m3u = "#EXTM3U\r\n\r\n"
     for s in data_group:
-        m3u += f"#EXTINF:-1 channel-id=\"{provider}-{s.get('slug')}\""
-        m3u += f" tvg-id=\"{s.get('id')}\""
-        m3u += f" tvg-chno=\"{''.join(map(str, s.get('number', [])))}\"" if s.get('number') else ""
-        m3u += f" group-title=\"{';'.join(map(str, s.get('group', [])))}\"" if s.get('group') else ""
-        m3u += f" tvg-logo=\"{''.join(map(str, s.get('logo', [])))}\"" if s.get('logo') else ""
-        m3u += f" tvg-name=\"{s.get('call_sign')}\"" if s.get('call_sign') else ""
-        if gracenote == 'include':
-            m3u += f" tvg-shift=\"{s.get('time_shift')}\"" if s.get('time_shift') else ""
-            m3u += f" tvc-guide-stationid=\"{s.get('tmsid')}\"" if s.get('tmsid') else ""
-        m3u += f",{s.get('name') or s.get('call_sign')}\n"
-        m3u += f"https://epg.provider.plex.tv{s.get('key')}?X-Plex-Token={token}\n\n"
+        groups = s.get('group', [''])
+        for group in groups:
+            m3u += f"#EXTINF:-1 channel-id=\"{provider}-{s.get('slug')}\""
+            m3u += f" tvg-id=\"{s.get('id')}\""
+            m3u += f" tvg-chno=\"{''.join(map(str, s.get('number', [])))}\"" if s.get('number') else ""
+            m3u += f" group-title=\"{group}\"" if group else ""
+            m3u += f" tvg-logo=\"{''.join(map(str, s.get('logo', [])))}\"" if s.get('logo') else ""
+            m3u += f" tvg-name=\"{s.get('call_sign')}\"" if s.get('call_sign') else ""
+            if gracenote == 'include':
+                m3u += f" tvg-shift=\"{s.get('time_shift')}\"" if s.get('time_shift') else ""
+                m3u += f" tvc-guide-stationid=\"{s.get('tmsid')}\"" if s.get('tmsid') else ""
+            m3u += f",{s.get('name') or s.get('call_sign')}\n"
+            m3u += f"https://epg.provider.plex.tv{s.get('key')}?X-Plex-Token={token}\n\n"
 
     response = Response(m3u, content_type='audio/x-mpegurl')
     return (response)
@@ -304,18 +310,19 @@ def playlist_mjh_compatible(provider, country_code):
 
     m3u = "#EXTM3U\r\n\r\n"
     for s in data_group:
-        m3u += f"#EXTINF:-1 channel-id=\"{provider}-{s.get('id')}\""
-        m3u += f" tvg-id=\"{s.get('id')}\""
-        m3u += f" tvg-chno=\"{s.get('number')}\"" if s.get('number') else ""
-        # m3u += f" group-title=\"{''.join(map(str, s.get('group', [])))}\"" if s.get('group') else ""
-        m3u += f" tvg-logo=\"{''.join(map(str, s.get('logo', [])))}\"" if s.get('logo') else ""
-        m3u += f" tvg-name=\"{s.get('call_sign')}\"" if s.get('call_sign') else ""
-        if gracenote == 'include':
-            m3u += f" tvg-shift=\"{s.get('time_shift')}\"" if s.get('time_shift') else ""
-            m3u += f" tvc-guide-stationid=\"{s.get('tmsid')}\"" if s.get('tmsid') else ""
-        m3u += f" group-title=\"{''.join(map(str, s.get('group', [])))}\"" if s.get('group') else ""
-        m3u += f",{s.get('name') or s.get('call_sign')}\n"
-        m3u += f"https://epg.provider.plex.tv{s.get('key')}?X-Plex-Token={token}\n\n"
+        groups = s.get('group', [''])
+        for group in groups:
+            m3u += f"#EXTINF:-1 channel-id=\"{provider}-{s.get('slug')}\""
+            m3u += f" tvg-id=\"{s.get('id')}\""
+            m3u += f" tvg-chno=\"{''.join(map(str, s.get('number', [])))}\"" if s.get('number') else ""
+            m3u += f" group-title=\"{group}\"" if group else ""
+            m3u += f" tvg-logo=\"{''.join(map(str, s.get('logo', [])))}\"" if s.get('logo') else ""
+            m3u += f" tvg-name=\"{s.get('call_sign')}\"" if s.get('call_sign') else ""
+            if gracenote == 'include':
+                m3u += f" tvg-shift=\"{s.get('time_shift')}\"" if s.get('time_shift') else ""
+                m3u += f" tvc-guide-stationid=\"{s.get('tmsid')}\"" if s.get('tmsid') else ""
+            m3u += f",{s.get('name') or s.get('call_sign')}\n"
+            m3u += f"https://epg.provider.plex.tv{s.get('key')}?X-Plex-Token={token}\n\n"
 
     response = Response(m3u, content_type='audio/x-mpegurl')
     return (response)
