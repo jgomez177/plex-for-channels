@@ -537,6 +537,12 @@ class Client:
             # originallyAvailableAt = self.parse_date(timeline.get('originallyAvailableAt', ''))
             # date.text = datetime.strptime(timeline.get('originallyAvailableAt', ''), "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%Y%m%d")
             date.text = originallyAvailableAt.strftime("%Y%m%d")
+        else:
+            # Check if <category>movie</category> exists and remove it
+            for elem in programme.findall(".//category"):
+                if elem.text.lower() == 'movie':
+                    programme.remove(elem)
+
 
         categories = []
         for genres in timeline.get('Genre', []):
