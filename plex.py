@@ -52,10 +52,10 @@ class Client:
             'X-Plex-Device-Screen-Resolution': '1282x929,1920x1080',
             'X-Plex-Language': 'en',
                 }
-        
+
         self.x_forward = {"local": {"X-Forwarded-For":""},
                           "uk": {"X-Forwarded-For":"178.238.11.6"},
-                          "ca": {"X-Forwarded-For":"192.206.151.131"}, 
+                          "ca": {"X-Forwarded-For":"192.206.151.131"},
                           "us_clt": {"X-Forwarded-For":"108.82.206.181"},
                           "us_sea": {"X-Forwarded-For":"159.148.218.183"},
                           "us_nyc": {"X-Forwarded-For":"85.254.181.50"},
@@ -86,15 +86,15 @@ class Client:
         if (self.sessionID_list.get(country_code) is not None) and (current_date - self.sessionAt.get(country_code, datetime.now())) < timedelta(hours=4):
             # print(f'Returning valid token for {country_code}')
             return self.sessionID_list[country_code], None
-        
+
         if country_code in self.x_forward.keys():
             self.headers.update(self.x_forward.get(country_code))
 
         try:
             response = self.session.post('https://clients.plex.tv/api/v2/users/anonymous', params=self.params, headers=self.headers)
         except Exception as e:
-            return None, (f"Exception type Error: {type(e).__name__}")    
-        
+            return None, (f"Exception type Error: {type(e).__name__}")
+
         if (200 <= response.status_code <= 201):
             # print('Return for sign-in')
             resp = response.json()
@@ -150,7 +150,7 @@ class Client:
 
         if channels is None:
             print(f"No items found for {genre}")
-            return 
+            return
 
         for elem in channels:
             callSign = elem.get('callSign')
@@ -220,13 +220,13 @@ class Client:
             resp, error = self.api(country_code, f"lineups/plex/channels?genre={genre}")
             if error: return None, token, error
             self.generate_channels(resp, genres.get(genre))
-        
+
         if len(self.stations) == 0:
             print("No channels match genres")
             resp, error = self.api(country_code, f"lineups/plex/channels")
             if error: return None, token, error
             self.generate_channels(resp)
-                
+
         tmsid_dict = {}
         tmsid_custom_dict = {}
 
@@ -243,7 +243,7 @@ class Client:
             print("Using local cached file.")
             with open('plex_tmsid.csv', mode='r') as file:
                 reader = csv.DictReader(file)
-       
+
         for row in reader:
             tmsid_dict[row['id']] = row
 
@@ -256,7 +256,7 @@ class Client:
 
         tmsid_dict.update(tmsid_custom_dict)
 
-        #self.stations = {key: {**value, 'tmsid': tmsid_dict[key]['tmsid'], 'time_shift': tmsid_dict[key]['time_shift']} 
+        #self.stations = {key: {**value, 'tmsid': tmsid_dict[key]['tmsid'], 'time_shift': tmsid_dict[key]['time_shift']}
         #                 if key in tmsid_dict else value for key, value in self.stations.items()}
 
         self.stations = [{**entry, 'tmsid': tmsid_dict[entry["id"]]['tmsid'], 'time_shift': tmsid_dict[entry["id"]]['time_shift']}
@@ -276,7 +276,7 @@ class Client:
             api_params = self.params
         if api_headers is None:
             api_headers = self.headers
-        
+
         if error:
             return None, error
 
@@ -288,16 +288,16 @@ class Client:
             try:
                 response = self.session.put(url, data=data, params=api_params, headers=api_headers, timeout=300)
             except Exception as e:
-                return None, (f"Exception type Error: {type(e).__name__}")    
+                return None, (f"Exception type Error: {type(e).__name__}")
         else:
             try:
                 response = self.session.get(url, params=api_params, headers=api_headers, timeout=300)
             except Exception as e:
-                return None, (f"Exception type Error: {type(e).__name__}")    
+                return None, (f"Exception type Error: {type(e).__name__}")
         if response.status_code != 200:
             return None, f"HTTP failure {response.status_code}: {response.text}"
         # print(response.text)
-        
+
         return response.json(), None
 
     def read_epg_from_api(self, run_datetime, start_datetime, range_val, id_values, country_code, verbose = False):
@@ -379,10 +379,9 @@ class Client:
                 #else:
                 #    print(metadata)
 
-
             #id_data_old = self.epg_data.get(country_code, {}).get(id, [])
             #id_data_dict = {id: id_data + id_data_old}
-                
+
             country_data = self.epg_data.get(country_code, {})
             country_data.update({id: country_data.get(id, []) + id_data})
 
@@ -393,10 +392,9 @@ class Client:
         print(f"Retrieving {country_code} EPG data complete. Elapsed time: {elapsed_time:.2f} seconds. {j} Channels parsed.")
         return None
 
-
     def update_epg(self, country_code):
         # print("Running EPG")
-        epg_update_value = 4 # Value for updating EPG data in hours 
+        epg_update_value = 4 # Value for updating EPG data in hours
         range_val = 3         # Number of EPG dates to pull range_val + 1 times
 
         # Set desired timezone as 'UTC'
@@ -430,10 +428,10 @@ class Client:
                     filtered_list = [item for item in value_list if datetime.strptime(item["date"], "%Y-%m-%d").date() > today]
                     self.epg_data.get(country_code)[key] = filtered_list
 
-            # Using the first entry in self.epg_data, pull dates 
+            # Using the first entry in self.epg_data, pull dates
             first_entry_dates = [datetime.strptime(item["date"], "%Y-%m-%d").date() for item in self.epg_data[country_code][list(self.epg_data[country_code].keys())[0]]]
 
-            # List of pulled EPG data between now and range_val + 1 
+            # List of pulled EPG data between now and range_val + 1
             dates_between_now_and_x_days = [(start_datetime + timedelta(days=i)).date() for i in range(range_val + 1)]
 
             # Check if each date is present in the list of dates from the first entry
@@ -454,7 +452,7 @@ class Client:
     def epg_json(self, country_code):
         error_code = self.update_epg(country_code)
         if error_code:
-            print("error") 
+            print("error")
             return None, error_code
         return self.epg_data, None
 
@@ -479,8 +477,6 @@ class Client:
                 pass
         print(f"Error: Could not parse date: {date_str}")
         return ''
-        
-
 
     def create_programme_element(self, timeline, media, channel_id, root):
         epoch_begin_time = int(media['beginsAt'])
@@ -505,11 +501,6 @@ class Client:
             sub_title = ET.SubElement(programme, "sub-title")
             sub_title.text = self.strip_illegal_characters(timeline.get('title',''))
 
-        if originallyAvailableAt != '':
-            # "originallyAvailableAt": "2016-04-05T12:00:00Z",
-            if timeline.get('originallyAvailableAt') == start_datetime.strftime("%Y-%m-%dT%H:%M:00Z"):
-                live = ET.SubElement(programme, "live")
-
         if timeline.get('type') == 'movie':
             category_elem = ET.SubElement(programme, "category")
             category_elem.text = timeline.get('type').capitalize()
@@ -524,14 +515,6 @@ class Client:
             desc = ET.SubElement(programme, "desc")
             desc.text = self.strip_illegal_characters(timeline.get('summary',''))
 
-        image_list = timeline.get('Image', [])
-        order = {"coverPoster": 0, "coverArt": 1, "snapshot": float('inf')}
-        sorted_image_list = sorted(image_list, key=lambda x: (order.get(x["type"], float('inf')), x["type"]))
-        # print(sorted_timeline_items)
-        art = next((item["url"] for item in sorted_image_list), '')
-        if art != '':    
-            icon_programme = ET.SubElement(programme, "icon", attrib={"src": art})
-        
         if originallyAvailableAt != '':
             date = ET.SubElement(programme, "date")
             # originallyAvailableAt = self.parse_date(timeline.get('originallyAvailableAt', ''))
@@ -547,7 +530,7 @@ class Client:
         categories = []
         for genres in timeline.get('Genre', []):
             categories.append(genres.get('tag', ''))
-            
+
 
         unique_list = []
         for item in categories:
@@ -578,14 +561,33 @@ class Client:
 
         return root
 
-    def create_xml_file(self, country_code):
-        error_code = self.update_epg(country_code)
-        if error_code: return error_code
+    def create_xml_file(self, country_code, country_list, allowed_codes, is_all=False):
+        if not is_all:
+            error_code = self.update_epg(country_code)
+            if error_code: return error_code
 
-        xml_file_path        = f"epg-{country_code}.xml"
+        xml_file_path = f"epg-{country_code}.xml"
         compressed_file_path = f"{xml_file_path}.gz"
 
-        station_list = self.country_stations.get(country_code, [])
+        if is_all:
+            all_stations = {}
+            all_epg_data = {}
+            for code in country_list:
+                if code not in allowed_codes:
+                    continue
+                # Collect stations
+                stations = self.country_stations.get(code, [])
+                for station in stations:
+                    slug = station.get('slug')
+                    if slug not in all_stations:
+                        all_stations[slug] = station.copy()
+                # Collect EPG data
+                epg_data = self.epg_data.get(code, {})
+                all_epg_data.update(epg_data)
+            station_list = list(all_stations.values())
+            self.epg_data["all"] = all_epg_data
+        else:
+            station_list = self.country_stations.get(country_code, [])
 
         if len(station_list) == 0:
             print("Run channels to load self.channel_list")
@@ -599,7 +601,6 @@ class Client:
             channel = ET.SubElement(root, "channel", attrib={"id": station["id"]})
             display_name = ET.SubElement(channel, "display-name")
             display_name.text = self.strip_illegal_characters(station["name"])
-            icon = ET.SubElement(channel, "icon", attrib={"src": station["logo"]})
 
         for key, value_list in self.epg_data.get(country_code).items():
             for entry in value_list:
@@ -632,21 +633,9 @@ class Client:
         with open(xml_file_path, "w", encoding='utf-8') as f:
             f.write(output_content)
 
-        with open(xml_file_path, 'r') as file:
-            xml_data = file.read()
-
         # Compress the XML file
         with open(xml_file_path, 'rb') as file:
             with gzip.open(compressed_file_path, 'wb') as compressed_file:
                 compressed_file.writelines(file)
 
         return None
-        
-
-                
-
-
-
-
-
-
