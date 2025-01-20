@@ -1,11 +1,14 @@
 # Plex for Channels
 
-Current version: **1.14**
+Current version: **1.20**
 
 # About
 This takes Plex Live TV Channels and generates an M3U playlist and EPG XMLTV file.
 
 # Changes
+ - Version 1.20
+   - Improved threading for EPG Scheduler
+   - Additional optimizations and logging
  - Version 1.14
    - Minor Changes to EPG
  - Version 1.13

@@ -1,4 +1,4 @@
-import secrets, requests, json, pytz, gzip, csv, os, re, time
+import uuid, requests, json, pytz, gzip, csv, os, re, time
 from datetime import datetime, timedelta
 # from urllib.parse import quote
 # from io import StringIO
@@ -10,6 +10,7 @@ class Client:
         # self.sessionID = ""
         # self.sessionToken = ""
         self.sessionAt = {}
+        self.session_expires_in = (4 * 60 * 60)
         self.session = requests.Session()
         self.device = None
         self.load_device()
@@ -41,7 +42,7 @@ class Client:
             'X-Plex-Product': 'Plex Web',
             'X-Plex-Version': '4.139.0',
             'X-Plex-Provider-Version': '6.5',
-            'X-Plex-Client-Identifier': self.device,
+            'X-Plex-Client-Identifier': self.device_id,
             'X-Plex-Language': 'en',
             'X-Plex-Platform': 'Chrome',
             'X-Plex-Platform-Version': '129.0',
@@ -70,20 +71,42 @@ class Client:
                           "nz": {"X-Forwarded-For": "203.86.207.83"},
                         }
 
-    def load_device(self):
+    def is_uuid4(self, string):
         try:
-            with open("plex-device.json", "r") as f:
-                self.device = json.load(f)
+            uuid_obj = uuid.UUID(string, version=4)
+            return str(uuid_obj) == string
+        except ValueError:
+            return False
+
+    def load_device(self):
+        device_file = "plex-device.json"
+        try:
+            with open(device_file, "r") as f:
+                self.device_id = json.load(f)
         except FileNotFoundError:
-            self.device = secrets.token_hex(12)
-            with open("plex-device.json", "w") as f:
-                json.dump(self.device, f)
+            self.device_id = str(uuid.uuid4())
+            with open(device_file, "w") as f:
+                json.dump(self.device_id, f)
+            print(f"[INFO] Device ID Generated")
+        is_valid_uuid4 = self.is_uuid4(self.device_id)
+        if not is_valid_uuid4:
+            print(f"[WARNING] Device ID Not Valid: {self.device_id}")
+            print(f"[WARNING] Reload Device ID")
+            os.remove(device_file)
+            self.load_device()
+        else:
+            print(f"[INFO] Device ID: {self.device_id}")
+
+    def isTimeExpired(self, sessionAt, age):
+        desired_timezone = pytz.timezone('UTC')
+        current_date = datetime.now(desired_timezone)
+        return ((current_date - sessionAt) >= timedelta(seconds=age))
 
     def token(self, country_code):
         desired_timezone = pytz.timezone('UTC')
         current_date = datetime.now(desired_timezone)
         # if (self.sessionID_list.get(country_code) is not None) and (time.time() - self.sessionAt.get(country_code, 0)) < 4 * 60 * 60:
-        if (self.sessionID_list.get(country_code) is not None) and (current_date - self.sessionAt.get(country_code, datetime.now())) < timedelta(hours=4):
+        if (self.sessionID_list.get(country_code) is not None) and not (self.isTimeExpired(self.sessionAt.get(country_code, current_date), self.session_expires_in)):
             # print(f'Returning valid token for {country_code}')
             return self.sessionID_list[country_code], None
         
@@ -108,9 +131,12 @@ class Client:
         self.sessionToken_list.update({country_code: token})
 
         self.sessionID_list.update({country_code: token})
+        desired_timezone = pytz.timezone('UTC')
+        current_date = datetime.now(desired_timezone)
+
         self.sessionAt.update({country_code: current_date})
 
-        print(f"New token for {country_code} generated at {(self.sessionAt.get(country_code)).strftime('%Y-%m-%d %H:%M.%S %z')}")
+        print(f"[INFO] New token for {country_code} generated at {(self.sessionAt.get(country_code)).strftime('%Y-%m-%d %H:%M.%S %z')}")
         return token, None
 
     def genre(self, country_code = "local"):
@@ -202,8 +228,19 @@ class Client:
         return
 
     def channels(self, country_code = "local"):
+        desired_timezone = pytz.timezone('UTC')
+        current_date = datetime.now(desired_timezone)
+        if not (self.isTimeExpired(self.sessionAt.get(country_code, current_date), self.session_expires_in)) and len(self.country_stations.get(country_code, [])) != 0:
+            station_list = self.country_stations.get(country_code, [])
+            print (f"[INFO] Returning Cached Channel List for {country_code}")
+            token, error = self.token(country_code)
+            if error: return None, token, error
+            return station_list, token, error
+
         token, error = self.token(country_code)
         if error: return None, token, error
+
+        print (f"[INFO] Updating Channel List for {country_code}")
 
         plex_tmsid_url = "https://raw.githubusercontent.com/jgomez177/plex-for-channels/main/plex_tmsid.csv"
         plex_custom_tmsid = 'plex_data/plex_custom_tmsid.csv'
@@ -333,7 +370,7 @@ class Client:
                         'x-plex-version': '4.125.1',
                     }
 
-        print(f'Retrieving {country_code} EPG data for {start_datetime.strftime("%Y-%m-%d")} through {(start_datetime + timedelta(days=range_val)).strftime("%Y-%m-%d")}')
+        print(f'[INFO] Retrieving {country_code} EPG data for {start_datetime.strftime("%Y-%m-%d")} through {(start_datetime + timedelta(days=range_val)).strftime("%Y-%m-%d")}')
 
         j = 0
         k = 0
@@ -361,11 +398,11 @@ class Client:
                     case _ if j % 300 == 0:
                         time.sleep(16)
                         elapsed_time = time.time() - start_time
-                        print(f"Continuing to retrive {country_code} EPG data....Elapsed time: {elapsed_time:.2f} seconds. {j} Channels parsed. Please wait")
+                        print(f"[INFO] Continuing to retrive {country_code} EPG data....Elapsed time: {elapsed_time:.2f} seconds. {j} Channels parsed. Please wait")
                     case _ if j % 150 == 0:
                         time.sleep(8)
                         elapsed_time = time.time() - start_time
-                        print(f"Continuing to retrive {country_code} EPG data....Elapsed time: {elapsed_time:.2f} seconds. {j} Channels parsed")
+                        print(f"[INFO] Continuing to retrive {country_code} EPG data....Elapsed time: {elapsed_time:.2f} seconds. {j} Channels parsed")
                     case _ if j % 20 == 0:
                         # print("Loading EPG data...")
                         time.sleep(1)
@@ -390,7 +427,7 @@ class Client:
             self.epgLastUpdatedAt.update({country_code: run_datetime})
 
         elapsed_time = time.time() - start_time
-        print(f"Retrieving {country_code} EPG data complete. Elapsed time: {elapsed_time:.2f} seconds. {j} Channels parsed.")
+        print(f"[INFO] Retrieving {country_code} EPG data complete. Elapsed time: {elapsed_time:.2f} seconds. {j} Channels parsed.")
         return None
 
 
@@ -413,7 +450,7 @@ class Client:
         station_list = self.country_stations.get(country_code, [])
 
         if len(station_list) == 0:
-            print("Run channels to load self.channel_list")
+            print("[INFO] Run channels to load self.channel_list")
             station_list, token, error = self.channels(country_code)
             if error: return error
 
@@ -445,7 +482,7 @@ class Client:
                 if error: return error
             return None
         else:
-            print("Day One Initialization of EPG data")
+            print("[INFO] Day One Initialization of EPG data")
             error = self.read_epg_from_api(start_datetime, start_datetime, 0, id_values, country_code)
             if error: return error
 

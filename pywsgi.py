@@ -6,8 +6,8 @@ import subprocess, os, sys, importlib, schedule, time
 from gevent import monkey
 monkey.patch_all()
 
-version = "1.14"
-updated_date = "Jan. 3, 2025"
+version = "1.20"
+updated_date = "Jan. 20, 2025"
 
 # Retrieve the port number from env variables
 # Fallback to default if invalid or unspecified
@@ -237,46 +237,69 @@ def epg_xml(provider, country_code, filename):
         # Handle other unexpected errors
         return f"An error occurred: {str(e)}", 500
 
-
 # Define the function you want to execute with scheduler
-def epg_scheduler():
-    if all(item in ALLOWED_COUNTRY_CODES for item in plex_country_list):
-        for code in plex_country_list:
-            # print("Scheduled EPG Data Update")
-            error = providers[provider].create_xml_file(code)
-            if error: print(f"{error}")
+def epg_scheduler(country_code):
+    print(f"[INFO] Running EPG Scheduler for {country_code}")
 
+    try:
+        # Replace the following with your actual logic for XML file creation
+        error = providers[provider].create_xml_file(country_code)
+        if error:
+            print(f"[ERROR] {error} for {country_code}")
+    except Exception as e:
+        print(f"[ERROR] Exception in EPG Scheduler for {country_code}: {e}")
+    print(f"[INFO] EPG Scheduler Complete for {country_code}")
 
 # Define a function to run the scheduler in a separate thread
-def scheduler_thread():
+def scheduler_thread(country_code):
+
+    # Define a task for this country
+    schedule.every(2).hours.do(epg_scheduler, country_code)
+
+    # Run the task immediately when the thread starts
+    try:
+        epg_scheduler(country_code)
+    except Exception as e:
+        print(f"[ERROR] Error running initial task for {country_code}: {e}")
+
+    # Continue as Scheduled
     while True:
         try:
             schedule.run_pending()
             time.sleep(1)
         except Exception as e:
-            print(f"Scheduler crashed: {e}. Restarting...")
-            # Restart scheduler
-            schedule.clear()
-            # Schedule the function to run every thirty minutes
-            schedule.every(30).minutes.do(epg_scheduler)
+             print(f"[ERROR] Error in scheduler thread: {e}")
+
+# Function to monitor and restart the thread if needed
+def monitor_thread(country_code):
+    def thread_wrapper():
+        print(f"[INFO] Starting thread for code {country_code}")
+        scheduler_thread(country_code)
+
+    thread = Thread(target=thread_wrapper, daemon=True)
+    thread.start()
+
+    while True:
+        if not thread.is_alive():
+            print(f"[ERROR] Scheduler thread for {country_code} stopped. Restarting...")
+            thread = Thread(target=thread_wrapper, daemon=True)
+            thread.start()
+        time.sleep(15 * 60)  # Check every 15 minutes
+        print(f"[INFO] Checking scheduler thread for {country_code}")
 
 
 if __name__ == '__main__':
-    # Schedule the function to run every thirty minutes
-    schedule.every(30).minutes.do(epg_scheduler)
-
     if all(item.lower() in ALLOWED_COUNTRY_CODES for item in plex_country_list):
-        for code in plex_country_list:
-            print("Initialize XML File")
-            error = providers[provider].create_xml_file(code)
-            if error: print(f"{error}")
+        try:
+            # Start a monitoring thread            
+            for country_code in plex_country_list:
+                Thread(target=monitor_thread, args=(country_code,), daemon=True).start()
+
+            print(f"⇨ http server started on [::]:{port}")
+            WSGIServer(('', port), app, log=None).serve_forever()
+
+        except OSError as e:
+            print(str(e))
     else:
-        print(f"Invalid PLEX_CODE: {plex_country_list}")
-    sys.stdout.write(f"⇨ http server started on [::]:{port}\n")
-    try:
-        # Start the scheduler thread
-        thread = Thread(target=scheduler_thread)
-        thread.start()
-        WSGIServer(('', port), app, log=None).serve_forever()
-    except OSError as e:
-        print(str(e))
+        invalid_items = [item for item in plex_country_list if item.lower() not in ALLOWED_COUNTRY_CODES]
+        print(f"Invalid items in PLEX_CODE: {invalid_items}")
