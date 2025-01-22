@@ -109,12 +109,13 @@ class Client:
         if (self.sessionID_list.get(country_code) is not None) and not (self.isTimeExpired(self.sessionAt.get(country_code, current_date), self.session_expires_in)):
             # print(f'Returning valid token for {country_code}')
             return self.sessionID_list[country_code], None
-        
+
+        token_headers=self.headers
         if country_code in self.x_forward.keys():
-            self.headers.update(self.x_forward.get(country_code))
+            token_headers.update(self.x_forward.get(country_code))
 
         try:
-            response = self.session.post('https://clients.plex.tv/api/v2/users/anonymous', params=self.params, headers=self.headers)
+            response = self.session.post('https://clients.plex.tv/api/v2/users/anonymous', params=self.params, headers=token_headers)
         except Exception as e:
             return None, (f"Exception type Error: {type(e).__name__}")    
         
@@ -143,10 +144,12 @@ class Client:
         token, error = self.token(country_code)
         if error: return None, token, error
 
-        if country_code in self.x_forward.keys():
-            self.headers.update(self.x_forward.get(country_code))
+        genre_headers = self.headers
 
-        resp, error = self.api(country_code, "")
+        if country_code in self.x_forward.keys():
+            genre_headers.update(self.x_forward.get(country_code))
+
+        resp, error = self.api(country_code, "", self.params, genre_headers)
         if error: return None, error
 
         genres_temp = {}
@@ -245,8 +248,12 @@ class Client:
         plex_tmsid_url = "https://raw.githubusercontent.com/jgomez177/plex-for-channels/main/plex_tmsid.csv"
         plex_custom_tmsid = 'plex_data/plex_custom_tmsid.csv'
 
+
+        channels_headers = self.headers
+
+
         if country_code in self.x_forward.keys():
-            self.headers.update(self.x_forward.get(country_code))
+            channels_headers.update(self.x_forward.get(country_code))
 
         genres, error = self.genre(country_code)
         if error: return None, token, error
@@ -254,13 +261,13 @@ class Client:
         self.stations = []
 
         for genre in genres.keys():
-            resp, error = self.api(country_code, f"lineups/plex/channels?genre={genre}")
+            resp, error = self.api(country_code, f"lineups/plex/channels?genre={genre}", self.params, channels_headers)
             if error: return None, token, error
             self.generate_channels(resp, genres.get(genre))
         
         if len(self.stations) == 0:
             print("No channels match genres")
-            resp, error = self.api(country_code, f"lineups/plex/channels")
+            resp, error = self.api(country_code, f"lineups/plex/channels", self.params, channels_headers)
             if error: return None, token, error
             self.generate_channels(resp)
                 
@@ -369,6 +376,9 @@ class Client:
                         'x-plex-token': token,
                         'x-plex-version': '4.125.1',
                     }
+
+        if country_code in self.x_forward.keys():
+            epg_headers.update(self.x_forward.get(country_code))
 
         print(f'[INFO] Retrieving {country_code} EPG data for {start_datetime.strftime("%Y-%m-%d")} through {(start_datetime + timedelta(days=range_val)).strftime("%Y-%m-%d")}')
 
