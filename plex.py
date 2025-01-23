@@ -1,4 +1,4 @@
-import uuid, requests, json, pytz, gzip, csv, os, re, time
+import uuid, requests, json, pytz, gzip, csv, os, re, time, threading
 from datetime import datetime, timedelta
 # from urllib.parse import quote
 # from io import StringIO
@@ -9,14 +9,12 @@ class Client:
 
         # self.sessionID = ""
         # self.sessionToken = ""
+        self.lock = threading.Lock()
         self.sessionAt = {}
         self.session_expires_in = (4 * 60 * 60)
-        self.session = requests.Session()
         self.device = None
         self.load_device()
         self.offset = 0
-        self.channel_list = []
-        self.stations = []
         self.country_stations = {}
         self.sessionToken_list = {}
         self.sessionID_list = {}
@@ -110,14 +108,17 @@ class Client:
             # print(f'Returning valid token for {country_code}')
             return self.sessionID_list[country_code], None
 
-        token_headers=self.headers
+        token_headers=self.headers.copy()
         if country_code in self.x_forward.keys():
             token_headers.update(self.x_forward.get(country_code))
 
         try:
-            response = self.session.post('https://clients.plex.tv/api/v2/users/anonymous', params=self.params, headers=token_headers)
+            session = requests.Session()
+            response = session.post('https://clients.plex.tv/api/v2/users/anonymous', params=self.params, headers=token_headers)
         except Exception as e:
             return None, (f"Exception type Error: {type(e).__name__}")    
+        finally:
+            session.close()
         
         if (200 <= response.status_code <= 201):
             # print('Return for sign-in')
@@ -144,7 +145,7 @@ class Client:
         token, error = self.token(country_code)
         if error: return None, token, error
 
-        genre_headers = self.headers
+        genre_headers = self.headers.copy()
 
         if country_code in self.x_forward.keys():
             genre_headers.update(self.x_forward.get(country_code))
@@ -173,7 +174,7 @@ class Client:
 
         return genres, None
 
-    def generate_channels(self, resp, genre = None):
+    def generate_channels(self, resp, stations, genre = None):
         # print (len(resp))
         channels = resp.get("MediaContainer").get("Channel")
 
@@ -221,24 +222,25 @@ class Client:
                 if genre is not None:
                     new_item.update({'group': [genre]})
 
-                check_callSign = next(filter(lambda d: d.get('slug','') == slug, self.stations), None)
+                check_callSign = next(filter(lambda d: d.get('slug','') == slug, stations), None)
                 if check_callSign is not None:
                     new_group = check_callSign.get('group')
                     new_group.append(genre)
                     check_callSign.update({'group': new_group})
                 else:
-                    self.stations.append(new_item)
+                    stations.append(new_item)
         return
 
     def channels(self, country_code = "local"):
         desired_timezone = pytz.timezone('UTC')
         current_date = datetime.now(desired_timezone)
-        if not (self.isTimeExpired(self.sessionAt.get(country_code, current_date), self.session_expires_in)) and len(self.country_stations.get(country_code, [])) != 0:
-            station_list = self.country_stations.get(country_code, [])
-            print (f"[INFO] Returning Cached Channel List for {country_code}")
-            token, error = self.token(country_code)
-            if error: return None, token, error
-            return station_list, token, error
+        with self.lock:
+            if not (self.isTimeExpired(self.sessionAt.get(country_code, current_date), self.session_expires_in)) and len(self.country_stations.get(country_code, [])) != 0:
+                station_list = self.country_stations.get(country_code, [])
+                print (f"[INFO] Returning Cached Channel List for {country_code}")
+                token, error = self.token(country_code)
+                if error: return None, token, error
+                return station_list, token, error
 
         token, error = self.token(country_code)
         if error: return None, token, error
@@ -249,7 +251,7 @@ class Client:
         plex_custom_tmsid = 'plex_data/plex_custom_tmsid.csv'
 
 
-        channels_headers = self.headers
+        channels_headers = self.headers.copy()
 
 
         if country_code in self.x_forward.keys():
@@ -258,18 +260,18 @@ class Client:
         genres, error = self.genre(country_code)
         if error: return None, token, error
 
-        self.stations = []
+        stations = []
 
         for genre in genres.keys():
             resp, error = self.api(country_code, f"lineups/plex/channels?genre={genre}", self.params, channels_headers)
             if error: return None, token, error
-            self.generate_channels(resp, genres.get(genre))
+            self.generate_channels(resp, stations, genres.get(genre))
         
-        if len(self.stations) == 0:
+        if len(stations) == 0:
             print("No channels match genres")
             resp, error = self.api(country_code, f"lineups/plex/channels", self.params, channels_headers)
             if error: return None, token, error
-            self.generate_channels(resp)
+            self.generate_channels(resp, stations)
                 
         tmsid_dict = {}
         tmsid_custom_dict = {}
@@ -300,44 +302,55 @@ class Client:
 
         tmsid_dict.update(tmsid_custom_dict)
 
-        #self.stations = {key: {**value, 'tmsid': tmsid_dict[key]['tmsid'], 'time_shift': tmsid_dict[key]['time_shift']} 
-        #                 if key in tmsid_dict else value for key, value in self.stations.items()}
-
-        self.stations = [{**entry, 'tmsid': tmsid_dict[entry["id"]]['tmsid'], 'time_shift': tmsid_dict[entry["id"]]['time_shift']}
+        stations = [{**entry, 'tmsid': tmsid_dict[entry["id"]]['tmsid'], 'time_shift': tmsid_dict[entry["id"]]['time_shift']}
                          if entry["id"] in tmsid_dict and tmsid_dict[entry["id"]]['time_shift'] != ''
                          else {**entry, 'tmsid': tmsid_dict[entry["id"]]['tmsid']} if entry["id"] in tmsid_dict and tmsid_dict[entry["id"]]['tmsid'] != ''
                          else entry
-                         for entry in self.stations]
+                         for entry in stations]
 
-        self.stations = sorted(self.stations, key=lambda x: (not x.get("call_sign", False), x["name"]))
-        self.country_stations.update({country_code: self.stations})
+        stations = sorted(stations, key=lambda x: (not x.get("call_sign", False), x["name"]))
 
-        return self.stations, token, None
+        with self.lock:
+            self.country_stations.update({country_code: stations})
+
+        print(f"[INFO] Channel Listing for {country_code} Complete")
+
+        return stations, token, None
 
     def api(self, country_code, cmd, api_params = None, api_headers = None, data=None):
         token, error = self.token(country_code)
-        if api_params is None:
-            api_params = self.params
-        if api_headers is None:
-            api_headers = self.headers
-        
+
+        # Use local copies of parameters and headers to ensure thread safety
+        local_params = api_params.copy() if api_params else self.params.copy()
+        local_headers = api_headers.copy() if api_headers else self.headers.copy()
+
+
+        if country_code in self.x_forward.keys():
+            local_headers.update(self.x_forward.get(country_code))
+
         if error:
             return None, error
 
         if token is not None:
-            self.params.update({'X-Plex-Token': token})
+            local_params.update({'X-Plex-Token': token})
         # print(headers)
         url = f"https://epg.provider.plex.tv/{cmd}"
         if data:
             try:
-                response = self.session.put(url, data=data, params=api_params, headers=api_headers, timeout=300)
+                session = requests.Session()
+                response = session.put(url, data=data, params=local_params, headers=local_headers, timeout=300)
             except Exception as e:
-                return None, (f"Exception type Error: {type(e).__name__}")    
+                return None, (f"Exception type Error: {type(e).__name__}")
+            finally:
+                session.close()    
         else:
             try:
-                response = self.session.get(url, params=api_params, headers=api_headers, timeout=300)
+                session = requests.Session()
+                response = session.get(url, params=local_params, headers=local_headers, timeout=300)
             except Exception as e:
                 return None, (f"Exception type Error: {type(e).__name__}")    
+            finally:
+                session.close()    
         if response.status_code != 200:
             return None, f"HTTP failure {response.status_code}: {response.text}"
         # print(response.text)
@@ -429,12 +442,12 @@ class Client:
 
             #id_data_old = self.epg_data.get(country_code, {}).get(id, [])
             #id_data_dict = {id: id_data + id_data_old}
-                
-            country_data = self.epg_data.get(country_code, {})
-            country_data.update({id: country_data.get(id, []) + id_data})
+            with self.lock:    
+                country_data = self.epg_data.get(country_code, {})
+                country_data.update({id: country_data.get(id, []) + id_data})
 
-            self.epg_data.update({country_code: country_data})
-            self.epgLastUpdatedAt.update({country_code: run_datetime})
+                self.epg_data.update({country_code: country_data})
+                self.epgLastUpdatedAt.update({country_code: run_datetime})
 
         elapsed_time = time.time() - start_time
         print(f"[INFO] Retrieving {country_code} EPG data complete. Elapsed time: {elapsed_time:.2f} seconds. {j} Channels parsed.")
@@ -454,13 +467,13 @@ class Client:
         # start_time = quote(start_datetime.strftime("%Y-%m-%d %H:00:00.000Z"))
         # start_time = start_datetime.strftime("%Y-%m-%d")
 
-        if country_code in self.x_forward.keys():
-            self.headers.update(self.x_forward.get(country_code))
+        #if country_code in self.x_forward.keys():
+        #    self.headers.update(self.x_forward.get(country_code))
 
-        station_list = self.country_stations.get(country_code, [])
+        with self.lock:
+            station_list = self.country_stations.get(country_code, [])
 
         if len(station_list) == 0:
-            print("[INFO] Run channels to load self.channel_list")
             station_list, token, error = self.channels(country_code)
             if error: return error
 
@@ -468,17 +481,21 @@ class Client:
         id_values = [d['id'] for d in station_list]
         # id_values = [id_values[0],id_values[1]]
 
-        if self.epg_data.get(country_code):
+
+        local_epg_data = self.epg_data.copy()
+        local_epgLastUpdatedAt = self.epgLastUpdatedAt.copy()
+
+        if local_epg_data.get(country_code):
             # print('Returning cached data')
             today = start_datetime.date()
-            if (start_datetime - self.epgLastUpdatedAt.get(country_code, start_datetime)) >= timedelta(hours=epg_update_value):
-                print(f"{start_datetime - self.epgLastUpdatedAt.get(country_code, start_datetime)}: Updating data for {country_code}")
-                for key, value_list in self.epg_data.get(country_code).items():
+            if (start_datetime - local_epgLastUpdatedAt.get(country_code, start_datetime)) >= timedelta(hours=epg_update_value):
+                print(f"{start_datetime - local_epgLastUpdatedAt.get(country_code, start_datetime)}: Updating data for {country_code}")
+                for key, value_list in local_epg_data.get(country_code).items():
                     filtered_list = [item for item in value_list if datetime.strptime(item["date"], "%Y-%m-%d").date() > today]
-                    self.epg_data.get(country_code)[key] = filtered_list
+                    local_epg_data.get(country_code)[key] = filtered_list
 
-            # Using the first entry in self.epg_data, pull dates 
-            first_entry_dates = [datetime.strptime(item["date"], "%Y-%m-%d").date() for item in self.epg_data[country_code][list(self.epg_data[country_code].keys())[0]]]
+            # Using the first entry in local_epg_data, pull dates 
+            first_entry_dates = [datetime.strptime(item["date"], "%Y-%m-%d").date() for item in local_epg_data[country_code][list(local_epg_data[country_code].keys())[0]]]
 
             # List of pulled EPG data between now and range_val + 1 
             dates_between_now_and_x_days = [(start_datetime + timedelta(days=i)).date() for i in range(range_val + 1)]
@@ -632,10 +649,10 @@ class Client:
         xml_file_path        = f"epg-{country_code}.xml"
         compressed_file_path = f"{xml_file_path}.gz"
 
-        station_list = self.country_stations.get(country_code, [])
+        with self.lock:
+            station_list = self.country_stations.get(country_code, [])
 
         if len(station_list) == 0:
-            print("Run channels to load self.channel_list")
             station_list, token, error_code = self.channels(country_code)
             if error_code: return None, error_code
 

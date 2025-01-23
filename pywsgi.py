@@ -6,7 +6,7 @@ import subprocess, os, sys, importlib, schedule, time
 from gevent import monkey
 monkey.patch_all()
 
-version = "1.21"
+version = "1.22"
 updated_date = "Jan. 22, 2025"
 
 # Retrieve the port number from env variables
