@@ -5,6 +5,18 @@ Current version: **1.22**
 # About
 This takes Plex Live TV Channels and generates an M3U playlist and EPG XMLTV file.
 
+If you like this and other linear containers for Channels that I have created, please consider supporting my work.
+
+[![](https://pics.paypal.com/00/s/MDY0MzZhODAtNGI0MC00ZmU5LWI3ODYtZTY5YTcxOTNlMjRm/file.PNG)](https://www.paypal.com/donate/?hosted_button_id=BBUTPEU8DUZ6J)
+
+Or Even Better support the Girl Scouts with the purchase of cookies for the 2025 campaign:
+
+Site 1
+[<img src="https://townsquare.media/site/191/files/2024/01/attachment-cookie.jpg" width=400/>](https://digitalcookie.girlscouts.org/scout/charlotte816794)
+
+Site 2
+[<img src="https://townsquare.media/site/191/files/2024/01/attachment-cookie.jpg" width=400/>](https://digitalcookie.girlscouts.org/scout/mckenna899691)
+
 # Changes
  - Version 1.22
    - More fun with thread protection
@@ -95,8 +107,3 @@ Plex occasionally duplicates a name of a channel, therefore the easiest way to e
 
     http://127.0.0.1:[your_port_number_here]/plex/[playlist_location]/channels.json
 
-***
-
-If you like this and other linear containers for Channels that I have created, please consider supporting my work.
-
-[![](https://pics.paypal.com/00/s/MDY0MzZhODAtNGI0MC00ZmU5LWI3ODYtZTY5YTcxOTNlMjRm/file.PNG)](https://www.paypal.com/donate/?hosted_button_id=BBUTPEU8DUZ6J)
