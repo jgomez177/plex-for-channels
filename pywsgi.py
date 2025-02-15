@@ -1,305 +1,210 @@
 from gevent.pywsgi import WSGIServer
 from flask import Flask, redirect, request, Response, send_file
-from threading import Thread
-import subprocess, os, sys, importlib, schedule, time
-# import flask module
+from threading import Thread, Event
+import os, importlib, schedule, time
 from gevent import monkey
 monkey.patch_all()
 
-version = "1.22"
-updated_date = "Jan. 22, 2025"
+version = "4.00"
+updated_date = "Feb. 15, 2025"
 
 # Retrieve the port number from env variables
 # Fallback to default if invalid or unspecified
 try:
-    port = int(os.environ.get("PLEX_PORT", 7777))
+    port = int(os.environ.get("PORT", 7777))
 except:
     port = 7777
 
-# Retrieve the country codes from env variables
-plex_country_code = os.environ.get("PLEX_CODE")
-if plex_country_code:
-   plex_country_list = [item.strip().lower() for item in plex_country_code.split(',')]
-else:
-   plex_country_list = ['local']
 
-ALLOWED_COUNTRY_CODES = ['us_east', 'us_west', 'local', 'ca', 'uk', 'nz', 'au', 'mx', 'es']
 # instance of flask application
 app = Flask(__name__)
-provider = "plex"
-providers = {
-    provider: importlib.import_module(provider).Client(),
-}
+provider_list = ['plex']
 
-url = f'<!DOCTYPE html>\
+providers = {}
+for provider in provider_list:
+    providers.update({
+        provider: importlib.import_module(provider).Client(),
+    })
+
+url_main = f'<!DOCTYPE html>\
         <html>\
           <head>\
             <meta charset="utf-8">\
             <meta name="viewport" content="width=device-width, initial-scale=1">\
-            <title>{provider.capitalize()} Playlist</title>\
+            <title>Playlist</title>\
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">\
-            <style>\
-              ul{{\
-                margin-bottom: 10px;\
-              }}\
-            </style>\
           </head>\
           <body>\
-          <section class="section">\
-            <div class="container">\
-              <h1 class="title">\
-                {provider.capitalize()} Playlist\
+          <section class="section py-2">\
+              <h1 class="title is-2">\
+                Playlist\
                 <span class="tag">v{version}</span>\
-              </h1>\
-              <p class="subtitle">\
-                Last Updated: {updated_date}\
-              '
+                <span class="tag">Last Updated: {updated_date}</span>\
+              </h1>'
+
+# Dictionary to store trigger events for each provider
+trigger_events = {}
+def trigger_epg_build(provider):
+    if provider in trigger_events:
+        trigger_events[provider].set()
+    else:
+        print(f"[ERROR - {provider}] No scheduler thread found for provider: {provider}")    
+
 
 @app.route("/")
 def index():
     host = request.host
-    ul = ""
-    if all(item in ALLOWED_COUNTRY_CODES for item in plex_country_list):
-        pl = f"http://{host}/mjh_compatible"
-        # ul = f'<p class="subtitle">channel-id by "provider"-"id" (i.mjh.nz compatibility): <a href="{pl}">{pl}</a><br></p><ul>'
-        for code in plex_country_list:
-            pl = f"http://{host}/{provider}/{code}/playlist.m3u"
-            ul += f"<li>{provider.upper()} {code.upper()}: <a href='{pl}'>{pl}</a></li>\n"
-            pl = f"http://{host}/mjh_compatible/{provider}/{code}/playlist.m3u"
-            ul += f"<li>{provider.upper()} {code.upper()} MJH Compatible: <a href='{pl}'>{pl}</a></li>\n"
-            if code in ['local', 'us_east', 'us_west']:
-                pl = f"http://{host}/{provider}/{code}/playlist.m3u?gracenote=include"
-                ul += f"<li>{provider.upper()} {code.upper()} Gracenote Playlist: <a href='{pl}'>{pl}</a></li>\n"
-                pl = f"http://{host}/{provider}/{code}/playlist.m3u?gracenote=exclude"
-                ul += f"<li>{provider.upper()} {code.upper()} EPG Only Playlist: <a href='{pl}'>{pl}</a></li>\n"
-            ul += f"<br>\n"
-            pl = f"http://{host}/{provider}/epg/{code}/epg-{code}.xml"
-            ul += f"<li>{provider.upper()} {code.upper()} EPG: <a href='{pl}'>{pl}</a></li>\n"
-            pl = f"http://{host}/{provider}/epg/{code}/epg-{code}.xml.gz"
-            ul += f"<li>{provider.upper()} {code.upper()} EPG GZ: <a href='{pl}'>{pl}</a></li>\n"
-            ul += f"<br>\n"
-    else:
-        ul += f"<li>INVALID COUNTRY CODE in \"{', '.join(plex_country_list).upper()}\"</li>\n"
-    return f"{url}<ul>{ul}</ul></div></section></body></html>"
 
-@app.route("/token/<country_code>")
-def token(country_code):
+    body = ''
+    for provider in providers:
+        geo_code_name = f"{provider.upper()}_CODE"
+        geo_code_list = os.environ.get(geo_code_name)
+
+        body += '<div>'
+        body_text = providers[provider].body_text(provider, host, geo_code_list)
+        body += body_text
+        body += "</dev>"
+    return f"{url_main}{body}</section></body></html>"
+
+@app.route("/<provider>/token")
+def token(provider):
     # host = request.host
-    token = providers[provider].token(country_code)
-    return(token)
+    args = request.args
 
-@app.get("/<provider>/<country_code>/playlist.m3u")
-def playlist(provider, country_code):
-    gracenote = request.args.get('gracenote')
-    filter_stations = request.args.get('filtered')
+    token_keychain, error = providers[provider].token(args)
+    if error:
+        return error
+    else:
+        return token_keychain
 
-    if country_code not in ALLOWED_COUNTRY_CODES:
-        return "Invalid county code", 400
-
+@app.get("/<provider>/playlist.m3u")
+def playlist(provider):
+    args = request.args
     host = request.host
 
-    stations, token, err = providers[provider].channels(country_code)
-    if err is not None: return err, 500
-
-    # Filter out Hidden items or items without Hidden Attribute
-    tmsid_stations = []
-    no_tmsid_stations = []
-    if stations:
-        tmsid_stations = list(filter(lambda d: d.get('tmsid'), stations))
-        no_tmsid_stations = list(filter(lambda d: d.get('tmsid', None) is None, stations))
-
-    if 'unfiltered' not in request.args and gracenote == 'include':
-        data_group = tmsid_stations
-    elif  'unfiltered' not in request.args and gracenote == 'exclude':
-        data_group = no_tmsid_stations
-    else:
-        data_group = stations
-
-
-    stations = sorted(stations, key = lambda i: i.get('name', ''))
-
-    if err is not None:
-        return err, 500
-    m3u = "#EXTM3U\r\n\r\n"
-    for s in data_group:
-        m3u += f"#EXTINF:-1 channel-id=\"{provider}-{s.get('slug')}\""
-        m3u += f" tvg-id=\"{s.get('id')}\""
-        m3u += f" tvg-chno=\"{''.join(map(str, s.get('number', [])))}\"" if s.get('number') else ""
-        m3u += f" group-title=\"{';'.join(map(str, s.get('group', [])))}\"" if s.get('group') else ""
-        m3u += f" tvg-logo=\"{''.join(map(str, s.get('logo', [])))}\"" if s.get('logo') else ""
-        m3u += f" tvg-name=\"{s.get('call_sign')}\"" if s.get('call_sign') else ""
-        if gracenote == 'include':
-            m3u += f" tvg-shift=\"{s.get('time_shift')}\"" if s.get('time_shift') else ""
-            m3u += f" tvc-guide-stationid=\"{s.get('tmsid')}\"" if s.get('tmsid') else ""
-        m3u += f",{s.get('name') or s.get('call_sign')}\n"
-        m3u += f"https://epg.provider.plex.tv{s.get('key')}?X-Plex-Token={token}\n\n"
-
+    m3u, error = providers[provider].generate_playlist(provider, args, host)
+    if error: return error, 500
     response = Response(m3u, content_type='audio/x-mpegurl')
+    # response = Response(m3u)
     return (response)
 
-@app.get("/<provider>/<country_code>/channels.json")
-def channels_json(provider, country_code):
-        stations, token, err = providers[provider].channels(country_code)
+@app.get("/<provider>/channels.json")
+def channels_json(provider):
+        args = request.args
+
+        stations, err = providers[provider].channels(args)
+        if err: return (err)
         return (stations)
 
-@app.get("/<provider>/<country_code>/genre.json")
-def genre_json(provider, country_code):
-        resp, err = providers[provider].genre(country_code)
-        if err: return err
-        return (resp)
+@app.get("/<provider>/rebuild_epg")
+def rebuild_epg(provider):
+        providers[provider].rebuild_epg()
+        trigger_epg_build(provider)
+        return "Rebuilding EPG"
 
-@app.get("/<provider>/<country_code>/epg.json")
-def epg_json(provider, country_code):
-        epg, err = providers[provider].epg_json(country_code)
-        if err: return err
-        return epg
+@app.route("/<provider>/watch/<id>")
+def watch(provider, id):
+    video_url, err = providers[provider].generate_video_url(id)
+    if err: return "Error", 500, {'X-Tuner-Error': err}
+    if not video_url:return "Error", 500, {'X-Tuner-Error': 'No Video Stream Detected'}
+    # print(f'[INFO] {video_url}')
+    return (redirect(video_url))
 
+@app.get("/<provider>/<filename>")
+def epg_xml(provider, filename):
+    file_path = f'data/{provider}/{filename}'
 
-@app.get("/mjh_compatible/<provider>/<country_code>/playlist.m3u")
-def playlist_mjh_compatible(provider, country_code):
-    gracenote = request.args.get('gracenote')
-    filter_stations = request.args.get('filtered')
-
-    if country_code not in ALLOWED_COUNTRY_CODES:
-        return "Invalid county code", 400
-
-    host = request.host
-
-    stations, token, err = providers[provider].channels(country_code)
-    # Filter out Hidden items or items without Hidden Attribute
-    tmsid_stations = list(filter(lambda d: d.get('tmsid'), stations))
-    no_tmsid_stations = list(filter(lambda d: d.get('tmsid', None) is None, stations))
-
-    if 'unfiltered' not in request.args and gracenote == 'include':
-        data_group = tmsid_stations
-    elif  'unfiltered' not in request.args and gracenote == 'exclude':
-        data_group = no_tmsid_stations
-    else:
-        data_group = stations
-
-    if err is not None:
-        return err, 500
-    
-    stations = sorted(stations, key = lambda i: i.get('name', ''))
-
-    m3u = "#EXTM3U\r\n\r\n"
-    for s in data_group:
-        m3u += f"#EXTINF:-1 channel-id=\"{provider}-{s.get('id')}\""
-        m3u += f" tvg-id=\"{s.get('id')}\""
-        m3u += f" tvg-chno=\"{s.get('number')}\"" if s.get('number') else ""
-        # m3u += f" group-title=\"{''.join(map(str, s.get('group', [])))}\"" if s.get('group') else ""
-        m3u += f" tvg-logo=\"{''.join(map(str, s.get('logo', [])))}\"" if s.get('logo') else ""
-        m3u += f" tvg-name=\"{s.get('call_sign')}\"" if s.get('call_sign') else ""
-        if gracenote == 'include':
-            m3u += f" tvg-shift=\"{s.get('time_shift')}\"" if s.get('time_shift') else ""
-            m3u += f" tvc-guide-stationid=\"{s.get('tmsid')}\"" if s.get('tmsid') else ""
-        m3u += f" group-title=\"{''.join(map(str, s.get('group', [])))}\"" if s.get('group') else ""
-        m3u += f",{s.get('name') or s.get('call_sign')}\n"
-        m3u += f"https://epg.provider.plex.tv{s.get('key')}?X-Plex-Token={token}\n\n"
-
-    response = Response(m3u, content_type='audio/x-mpegurl')
-    return (response)
-
-
-
-
-@app.get("/<provider>/epg/<country_code>/<filename>")
-def epg_xml(provider, country_code, filename):
-
-    # Generate ALLOWED_FILENAMES and ALLOWED_GZ_FILENAMES based on ALLOWED_COUNTRY_CODES
-    ALLOWED_EPG_FILENAMES = {f'epg-{code}.xml' for code in ALLOWED_COUNTRY_CODES}
-    ALLOWED_GZ_FILENAMES = {f'epg-{code}.xml.gz' for code in ALLOWED_COUNTRY_CODES}
-
-    # Specify the file path
-    # file_path = 'epg.xml'
     try:
-        if country_code not in ALLOWED_COUNTRY_CODES:
-            return "Invalid county code", 400
-
-        # Check if the provided filename is allowed in either format
-        if filename not in ALLOWED_EPG_FILENAMES and filename not in ALLOWED_GZ_FILENAMES:
-        # Check if the provided filename is allowed
-        # if filename not in ALLOWED_EPG_FILENAMES:
-            return "Invalid filename", 400
-        
-        # Specify the file path based on the provider and filename
-        file_path = f'{filename}'
-
+        suffix = filename.split('.')[-1] if '.' in filename else ''
         # Return the file without explicitly opening it
-        if filename in ALLOWED_EPG_FILENAMES: 
+        if suffix.lower() == 'xml':
             return send_file(file_path, as_attachment=False, download_name=file_path, mimetype='text/plain')
-        elif filename in ALLOWED_GZ_FILENAMES:
+        elif suffix.lower() == 'gz':
             return send_file(file_path, as_attachment=True, download_name=file_path)
+        else:
+            return f"{file_path} file not found", 404
     except FileNotFoundError:
-        # Handle the case where the file is not found
-        return "XML file not found", 404
-    except Exception as e:
-        # Handle other unexpected errors
-        return f"An error occurred: {str(e)}", 500
+        return "XML Being Generated Please Standby", 404
 
 # Define the function you want to execute with scheduler
-def epg_scheduler(country_code):
-    print(f"[INFO] Running EPG Scheduler for {country_code}")
+def epg_scheduler(provider):
+    print(f"[INFO - {provider.upper()}] Running EPG Scheduler for {provider}")
 
     try:
-        # Replace the following with your actual logic for XML file creation
-        error = providers[provider].create_xml_file(country_code)
+        error = providers[provider].epg()
         if error:
-            print(f"[ERROR] {error} for {country_code}")
+            print(f"[ERROR - {provider.upper()}] EPG: {error}")
     except Exception as e:
-        print(f"[ERROR] Exception in EPG Scheduler for {country_code}: {e}")
-    print(f"[INFO] EPG Scheduler Complete for {country_code}")
+        print(f"[ERROR - {provider.upper()}] Exception in EPG Scheduler : {e}")
+    print(f"[INFO - {provider.upper()}] EPG Scheduler Complete")
 
 # Define a function to run the scheduler in a separate thread
-def scheduler_thread(country_code):
+def scheduler_thread(provider):
 
-    # Define a task for this country
-    schedule.every(2).hours.do(epg_scheduler, country_code)
+    if provider not in trigger_events:
+        trigger_events[provider] = Event()
+
+    event = trigger_events[provider]  # Get the event for this provider
+
+    # Define Scheduler
+    match provider.lower():
+        case 'plex':
+            schedule.every(10).minutes.do(lambda: epg_scheduler(provider))
+        case _:
+            schedule.every(1).hours.do(lambda: epg_scheduler(provider))
 
     # Run the task immediately when the thread starts
-    try:
-        epg_scheduler(country_code)
-    except Exception as e:
-        print(f"[ERROR] Error running initial task for {country_code}: {e}")
-
-    # Continue as Scheduled
     while True:
         try:
-            schedule.run_pending()
-            time.sleep(1)
+            epg_scheduler(provider)
+
         except Exception as e:
-             print(f"[ERROR] Error in scheduler thread: {e}")
+            print(f"[ERROR - {provider.upper()}] Error in running scheduler, retrying: {e}")
+            continue  # Immediately retry
+
+        # Continue as Scheduled
+        while True:
+            try:
+                # Scheduled event
+                schedule.run_pending()
+
+                # Check if the event is set (manual trigger)
+                if event.is_set():
+                    print(f"[MANUAL TRIGGER - {provider.upper()}] Running epg_scheduler manually...")
+                    epg_scheduler(provider)
+                    event.clear()  # Reset event after execution
+
+                time.sleep(1)
+            except Exception as e:
+                 print(f"[ERROR - {provider.upper()}] Error in scheduler thread: {e}")
+                 break # Restart the loop and rerun epg_scheduler
 
 # Function to monitor and restart the thread if needed
-def monitor_thread(country_code):
-    def thread_wrapper():
-        print(f"[INFO] Starting thread for code {country_code}")
-        scheduler_thread(country_code)
+def monitor_thread(provider):
+    def thread_wrapper(provider):
+        print(f"[INFO - {provider.upper()}] Starting Scheduler thread for {provider}")
+        scheduler_thread(provider)
 
-    thread = Thread(target=thread_wrapper, daemon=True)
+    thread = Thread(target=thread_wrapper, args=(provider,), daemon=True)
     thread.start()
 
     while True:
         if not thread.is_alive():
-            print(f"[ERROR] Scheduler thread for {country_code} stopped. Restarting...")
-            thread = Thread(target=thread_wrapper, daemon=True)
+            print(f"[ERROR - {provider.upper()}] Scheduler thread stopped. Restarting...")
+            thread = Thread(target=thread_wrapper, args=(provider,),daemon=True)
             thread.start()
         time.sleep(15 * 60)  # Check every 15 minutes
-        # print(f"[INFO] Checking scheduler thread for {country_code}")
-
+        print(f"[INFO - {provider.upper()}] Checking scheduler thread")
 
 if __name__ == '__main__':
-    if all(item.lower() in ALLOWED_COUNTRY_CODES for item in plex_country_list):
-        try:
-            # Start a monitoring thread            
-            for country_code in plex_country_list:
-                Thread(target=monitor_thread, args=(country_code,), daemon=True).start()
+    trigger_event = Event()
 
-            print(f"⇨ http server started on [::]:{port}")
-            WSGIServer(('', port), app, log=None).serve_forever()
+    for provider in provider_list:
+        # pass
+        Thread(target=monitor_thread, args=(provider,), daemon=True).start()
 
-        except OSError as e:
-            print(str(e))
-    else:
-        invalid_items = [item for item in plex_country_list if item.lower() not in ALLOWED_COUNTRY_CODES]
-        print(f"Invalid items in PLEX_CODE: {invalid_items}")
+    try:
+        print(f"[INFO - MAIN] ⇨ http server started on [::]:{port}")
+        WSGIServer(('', port), app, log=None).serve_forever()
+    except OSError as e:
+        print(str(e))
