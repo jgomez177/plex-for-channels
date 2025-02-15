@@ -638,7 +638,6 @@ class Client:
             total=3,              # Total number of retries
             backoff_factor=2,     # Time between retries will grow exponentially: 1s, 2s, 4s, etc.
             status_forcelist=[429, 500, 502, 503, 504],  # Retry for these status codes
-            method_allowlist=["GET", "POST"],  # Retry only for GET and POST requests
             raise_on_status=False  # Don't raise an exception for failed retries, just return the response
         )
 
