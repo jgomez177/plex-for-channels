@@ -1,4 +1,4 @@
-import threading, json, random, string, time, requests, csv, os, gzip, pytz
+import threading, json, random, string, time, requests, csv, os, gzip, pytz, shutil
 from urllib.parse import urlencode
 from pathlib import Path
 import xml.etree.ElementTree as ET
@@ -711,9 +711,9 @@ class Client:
 
         with self.lock:
             try:
-                folder_path.mkdir(parents=True, exist_ok=True)
+                xml_file_path.parent.mkdir(parents=True, exist_ok=True)
                 xml_file_path.write_text(output_content, encoding="utf-8")
-                print(f"[INFO - {self.client_name.upper()}] XML data successfully written to '{xml_file_path}'")
+                # print(f"[INFO - {self.client_name.upper()}] XML data successfully written to '{xml_file_path}'")
             except Exception as e:
                 print(f"[ERROR - {self.client_name.upper()}] Error writing XML file: {e}")
 
@@ -729,147 +729,111 @@ class Client:
                
         return None
 
-    def generate_epg_style(self, station, epg_xml_data, output_xml):
-        # print(json.dumps(station, indent=2))
+    def process_video(self, video, station, output_xml):
+        originally_available_at = video.attrib.get("originallyAvailableAt", "0000-00-00T00:00:00Z").split("T")[0].replace("-", "")
+        video_type = video.attrib.get("type")
 
-        # Count the number of <Video> elements
-        video_count = len(epg_xml_data.findall(".//Video"))
+        if video_type is not None:
+            match video_type.lower():
+                case 'movie':
+                    date = video.attrib.get("year")
+                    title = f'{video.attrib.get("title", "")} ({date})' if date else video.attrib.get("title", "")
+                    subtitle, parent_index, index, grandparent_art = None, None, None, None
+                case _:
+                    title = video.attrib.get("grandparentTitle", "Unknown Title")
+                    subtitle = video.attrib.get("title", "Unknown Subtitle")
+                    parent_index = video.attrib.get("parentIndex")
+                    index = video.attrib.get("index")
+                    grandparent_art = video.attrib.get("grandparentArt")
 
-        # Output the result
-        # print(f"[INFO - {self.client_name.upper()}] Number Programs identified: {video_count}")
+        content_rating = video.attrib.get("contentRating", "NR")
+        desc = video.attrib.get("summary", "")
+        genres = [genre.attrib.get("tag") for genre in video.findall("Genre")]
 
-        # Create new XML structure
-        found = any(channel.get("id") == station.get('id') for channel in output_xml.findall(".//channel"))
-        if not found:
-            channel_element = ET.Element("channel", id=station.get('id'))
-            ET.SubElement(channel_element, "display-name").text = station.get('name')
-            ET.SubElement(channel_element, "icon", src=station.get('logo'))
-            output_xml.append(channel_element)
+        for media in video.findall("Media"):
+            previously_shown = False 
+            begins_at = media.get("beginsAt")
+            ends_at = media.get("endsAt")
 
-        current_year = str(datetime.now().year)
+            if begins_at:
+                dt = datetime.fromtimestamp(int(begins_at), tz=timezone.utc)
+                start_time = dt.strftime("%Y%m%d%H%M%S +0000")
 
-        for video in epg_xml_data.findall(".//MediaContainer/Video"):
-            originally_available_at = video.attrib.get("originallyAvailableAt", "0000-00-00T00:00:00Z").split("T")[0].replace("-", "")
-            video_type = video.attrib.get("type")
-            if video_type is not None:
-                match video_type.lower():
-                    case 'movie':
-                        date = video.attrib.get("year")
-                        if date is None:
-                            title = f'{video.attrib.get("title", "")}'
-                            originally_available_at = None
-                        else:
-                            title = f'{video.attrib.get("title", "")} ({date})'
-                        subtitle = None
-                        parent_index = video.attrib.get("parentIndex")
-                        index = video.attrib.get("index")
-                        grandparent_art = None
-                    case _:
-                        title = video.attrib.get("grandparentTitle", "Unknown Title")
-                        subtitle = video.attrib.get("title", "Unknown Subtitle")
-                        parent_index = video.attrib.get("parentIndex")
-                        index = video.attrib.get("index")
-                        grandparent_art = video.attrib.get("grandparentArt")
+            if ends_at:
+                dt = datetime.fromtimestamp(int(ends_at), tz=timezone.utc)
+                stop_time = dt.strftime("%Y%m%d%H%M%S +0000")
 
-            content_rating = video.attrib.get("contentRating", "NR")
-            desc = video.attrib.get("summary", "")
+            programme = ET.Element("programme", start=start_time, stop=stop_time, channel=station.get('id'))
+            ET.SubElement(programme, "title").text = title
+            if subtitle: ET.SubElement(programme, "sub-title").text = subtitle
+            ET.SubElement(programme, "desc").text = desc
 
-            # media = video.find("Media")
-            for media in video.findall("Media"):
-                previously_shown = False 
-                if media is not None:
-                    begins_at = media.get("beginsAt")
-                    if begins_at:
-                        begins_at = int(begins_at)  # Convert to integer
-                        dt = datetime.fromtimestamp(begins_at, tz=timezone.utc)  # Convert to UTC datetime
-                        start_time = dt.strftime("%Y%m%d%H%M%S +0000")  # Format datetime
+            for genre in genres:
+                ET.SubElement(programme, "category").text = genre
 
-                        if originally_available_at:
-                            try:
-                                original_date = datetime.strptime(originally_available_at, "%Y%m%d").replace(tzinfo=timezone.utc)
-                                if original_date < dt:
-                                    previously_shown = True  # Mark if it's older
-                            except ValueError:
-                                original_date = None  # Handle invalid dates
+            if grandparent_art:
+                ET.SubElement(programme, "icon", src=grandparent_art)
 
-                    ends_at = media.get("endsAt")
-                    if ends_at:
-                        ends_at = int(ends_at)  # Convert to integer
-                        dt = datetime.fromtimestamp(ends_at, tz=timezone.utc)  # Convert to UTC datetime
-                        stop_time = dt.strftime("%Y%m%d%H%M%S +0000")  # Format datetime
+            if originally_available_at:
+                ET.SubElement(programme, "date").text = originally_available_at
+            if previously_shown:
+                ET.SubElement(programme, "previously-shown")
+            if parent_index and index:
+                ET.SubElement(programme, "episode-num", system="onscreen").text = f"S{parent_index}E{index}"
+                ET.SubElement(programme, "episode-num", system="xmltv_ns").text = f"{int(parent_index)-1}.{int(index)-1}."
+            elif index:
+                ET.SubElement(programme, "episode-num", system="onscreen").text = f"E{index}"
 
-                # Extract genres dynamically
-                genres = [genre.attrib.get("tag") for genre in video.findall("Genre")]
+            rating = ET.SubElement(programme, "rating")
+            ET.SubElement(rating, "value").text = content_rating
 
-                # Create new XML structure
-                programme = ET.Element("programme", start=start_time, stop=stop_time, channel=station.get('id'))
-                ET.SubElement(programme, "title").text = title
-                if subtitle: ET.SubElement(programme, "sub-title").text = subtitle
-                ET.SubElement(programme, "desc").text = desc
+            output_xml.append(programme)
 
-                # Add categories
-                if video_type is not None:
-                    match video_type.lower():
-                        case 'episode':
-                            ET.SubElement(programme, "category").text = video_type.capitalize()
-                        case 'series':
-                            ET.SubElement(programme, "category").text = video_type.capitalize()
-                        case 'movie':
-                            previously_shown = False
+    def generate_epg_style(self, station_dict, epg_xml_data, output_xml):
+        media_items = epg_xml_data.findall(".//Media")
+        video_items = epg_xml_data.findall(".//Video")
+        tv_items = epg_xml_data.findall(".//tv")
 
-                # ET.SubElement(programme, "category").text = "Series"
-                for genre in genres:
-                    ET.SubElement(programme, "category").text = genre
+        print(f"[DEBUG - {self.client_name.upper()}] Number Stations identified: {len(tv_items)}")
+        print(f"[DEBUG - {self.client_name.upper()}] Number Programs identified: {len(media_items)}")
 
-                # Add icon (using the first image found)
-                if grandparent_art:
-                    ET.SubElement(programme, "icon", src=grandparent_art)
-                else:
-                    coverart = video.find("Image[@type='coverArt']")
-                    if coverart is None:
-                        image = video.find("Image")
-                    else:
-                        image = coverart
-                    if image is not None:
-                        ET.SubElement(programme, "icon", src=image.attrib.get("url", ""))
 
-                # Add series-id and episode details
-                # ET.SubElement(programme, "series-id", system="tms").text = "10779263"
-                if originally_available_at: ET.SubElement(programme, "date").text = originally_available_at
-                if previously_shown:
-                    ET.SubElement(programme, "previously-shown")
-                # ET.SubElement(programme, "episode-num", system="tms").text = "EP019223320004"
-                if parent_index and index:
-                    ET.SubElement(programme, "episode-num", system="onscreen").text = f"S{parent_index}E{index}"
-                    ET.SubElement(programme, "episode-num", system="xmltv_ns").text = f"{int(parent_index)-1}.{int(index)-1}."
+        start_time = time.time()
+        stop_event = threading.Event()
 
-                elif index:
-                    ET.SubElement(programme, "episode-num", system="onscreen").text = f"E{index}"
+        # Function to print elapsed time every 60 seconds
+        def print_status():
+            while not stop_event.is_set():
+                elapsed_time = time.time() - start_time
+                print(f"[STATUS - {self.client_name.upper()}] generate_epg_style running for {int(elapsed_time)} seconds...")
+                stop_event.wait(60)  # Wait for 60 seconds before printing again
 
-                # Add rating
-                rating = ET.SubElement(programme, "rating")
-                ET.SubElement(rating, "value").text = content_rating
+        # Start status thread
+        status_thread = threading.Thread(target=print_status, daemon=True)
+        status_thread.start()
 
-                # Add credits (mocked for demo)
-                # credits = ET.SubElement(programme, "credits")
-                # ET.SubElement(credits, "director").text = "Jeff Thomas"
-                # for actor in ["David Caruso", "Emily Procter", "Adam Rodriguez"]:
-                #     ET.SubElement(credits, "actor").text = actor
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            futures = []
 
-                # Store the programme XML
-                output_xml.append(programme)
+            for tv_element in tv_items:
+                grid_key = tv_element.attrib.get("channelGridKey")
+                station = station_dict.get(grid_key)
 
-                # Sort XML
-                channels = [elem for elem in output_xml.findall("channel")]
-                programmes = sorted(output_xml.findall("programme"), key=lambda p: p.get("channel"))
+                found = any(channel.get("id") == station.get('id') for channel in output_xml.findall(".//channel"))
+                if not found:
+                    channel_element = ET.Element("channel", id=station.get('id'))
+                    ET.SubElement(channel_element, "display-name").text = station.get('name')
+                    ET.SubElement(channel_element, "icon", src=station.get('logo'))
+                    output_xml.append(channel_element)
 
-                tv_attributes = output_xml.attrib.copy()
-                output_xml.clear()
-                output_xml.attrib = tv_attributes  # Restore attributes
+                for video in tv_element.findall(".//MediaContainer/Video"):
+                    futures.append(executor.submit(self.process_video, video, station, output_xml))
 
-                for channel in channels: output_xml.append(channel)
-                for programme in programmes: output_xml.append(programme)
+            concurrent.futures.wait(futures)
 
+        # Stop status updates
+        stop_event.set()
+        status_thread.join()
         return output_xml
 
     def read_xml_from_file(self, date, epg_channels, output_xml):
@@ -892,7 +856,6 @@ class Client:
         else:
             count_increase = False
 
-
         programmes = channel_root.findall('programme')
         out_channels = output_xml.findall("channel")
 
@@ -909,61 +872,31 @@ class Client:
         for programme in out_programmes_list: output_xml.append(programme)
         
         return output_xml, count_increase
-    
-
-    '''
-    def generate_channel_root(self, date, epg_channels, output_root):
-        station_list = epg_channels.keys()
-        stations_completed = 0
-        date_file = f'{date}_epg.xml'
-        date_media_file = f'{date}_media.xml'
-        channel_media_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
-        channel_date_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
-
-        start_time = time.time()
-        for station in station_list:
-            # station_name = epg_channels[station]['slug']
-            channel_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
-            channel_root = self.read_epg_from_api(date, epg_channels.get(station), channel_root)
-            channel_media_root.append(channel_root)
-
-            output_root = self.generate_epg_style(epg_channels.get(station), channel_root, output_root)
-            channel_date_root = self.generate_epg_style(epg_channels.get(station), channel_root, channel_date_root)
-            stations_completed += 1
-            if stations_completed % 100 == 0:
-                elapsed_time = time.time() - start_time
-                print(f'[NOTIFICATION - {self.client_name.upper()}] Number of stations completed {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
-        elapsed_time = time.time() - start_time
-        print(f'[NOTIFICATION - {self.client_name.upper()}] Station List completed {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
-        self.save_xml(date_file, channel_date_root)
-        self.save_xml(date_media_file, channel_media_root)
-        return output_root
-        '''
-
-
+            
     def process_station(self, station, date, epg_channels):
-        channel_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
+        channel_root = ET.Element("tv", attrib={"channelGridKey": station})
         channel_root = self.read_epg_from_api(date, epg_channels.get(station), channel_root)
 
-        output_root = self.generate_epg_style(epg_channels.get(station), channel_root, self.output_root)
-        channel_date_root = self.generate_epg_style(epg_channels.get(station), channel_root, self.channel_date_root)
+        date_folder = Path(f'{date}')
+        filename = f'{station}_{date}.xml'
+        file_path = date_folder / filename
+        self.save_xml(file_path, channel_root)
+        return channel_root
 
-        return channel_root, output_root, channel_date_root
+    def process_xml(self, file_path):
+        # print(file_path)
+        try:
+            tree = ET.parse(file_path)
+            root = tree.getroot()
+            if root.tag == "tv": 
+                return root 
+        except ET.ParseError:
+            print(f"Error parsing {file_path}")
+            return None
 
     def generate_channel_root(self, date, epg_channels, output_root):
         station_list = epg_channels.keys()
         stations_completed = 0
-        date_file = f'{date}_epg.xml'
-        date_media_file = f'{date}_media.xml'
-
-        # Initialize attributes if they don't exist
-        if not hasattr(self, 'output_root'):
-            self.output_root = output_root
-        if not hasattr(self, 'channel_date_root'):
-            self.channel_date_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
-
-        channel_media_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
-        # channel_date_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
 
         start_time = time.time()
         with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
@@ -971,37 +904,57 @@ class Client:
 
             for future in concurrent.futures.as_completed(futures):
                 try:
-                    channel_root, output_root, channel_date_root = future.result()
-                    channel_media_root.append(channel_root)
-                    self.output_root = output_root
-                    self.channel_date_root = channel_date_root
-
+                    channel_root = future.result()
                     stations_completed += 1
-                    if stations_completed % 100 == 0:
-                        elapsed_time = time.time() - start_time
-                        print(f'[NOTIFICATION - {self.client_name.upper()}] Number of stations completed {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
                 except Exception as e:
                     print(f"Error processing station: {e}")
 
         elapsed_time = time.time() - start_time
         print(f'[NOTIFICATION - {self.client_name.upper()}] Station List completed {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
-        channel_count = output_root.findall('channel')
-        print(f'[NOTIFICATION - {self.client_name.upper()}] Channel Count {len(channel_count)}')
 
-        self.save_xml(date_file, channel_date_root)
-        self.save_xml(date_media_file, channel_media_root)
+        start_time = time.time()
+        # Merge all station XML files
+        input_folder = Path(f'{self.data_path}/{date}')
+        xml_files = list(input_folder.glob("*.xml"))
+        # print(xml_files)
+
+        merged_root = ET.Element("MergedTV")
+
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            results = executor.map(self.process_xml, xml_files)
+
+        for tv_element in results:
+            if tv_element is not None:
+                merged_root.append(tv_element)
+
+        channel_media_root = ET.ElementTree(merged_root)
+        date_media_file = Path(f'{self.data_path}/{date}_media.xml')
+
+        with self.lock:
+            try:
+                with date_media_file.open("wb") as f:
+                    channel_media_root.write(f, encoding="utf-8", xml_declaration=True)
+            except Exception as e:
+                print(f"[ERROR - {self.client_name.upper()}] Error writing XML file: {e}")
+
+        elapsed_time = time.time() - start_time
+        print(f'[NOTIFICATION - {self.client_name.upper()}] MediaContainer XML completed {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
+
+        # EPGize the XML
+        start_time = time.time()
+        output_root = self.generate_epg_style(epg_channels, channel_media_root, output_root)
+        elapsed_time = time.time() - start_time
+        print(f'[NOTIFICATION - {self.client_name.upper()}] EPG XML completed {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
+        # Cleanup - Remove date folder
+        if input_folder.exists():
+            shutil.rmtree(input_folder)
         return output_root
 
 
     def epg(self, args=None):
-        # local_sessionAt = self.sessionAt
-        # local_session_expires_in = self.session_expires_in
-        # if not self.isTimeExpired(local_sessionAt, local_session_expires_in):
-        #     print(f"[INFO - {self.client_name.upper()}] Return Cached EPG")
-        #     return None
         update_today_epg = self.update_today_epg
         num_of_cached = 4
-        days_of_data = 5
+        days_of_data = 1
 
         print(f"[INFO - {self.client_name.upper()}] EPG: Updating Channel Data")
         channel_cache, error = self.channels(args)
@@ -1009,15 +962,6 @@ class Client:
 
         epg_channels = self.generate_epg_station_list()
         output_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
-
-        #station_list = ['62b45f15b4508e0eedacdf26', '661fca34414d94009d1206ec']
-
-        # file_path = Path(f"{self.client_name}/epg.xml")
-        # if file_path.exists():
-        #     days_of_data = num_days_cached
-        # else:
-        #     days_of_data = 1
-        # print(f'[INFO - {self.client_name.upper()}] Number of days of schedule data to collect: {days_of_data}')
 
         # Get the current time in the desired timezone
         desired_timezone = pytz.timezone('UTC')
