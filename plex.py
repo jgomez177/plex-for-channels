@@ -5,6 +5,8 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 import xml.dom.minidom
 import concurrent.futures
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 class Client:
     def __init__(self):
@@ -628,16 +630,42 @@ class Client:
        
         epg_params = {'channelGridKey': station.get('gridKey'),
                         'date': date}
+        
+        session = requests.Session()
+
+        # Configure retries
+        retry_strategy = Retry(
+            total=3,              # Total number of retries
+            backoff_factor=2,     # Time between retries will grow exponentially: 1s, 2s, 4s, etc.
+            status_forcelist=[429, 500, 502, 503, 504],  # Retry for these status codes
+            method_whitelist=["GET", "POST"],  # Retry only for GET and POST requests
+            raise_on_status=False  # Don't raise an exception for failed retries, just return the response
+        )
+
+        # Attach the retry configuration to the session
+        adapter = HTTPAdapter(max_retries=retry_strategy)
+
+        session.mount("http://", adapter)
+        session.mount("https://", adapter)
+
+        has_error = False
                         
         try:
-            session = requests.Session()
-            response = session.get(url, params=epg_params, headers=epg_headers)
+            response = session.get(url, params=epg_params, headers=epg_headers, timeout=10)
+            response.raise_for_status() 
         except requests.ConnectionError as e:
             print(f"[ERROR - {self.client_name.upper()}]: Connection Error. {str(e)}")
-            session.close()
-            return epg_xml_data
+            has_error = True
+        except requests.exceptions.HTTPError as e:
+            print(f"[ERROR - {self.client_name.upper()}]: HTTP error occurred: {e}")
+            has_error = True
+        except requests.exceptions.RequestException as e:
+            print(f"[ERROR - {self.client_name.upper()}]: An error occurred: {e}")
+            has_error = True
         finally:
             session.close()
+
+        if has_error: return epg_xml_data
 
         if response.status_code != 200:
             print(f'[ERROR - {self.client_name.upper()}] EPG HTTP Failure {response.status_code}')
@@ -939,7 +967,7 @@ class Client:
         # channel_date_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
 
         start_time = time.time()
-        with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
             futures = {executor.submit(self.process_station, station, date, epg_channels): station for station in station_list}
 
             for future in concurrent.futures.as_completed(futures):
@@ -958,6 +986,9 @@ class Client:
 
         elapsed_time = time.time() - start_time
         print(f'[NOTIFICATION - {self.client_name.upper()}] Station List completed {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
+        channel_count = output_root.findall('channel')
+        print(f'[NOTIFICATION - {self.client_name.upper()}] Channel Count {len(channel_count)}')
+
         self.save_xml(date_file, channel_date_root)
         self.save_xml(date_media_file, channel_media_root)
         return output_root
