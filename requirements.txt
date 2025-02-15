@@ -4,3 +4,4 @@ requests
 schedule
 pytz
 bs4
+urllib3
