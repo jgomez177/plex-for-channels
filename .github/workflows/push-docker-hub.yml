@@ -3,6 +3,7 @@ name: ci
 on:
   push:
     branches:
+      - 'multi_thread_test'
       - 'main'
     tags:
       - '*'
