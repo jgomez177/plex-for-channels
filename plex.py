@@ -4,6 +4,7 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 import xml.dom.minidom
+import concurrent.futures
 
 class Client:
     def __init__(self):
@@ -677,6 +678,9 @@ class Client:
         dom = xml.dom.minidom.parseString(xml_string)
         output_content = dom.toprettyxml(indent="  ")
 
+        # Remove unnecessary blank lines
+        output_content = "\n".join(line for line in output_content.splitlines() if line.strip())
+
 
         with self.lock:
             try:
@@ -879,6 +883,8 @@ class Client:
         
         return output_xml, count_increase
     
+
+    '''
     def generate_channel_root(self, date, epg_channels, output_root):
         station_list = epg_channels.keys()
         stations_completed = 0
@@ -905,6 +911,57 @@ class Client:
         self.save_xml(date_file, channel_date_root)
         self.save_xml(date_media_file, channel_media_root)
         return output_root
+        '''
+
+
+    def process_station(self, station, date, epg_channels):
+        channel_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
+        channel_root = self.read_epg_from_api(date, epg_channels.get(station), channel_root)
+
+        output_root = self.generate_epg_style(epg_channels.get(station), channel_root, self.output_root)
+        channel_date_root = self.generate_epg_style(epg_channels.get(station), channel_root, self.channel_date_root)
+
+        return channel_root, output_root, channel_date_root
+
+    def generate_channel_root(self, date, epg_channels, output_root):
+        station_list = epg_channels.keys()
+        stations_completed = 0
+        date_file = f'{date}_epg.xml'
+        date_media_file = f'{date}_media.xml'
+
+        # Initialize attributes if they don't exist
+        if not hasattr(self, 'output_root'):
+            self.output_root = output_root
+        if not hasattr(self, 'channel_date_root'):
+            self.channel_date_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
+
+        channel_media_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
+        # channel_date_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
+
+        start_time = time.time()
+        with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+            futures = {executor.submit(self.process_station, station, date, epg_channels): station for station in station_list}
+
+            for future in concurrent.futures.as_completed(futures):
+                try:
+                    channel_root, output_root, channel_date_root = future.result()
+                    channel_media_root.append(channel_root)
+                    self.output_root = output_root
+                    self.channel_date_root = channel_date_root
+
+                    stations_completed += 1
+                    if stations_completed % 100 == 0:
+                        elapsed_time = time.time() - start_time
+                        print(f'[NOTIFICATION - {self.client_name.upper()}] Number of stations completed {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
+                except Exception as e:
+                    print(f"Error processing station: {e}")
+
+        elapsed_time = time.time() - start_time
+        print(f'[NOTIFICATION - {self.client_name.upper()}] Station List completed {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
+        self.save_xml(date_file, channel_date_root)
+        self.save_xml(date_media_file, channel_media_root)
+        return output_root
+
 
     def epg(self, args=None):
         # local_sessionAt = self.sessionAt
