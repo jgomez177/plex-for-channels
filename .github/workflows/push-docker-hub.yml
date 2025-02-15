@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - 'multi_thread_test'
-      - 'main'
     tags:
       - '*'
 
@@ -38,7 +37,8 @@ jobs:
           images: |
             ghcr.io/jgomez177/plex-for-channels
           tags: |
-            type=raw,value=latest,enable=${{ endsWith(github.ref, 'main') || endsWith(github.ref, 'multi_thread_test') }}
+            type=raw,value=latest,enable=${{ endsWith(github.ref, 'main') }}
+            type=raw,value=multi_thread_test,enable=${{ endsWith(github.ref, 'multi_thread_test') }}
             type=ref,event=tag
       -
         name: Build and push
