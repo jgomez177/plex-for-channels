@@ -818,7 +818,7 @@ class Client:
                     gc.collect()
 
         elapsed_time = time.time() - start_time
-        print(f'[DEBUG - {self.client_name.upper()}] Generate EPG Style completed {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
+        print(f'[DEBUG - {self.client_name.upper()}] Generate EPG Style completed: Elapsed time: {elapsed_time:.2f} seconds.')
         return output_xml
                 
     def process_station(self, station, date, epg_channels):
@@ -868,7 +868,7 @@ class Client:
                     print(f"Error processing station: {e}")
 
         elapsed_time = time.time() - start_time
-        print(f'[NOTIFICATION - {self.client_name.upper()}] {date} Station List completed {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
+        print(f'[NOTIFICATION - {self.client_name.upper()}] {date} Station API Calls completed - Count {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
 
         start_time = time.time()
         # Merge all station XML files
@@ -925,7 +925,7 @@ class Client:
         yesterday_epg_file = f'{yesterday_date}_epg.xml'
         yesterday_media_file = f'{yesterday_date}_media.xml'
 
-        output_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
+        # output_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
         # self.save_xml(yesterday_epg_file, output_root)  # Testing
         # self.save_xml(yesterday_media_file, output_root) # Testing
 
