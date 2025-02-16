@@ -102,6 +102,11 @@ def rebuild_epg(provider):
         trigger_epg_build(provider)
         return "Rebuilding EPG"
 
+@app.get("/<provider>/build_epg")
+def build_epg(provider):
+        trigger_epg_build(provider)
+        return "Manually Triggering EPG"
+
 @app.route("/<provider>/watch/<id>")
 def watch(provider, id):
     video_url, err = providers[provider].generate_video_url(id)

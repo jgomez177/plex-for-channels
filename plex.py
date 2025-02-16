@@ -686,17 +686,7 @@ class Client:
 
         return epg_xml_data
         
-    def generate_epg_station_list(self):
-        # channels_by_geo = self.channels_by_geo.copy()
-        with self.lock:
-            if self.channels_by_geo_file.exists():
-                channels_by_geo = json.loads(self.channels_by_geo_file.read_text())
-            else:
-                channels_by_geo = {}
-
-
-
-        # print(len(channels_by_geo))
+    def generate_epg_station_list(self, channels_by_geo):
         epg_dict = {}
         for geo_loc in channels_by_geo:
             channels_dict = channels_by_geo.get(geo_loc)
@@ -705,17 +695,11 @@ class Client:
                     station = channels_dict.get(ch)
                     station.update({'geo_code': geo_loc})
                     epg_dict.update({ch: station})
-        #print(len(epg_dict))
-        #print(json.dumps(epg_dict.get('6427568defc65caa7e9514d4'), indent=2))
-
         return(epg_dict)
 
     def save_xml(self, xml_file, root):
-        client_name = self.client_name.lower()
-        compressed_file = f"{xml_file}.gz"
         folder_path = Path(self.data_path)
         xml_file_path = folder_path / xml_file
-        compressed_file_path = folder_path / compressed_file
 
         xml_string = ET.tostring(root, encoding="utf-8").decode("utf-8")
         dom = xml.dom.minidom.parseString(xml_string)
@@ -733,16 +717,6 @@ class Client:
             except Exception as e:
                 print(f"[ERROR - {self.client_name.upper()}] Error writing XML file: {e}")
 
-            # Compress the XML file
-            if xml_file == 'epg.xml':
-                try:
-                    with compressed_file_path.open("wb") as file:
-                        with gzip.GzipFile(fileobj=file, mode="wb") as gz:
-                            gz.write(output_content.encode("utf-8"))
-                    print(f"[INFO - {self.client_name.upper()}] GZIP XML data successfully written to '{xml_file_path}'")
-                except Exception as e:
-                    print(f"[ERROR - {self.client_name.upper()}] Error writing GZIP XML file: {e}")
-               
         return None
 
     def process_video(self, video, station, output_xml):
@@ -843,46 +817,7 @@ class Client:
                     gc.collect()
 
         return output_xml
-
-    def read_xml_from_file(self, date, epg_channels, output_xml):
-        date_file = f'{date}_media.xml'
-        xml_file_path = Path(f'{self.data_path}/{date_file}')
-
-        media_root = ET.parse(xml_file_path)
-        channel_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
-        channel_root = self.generate_epg_style(epg_channels, media_root, channel_root)
-
-        station_list = epg_channels.keys()
-        print (f'[NOTIFICATION - {self.client_name.upper()}] Number of stations {len(station_list)}')
-        channels = channel_root.findall('channel')
-        print (f'[NOTIFICATION - {self.client_name.upper()}] Number of EPG Channels {len(channels)}')
-
-        if len(station_list) > len(channels):
-            print(f'[INFO - {self.client_name.upper()}] Update of EPG Needed to Support Additional Channels')
-            output_xml = self.generate_channel_root(date, epg_channels, output_xml)
-            out_channels = output_xml.findall("channel")
-            print(f'[INFO - {self.client_name.upper()}] Returning {len(out_channels)} channels in EPG')
-            count_increase = True
-            return output_xml, count_increase
-        else:
-            count_increase = False
-
-        programmes = channel_root.findall('programme')
-        out_channels = output_xml.findall("channel")
-
-        if len(out_channels) == 0:
-            for channel in channels: output_xml.append(channel)
-        for programme in programmes: output_xml.append(programme)
-
-        out_channels_list = [elem for elem in  output_xml.findall("channel")]
-        out_programmes_list = sorted(output_xml.findall("programme"), key=lambda p: p.get("channel"))
-        output_xml.clear()
-
-        for channel in out_channels_list: output_xml.append(channel)
-        for programme in out_programmes_list: output_xml.append(programme)
-        
-        return output_xml, count_increase
-            
+                
     def process_station(self, station, date, epg_channels):
         channel_root = ET.Element("tv", attrib={"channelGridKey": station})
         channel_root = self.read_epg_from_api(date, epg_channels.get(station), channel_root)
@@ -890,8 +825,8 @@ class Client:
         date_folder = Path(f'{date}')
         filename = f'{station}_{date}.xml'
         file_path = date_folder / filename
-        self.save_xml(file_path, channel_root)
-        return channel_root
+        self.save_xml(file_path, channel_root)        
+        return
 
     def process_xml(self, file_path):
         # print(file_path)
@@ -904,8 +839,25 @@ class Client:
             print(f"Error parsing {file_path}")
             return None
 
-    def generate_channel_root(self, date, epg_channels, output_root):
-        station_list = epg_channels.keys()
+    def generate_epg_from_media_file(self, date, date_media_file, epg_channels):
+        media_root = ET.parse(date_media_file)
+        channel_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
+        channel_root = self.generate_epg_style(epg_channels, media_root, channel_root)
+        media_root.getroot().clear()
+        
+        epg_file = f'{date}_epg.xml'
+        self.save_xml(epg_file, channel_root)
+        return
+
+    def generate_media_file(self, date, epg_channels):
+        # station_list = list(epg_channels.keys())
+        station_list = []
+        station_count = 1
+        for elem in epg_channels:
+            station_list.append(elem)
+            station_count += 1
+            if station_count > 5:
+                break
         stations_completed = 0
 
         start_time = time.time()
@@ -914,13 +866,13 @@ class Client:
 
             for future in concurrent.futures.as_completed(futures):
                 try:
-                    channel_root = future.result()
+                    future.result()
                     stations_completed += 1
                 except Exception as e:
                     print(f"Error processing station: {e}")
 
         elapsed_time = time.time() - start_time
-        print(f'[NOTIFICATION - {self.client_name.upper()}] Station List completed {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
+        print(f'[NOTIFICATION - {self.client_name.upper()}] {date} Station List completed {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
 
         start_time = time.time()
         # Merge all station XML files
@@ -928,7 +880,8 @@ class Client:
         xml_files = list(input_folder.glob("*.xml"))
         # print(xml_files)
 
-        merged_root = ET.Element("MergedTV")
+        # merged_root = ET.Element("MergedTV")
+        merged_root = ET.Element("MergedTV", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
 
         with concurrent.futures.ThreadPoolExecutor() as executor:
             results = executor.map(self.process_xml, xml_files)
@@ -948,97 +901,148 @@ class Client:
                 print(f"[ERROR - {self.client_name.upper()}] Error writing XML file: {e}")
 
         elapsed_time = time.time() - start_time
-        print(f'[NOTIFICATION - {self.client_name.upper()}] MediaContainer XML completed {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
+        print(f'[NOTIFICATION - {self.client_name.upper()}] {date} MediaContainer XML completed {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
 
-        # EPGize the XML
-        start_time = time.time()
-        output_root = self.generate_epg_style(epg_channels, channel_media_root, output_root)
-        elapsed_time = time.time() - start_time
-        print(f'[NOTIFICATION - {self.client_name.upper()}] EPG XML completed {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
-        # Cleanup - Remove date folder
+        self.generate_epg_from_media_file(date, date_media_file, epg_channels)
+
         if input_folder.exists():
             shutil.rmtree(input_folder)
-        return output_root
+        
+        return
 
     def epg(self, args=None):
+        print(f"[DEBUG - {self.client_name.upper()}] Running EPG Call")
+        channels_by_geo, error = self.channels(args)
+        epg_channels = self.generate_epg_station_list(channels_by_geo)
+
+        if epg_channels:
+            print(f"[DEBUG - {self.client_name.upper()}] Number of channels {len(epg_channels)}")
+            # for elem in epg_channels:
+            #     print(json.dumps(epg_channels[elem], indent=2))
+            #     break
+        desired_timezone = pytz.timezone('UTC')
+        today = datetime.now(desired_timezone)
+
+        today_date = (today).strftime("%Y-%m-%d")
+
+        yesterday_date = (today + timedelta(days=-1)).strftime("%Y-%m-%d")
+        yesterday_epg_file = f'{yesterday_date}_epg.xml'
+        yesterday_media_file = f'{yesterday_date}_media.xml'
+
+        output_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
+        # self.save_xml(yesterday_epg_file, output_root)  # Testing
+        # self.save_xml(yesterday_media_file, output_root) # Testing
+
         update_today_epg = self.update_today_epg
         num_of_cached = 4
         days_of_data = 7
 
-        print(f"[INFO - {self.client_name.upper()}] EPG: Updating Channel Data")
+        def delete_file(filename):
+            filepath = Path(f'{self.data_path}/{filename}')
+            try:
+                filepath.unlink()
+                print(f"[NOTIFICATION - {self.client_name.upper()}] {filename} deleted.")
+            except FileNotFoundError:
+                pass
+            except PermissionError:
+                print(f"[ERROR - {self.client_name.upper()}] Permission denied: Unable to delete {filename}")
+            return
+
+        delete_file(yesterday_epg_file)
+        delete_file(yesterday_media_file)
+
+        print(f"[DEBUG - {self.client_name.upper()}] EPG Pass {update_today_epg}")
         if update_today_epg == 0:
-            print(f"[INFO - {self.client_name.upper()}] EPG: Update Today's Data")
-
-        channel_cache, error = self.channels(args)
-        if error: return error
-
-        epg_channels = self.generate_epg_station_list()
-        output_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
-
-        # Get the current time in the desired timezone
-        desired_timezone = pytz.timezone('UTC')
-        today = datetime.now(desired_timezone)
-        dt_date = today
-        yesterday_date = (today + timedelta(days=-1)).strftime("%Y-%m-%d")
-        yesterday_file = f'{yesterday_date}_media.xml'
-        yesterday_file_path = Path(f'{self.data_path}/{yesterday_file}')
-
-        try:
-            yesterday_file_path.unlink()
-            print(f"[NOTIFICATION - {self.client_name.upper()}] {yesterday_file} deleted.")
-        except FileNotFoundError:
-            print(f"[WARNING - {self.client_name.upper()}] File {yesterday_file} does not exist")
-        except PermissionError:
-            print(f"[ERROR - {self.client_name.upper()}] Permission denied: Unable to delete {yesterday_file}")
+            print(f"[INFO - {self.client_name.upper()}] Update Today's EPG data")
+            self.generate_media_file(today_date, epg_channels)
 
         break_loop = False
+        merge_dates = []
         for i in range(days_of_data):
-            output_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
-            dt_date = today + timedelta(days=i)
-            date = dt_date.strftime("%Y-%m-%d")
-            print(f'[NOTIFICATION - {self.client_name.upper()}] Collect data for {date}')
-            date_file = f'{date}_media.xml'
-            date_file_path = Path(f'{self.data_path}/{date_file}')
-            if date_file_path.exists():
-                print(f'[NOTIFICATION - {self.client_name.upper()}] {date_file} exists')
-                if i > 0:
-                    print(f'[NOTIFICATION - {self.client_name.upper()}] {i}: Using cached data for {date}')
-                    output_root, break_loop = self.read_xml_from_file(date, epg_channels, output_root)
-                    channels = output_root.findall('channel')
-                    print(f'[INFO - {self.client_name.upper()}] Channel Count {len(channels)}')
-                else:
-                    if update_today_epg == 0:
-                        print(f'[NOTIFICATION - {self.client_name.upper()}] Refreshing data for {date}')
-                        output_root = self.generate_channel_root(date, epg_channels, output_root)
-                    else:
-                        print(f'[NOTIFICATION - {self.client_name.upper()}] Using cached data for {date}')
-                        output_root, break_loop = self.read_xml_from_file(date, epg_channels, output_root)
-                        channels = output_root.findall('channel')
-                        print(f'[INFO - {self.client_name.upper()}] Channel Count {len(channels)}')
+            loop_date = (today + timedelta(days=i)).strftime("%Y-%m-%d")
+            print(f'[NOTIFICATION - {self.client_name.upper()}] Collect data for {loop_date}')
+            date_epg_file = f'{loop_date}_epg.xml'
+            date_epg_file_path = Path(f'{self.data_path}/{date_epg_file}')
+            if date_epg_file_path.exists():
+                print(f'[NOTIFICATION - {self.client_name.upper()}] Using Saved Data for {loop_date}')
             else:
-                print(f'[NOTIFICATION - {self.client_name.upper()}] Generating {date_file}')
-                output_root = self.generate_channel_root(date, epg_channels, output_root)
+                # Generate EPG File for loop_date
+                self.generate_media_file(loop_date, epg_channels)
+                # Loop Date EPG to List
                 break_loop = True
-                    
-            filename = f'{date}_epg.xml'
-            self.save_xml(filename, output_root)
-            if break_loop:
-                break
+            merge_dates.append(date_epg_file)
+            if break_loop: break
+
+        self.generate_main_epg(merge_dates)
+
         with self.lock:
             update_today_epg += 1
             if update_today_epg >= num_of_cached:
                 update_today_epg = 0
             self.update_today_epg = update_today_epg
-        print(f'[NOTIFICATION - {self.client_name.upper()}] EPG Data Collection Complete')
+        print(f"[DEBUG - {self.client_name.upper()}] EPG Call Complete")
+        return
+
+    def generate_main_epg(self, file_list):
+        main_epg = f'{self.data_path}/epg.xml'
+
+        unique_channels = set()
+        channel_elements = []
+
+        # Open the output file in write mode with streaming support
+        with open(main_epg, "wb") as f_out:
+            f_out.write(b'<?xml version="1.0" ?>\n')
+            f_out.write(b'<tv generator-info-name="merged-script">\n')
+
+            # FIRST PASS: Collect Channels
+            for file in file_list:
+                fullpath_file = f'{self.data_path}/{file}'
+                print(f"[DEBUG - {self.client_name.upper()}] Processing Channels from {file}...")
+                for event, elem in ET.iterparse(fullpath_file, events=("end",)):
+                    if elem.tag == "channel":
+                        channel_id = elem.get("id")
+                        if channel_id not in unique_channels:
+                            unique_channels.add(channel_id)
+                            channel_elements.append(ET.tostring(elem, encoding="utf-8"))
+                        elem.clear()  # Free memory
+                    
+                # Write all <channel> elements at the beginning
+                for channel in channel_elements:
+                    f_out.write(channel)
+
+            # SECOND PASS: Collect Channels
+            for file in file_list:
+                fullpath_file = f'{self.data_path}/{file}'
+                print(f"[DEBUG - {self.client_name.upper()}] Processing Programs from {file}...")
+                for event, elem in ET.iterparse(fullpath_file, events=("end",)):
+                    if elem.tag == "programme":
+                        f_out.write(ET.tostring(elem, encoding="utf-8"))
+                        elem.clear()  # Free memory
+
+            # Close the root element in the output file
+            f_out.write(b'</tv>')
+        
+        print(f"[INFO - {self.client_name.upper()}] EPG FIle Created")
+
+        # **GZIP Compression Step**
+        gzip_file = main_epg + ".gz"
+        with open(main_epg, "rb") as f_in, gzip.open(gzip_file, "wb") as f_out:
+            shutil.copyfileobj(f_in, f_out)
+
+        print(f"[INFO - {self.client_name.upper()}] Compressed EPG FIle Created")
         return
 
     def rebuild_epg(self):
-        file_path = Path(f'{self.data_path}/epg.xml')
-        try:
-            file_path.unlink()
-            print(f"[NOTIFICATION - {self.client_name.upper()}] EPG Data deleted.")
-        except FileNotFoundError:
-            pass
-        except PermissionError:
-            print(f"[ERROR - {self.client_name.upper()}] Permission denied: Unable to delete EPG Data")
+        folder_path = Path(f'{self.data_path}')
+        file_types = ["20*", "epg.xml", "epg.xml.gz"]
+
+        for type in file_types:
+            for file in folder_path.glob(type):
+                if file.is_file():
+                    try:
+                        file.unlink()
+                    except:
+                        print(f"[ERROR - {self.client_name.upper()}] Unable to delete {file}")
+                    else:
+                        print(f"[ERROR - {self.client_name.upper()}] {file} Deleted")
 
