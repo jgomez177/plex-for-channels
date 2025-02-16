@@ -3,7 +3,7 @@ name: ci
 on:
   push:
     branches:
-      - 'multi_thread_test'
+      - 'memory-cleanup'
     tags:
       - '*'
 

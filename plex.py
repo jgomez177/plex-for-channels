@@ -1,4 +1,4 @@
-import threading, json, random, string, time, requests, csv, os, gzip, pytz, shutil
+import threading, json, random, string, time, requests, csv, os, gzip, pytz, shutil, gc, itertools, psutil
 from urllib.parse import urlencode
 from pathlib import Path
 import xml.etree.ElementTree as ET
@@ -806,32 +806,26 @@ class Client:
             output_xml.append(programme)
 
     def generate_epg_style(self, station_dict, epg_xml_data, output_xml):
-        media_items = epg_xml_data.findall(".//Media")
-        video_items = epg_xml_data.findall(".//Video")
-        tv_items = epg_xml_data.findall(".//tv")
+        batch_size = 100  # Number of video elements processed per batch
+        tv_items = list(epg_xml_data.iterfind(".//tv"))
 
-        print(f"[DEBUG - {self.client_name.upper()}] Number Stations identified: {len(tv_items)}")
-        print(f"[DEBUG - {self.client_name.upper()}] Number Programs identified: {len(media_items)}")
+        def log_memory_usage(tag=""):
+            """ Logs the memory usage of the current process """
+            process = psutil.Process(os.getpid())
+            mem_usage = process.memory_info().rss / 1024 ** 2  # Convert bytes to MB
+            print(f"[MEMORY {tag}] Usage: {mem_usage:.2f} MB")
+            return mem_usage
 
+        num_tv_items = sum(1 for _ in epg_xml_data.iterfind(".//tv"))
+        num_media_items = sum(1 for _ in epg_xml_data.iterfind(".//Media"))
 
-        start_time = time.time()
-        stop_event = threading.Event()
-
-        # Function to print elapsed time every 60 seconds
-        def print_status():
-            while not stop_event.is_set():
-                elapsed_time = time.time() - start_time
-                print(f"[STATUS - {self.client_name.upper()}] generate_epg_style running for {int(elapsed_time)} seconds...")
-                stop_event.wait(60)  # Wait for 60 seconds before printing again
-
-        # Start status thread
-        status_thread = threading.Thread(target=print_status, daemon=True)
-        status_thread.start()
+        print(f"[DEBUG - {self.client_name.upper()}] Number Stations identified: {num_tv_items}")
+        print(f"[DEBUG - {self.client_name.upper()}] Number Programs identified: {num_media_items}")
 
         with concurrent.futures.ThreadPoolExecutor() as executor:
             futures = []
 
-            for tv_element in tv_items:
+            for i, tv_element in enumerate(tv_items):
                 grid_key = tv_element.attrib.get("channelGridKey")
                 station = station_dict.get(grid_key)
 
@@ -842,14 +836,23 @@ class Client:
                     ET.SubElement(channel_element, "icon", src=station.get('logo'))
                     output_xml.append(channel_element)
 
-                for video in tv_element.findall(".//MediaContainer/Video"):
-                    futures.append(executor.submit(self.process_video, video, station, output_xml))
+                # **Process videos in batches**
+                video_iter = iter(tv_element.findall(".//MediaContainer/Video"))
 
-            concurrent.futures.wait(futures)
+                while True:
+                    batch = list(itertools.islice(video_iter, batch_size))  # Get next batch
+                    if not batch:
+                        break
 
-        # Stop status updates
-        stop_event.set()
-        status_thread.join()
+                    futures = [executor.submit(self.process_video, video, station, output_xml) for video in batch]
+                    concurrent.futures.wait(futures)
+
+                    # **Force Garbage Collection after each batch**
+                    mem_before = log_memory_usage("Before GC")
+                    gc.collect()
+                    mem_after = log_memory_usage("After GC")
+                    print(f"[DEBUG - {self.client_name.upper()}] {mem_before - mem_after:.2f} MB freed after GC")
+
         return output_xml
 
     def read_xml_from_file(self, date, epg_channels, output_xml):
