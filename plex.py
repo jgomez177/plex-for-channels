@@ -806,23 +806,6 @@ class Client:
             output_xml.append(programme)
 
     def generate_epg_style(self, station_dict, epg_xml_data, output_xml):
-        def get_memory_usage_from_cgroup():
-            """Get the current memory usage from the cgroup filesystem in bytes."""
-            try:
-                with open("/sys/fs/cgroup/memory/memory.usage_in_bytes", "r") as f:
-                    memory_usage_bytes = int(f.read().strip())
-                return memory_usage_bytes / (1024 ** 2)  # Convert to MB
-            except FileNotFoundError:
-                print("Could not access cgroup memory stats.")
-                return 0
-
-        def log_memory_usage(phase):
-            """Logs the memory usage before or after garbage collection."""
-            memory_usage = get_memory_usage_from_cgroup()
-            print(f"[{phase}] Memory Usage: {memory_usage:.2f} MB")
-            return memory_usage
-
-
         batch_size = 100  # Number of video elements processed per batch
         tv_items = list(epg_xml_data.iterfind(".//tv"))
         num_tv_items = sum(1 for _ in epg_xml_data.iterfind(".//tv"))
@@ -857,10 +840,7 @@ class Client:
                     concurrent.futures.wait(futures)
 
                     # **Force Garbage Collection after each batch**
-                    mem_before = log_memory_usage("Before GC")
                     gc.collect()
-                    mem_after = log_memory_usage("After GC")
-                    print(f"[DEBUG - {self.client_name.upper()}] {mem_before - mem_after:.2f} MB freed after GC")
 
         return output_xml
 
