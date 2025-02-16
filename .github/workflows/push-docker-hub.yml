@@ -38,7 +38,7 @@ jobs:
             ghcr.io/jgomez177/plex-for-channels
           tags: |
             type=raw,value=latest,enable=${{ endsWith(github.ref, 'main') }}
-            type=raw,value=multi_thread_test,enable=${{ endsWith(github.ref, 'multi_thread_test') }}
+            type=raw,value=multi_thread_test,enable=${{ endsWith(github.ref, 'memory-cleanup') }}
             type=ref,event=tag
       -
         name: Build and push
