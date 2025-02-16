@@ -850,14 +850,7 @@ class Client:
         return
 
     def generate_media_file(self, date, epg_channels):
-        # station_list = list(epg_channels.keys())
-        station_list = []
-        station_count = 1
-        for elem in epg_channels:
-            station_list.append(elem)
-            station_count += 1
-            if station_count > 5:
-                break
+        station_list = list(epg_channels.keys())
         stations_completed = 0
 
         start_time = time.time()
