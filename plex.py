@@ -1,4 +1,4 @@
-import threading, json, random, string, time, requests, csv, os, gzip, pytz, shutil, gc, itertools, psutil
+import threading, json, random, string, time, requests, csv, os, gzip, pytz, shutil, gc, itertools
 from urllib.parse import urlencode
 from pathlib import Path
 import xml.etree.ElementTree as ET
@@ -806,16 +806,25 @@ class Client:
             output_xml.append(programme)
 
     def generate_epg_style(self, station_dict, epg_xml_data, output_xml):
+        def get_memory_usage_from_cgroup():
+            """Get the current memory usage from the cgroup filesystem in bytes."""
+            try:
+                with open("/sys/fs/cgroup/memory/memory.usage_in_bytes", "r") as f:
+                    memory_usage_bytes = int(f.read().strip())
+                return memory_usage_bytes / (1024 ** 2)  # Convert to MB
+            except FileNotFoundError:
+                print("Could not access cgroup memory stats.")
+                return 0
+
+        def log_memory_usage(phase):
+            """Logs the memory usage before or after garbage collection."""
+            memory_usage = get_memory_usage_from_cgroup()
+            print(f"[{phase}] Memory Usage: {memory_usage:.2f} MB")
+            return memory_usage
+
+
         batch_size = 100  # Number of video elements processed per batch
         tv_items = list(epg_xml_data.iterfind(".//tv"))
-
-        def log_memory_usage(tag=""):
-            """ Logs the memory usage of the current process """
-            process = psutil.Process(os.getpid())
-            mem_usage = process.memory_info().rss / 1024 ** 2  # Convert bytes to MB
-            print(f"[MEMORY {tag}] Usage: {mem_usage:.2f} MB")
-            return mem_usage
-
         num_tv_items = sum(1 for _ in epg_xml_data.iterfind(".//tv"))
         num_media_items = sum(1 for _ in epg_xml_data.iterfind(".//Media"))
 

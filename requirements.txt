@@ -5,4 +5,3 @@ schedule
 pytz
 bs4
 urllib3
-psutil
