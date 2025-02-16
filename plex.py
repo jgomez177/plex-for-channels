@@ -993,6 +993,7 @@ class Client:
 
         break_loop = False
         for i in range(days_of_data):
+            output_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
             dt_date = today + timedelta(days=i)
             date = dt_date.strftime("%Y-%m-%d")
             print(f'[NOTIFICATION - {self.client_name.upper()}] Collect data for {date}')
@@ -1019,7 +1020,7 @@ class Client:
                 output_root = self.generate_channel_root(date, epg_channels, output_root)
                 break_loop = True
                     
-            filename = 'epg.xml'
+            filename = f'{date}_epg.xml'
             self.save_xml(filename, output_root)
             if break_loop:
                 break
