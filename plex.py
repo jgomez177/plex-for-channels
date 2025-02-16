@@ -1049,5 +1049,3 @@ class Client:
         except PermissionError:
             print(f"[ERROR - {self.client_name.upper()}] Permission denied: Unable to delete EPG Data")
 
-
-

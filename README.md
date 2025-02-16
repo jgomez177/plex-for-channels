@@ -1,6 +1,6 @@
 # Plex for Channels
 
-Current version: **4.00**
+Current version: **4.01**
 
 # About
 Generates M3U playlists and EPG XMLTV files from Plex linear feeds.
@@ -18,6 +18,8 @@ Site 2
 [<img src="https://townsquare.media/site/191/files/2024/01/attachment-cookie.jpg" width=400/>](https://digitalcookie.girlscouts.org/scout/mckenna899691)
 
 # Changes
+ - Version 4.01
+   - Corrected memory issues and parsing
  - Version 4.00
    - Total revamp of Plex Project!!!
    - Improved threading capability, updated web interface
