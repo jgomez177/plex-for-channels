@@ -13,11 +13,12 @@ class Client:
         self.lock = threading.Lock()
         self.client_name = 'plex'
         self.data_path = f'data/{self.client_name}'
+        self.channels_by_geo_file = Path(f'{self.data_path}/channels_by_geo.json')
         self.device_id = None
         self.load_device()
         self.sessionAt = 0
         self.session_expires_in = (6 * 60 * 60)
-        self.channels_by_geo = {}
+        # self.channels_by_geo = {}
         self.tokenResponse = None
         self.token_expires_in = (6 * 60 * 60)
         self.token_sessionAt = 0
@@ -469,7 +470,13 @@ class Client:
             self.parse_newregion(args.get('newregion'))
 
         geo_list = self.generate_geo_list(args).copy()
-        channels_by_geo = self.channels_by_geo
+        # channels_by_geo = self.channels_by_geo
+        with self.lock:
+            if self.channels_by_geo_file.exists():
+                channels_by_geo = json.loads(self.channels_by_geo_file.read_text())
+            else:
+                channels_by_geo = {}
+
         sessionAt = self.sessionAt
         session_expires_in = self.session_expires_in
 
@@ -521,7 +528,8 @@ class Client:
             print(f'[INFO - {self.client_name.upper()}] Stations Identified for {geo_code.lower()}: {len(stations)}/{len(channel_dict)}')
 
         with self.lock:
-            self.channels_by_geo = channels_by_geo
+            # self.channels_by_geo = channels_by_geo
+            self.channels_by_geo_file.write_text(json.dumps(channels_by_geo, indent = 4))
             self.sessionAt = time.time()
             self.session_expires_in = session_expires_in
         return channels_by_geo, error
@@ -679,7 +687,15 @@ class Client:
         return epg_xml_data
         
     def generate_epg_station_list(self):
-        channels_by_geo = self.channels_by_geo.copy()
+        # channels_by_geo = self.channels_by_geo.copy()
+        with self.lock:
+            if self.channels_by_geo_file.exists():
+                channels_by_geo = json.loads(self.channels_by_geo_file.read_text())
+            else:
+                channels_by_geo = {}
+
+
+
         # print(len(channels_by_geo))
         epg_dict = {}
         for geo_loc in channels_by_geo:
@@ -837,10 +853,13 @@ class Client:
         return output_xml
 
     def read_xml_from_file(self, date, epg_channels, output_xml):
-        date_file = f'{date}_epg.xml'
+        date_file = f'{date}_media.xml'
         xml_file_path = Path(f'{self.data_path}/{date_file}')
 
-        channel_root = ET.parse(xml_file_path)
+        media_root = ET.parse(xml_file_path)
+        channel_root = ET.Element("tv", attrib={"generator-info-name": "jgomez177", "generated-ts": ""})
+        channel_root = self.generate_epg_style(epg_channels, media_root, channel_root)
+
         station_list = epg_channels.keys()
         print (f'[NOTIFICATION - {self.client_name.upper()}] Number of stations {len(station_list)}')
         channels = channel_root.findall('channel')
@@ -955,6 +974,9 @@ class Client:
         days_of_data = 7
 
         print(f"[INFO - {self.client_name.upper()}] EPG: Updating Channel Data")
+        if update_today_epg == 0:
+            print(f"[INFO - {self.client_name.upper()}] EPG: Update Today's Data")
+
         channel_cache, error = self.channels(args)
         if error: return error
 
@@ -1000,9 +1022,6 @@ class Client:
                         output_root, break_loop = self.read_xml_from_file(date, epg_channels, output_root)
                         channels = output_root.findall('channel')
                         print(f'[INFO - {self.client_name.upper()}] Channel Count {len(channels)}')
-                    update_today_epg += 1
-                    if update_today_epg >= num_of_cached:
-                        update_today_epg = 0
             else:
                 print(f'[NOTIFICATION - {self.client_name.upper()}] Generating {date_file}')
                 output_root = self.generate_channel_root(date, epg_channels, output_root)
@@ -1013,8 +1032,12 @@ class Client:
             if break_loop:
                 break
         with self.lock:
+            update_today_epg += 1
+            if update_today_epg >= num_of_cached:
+                update_today_epg = 0
             self.update_today_epg = update_today_epg
         print(f'[NOTIFICATION - {self.client_name.upper()}] EPG Data Collection Complete')
+        return
 
     def rebuild_epg(self):
         file_path = Path(f'{self.data_path}/epg.xml')
