@@ -1,6 +1,6 @@
 # Plex for Channels
 
-Current version: **4.01**
+Current version: **4.02**
 
 # About
 Generates M3U playlists and EPG XMLTV files from Plex linear feeds.
@@ -18,6 +18,8 @@ Site 2
 [<img src="https://townsquare.media/site/191/files/2024/01/attachment-cookie.jpg" width=400/>](https://digitalcookie.girlscouts.org/scout/mckenna899691)
 
 # Changes
+ - Version 4.02
+   - More Updates
  - Version 4.01
    - Corrected memory issues and parsing
  - Version 4.00
@@ -29,7 +31,7 @@ Site 2
 # Running
 The recommended way of running is to pull the image from [GitHub](https://github.com/jgomez177/plex-for-channels/pkgs/container/plex-for-channels).
 
-    docker run -d --restart unless-stopped --network=host -e PLEX_PORT=[your_port_number_here] --name  plex-for-channels ghcr.io/jgomez177/plex-for-channels
+    docker run -d --restart unless-stopped --network=host -e PORT=[your_port_number_here] --name  plex-for-channels ghcr.io/jgomez177/plex-for-channels
 or
 
     docker run -d --restart unless-stopped -p [your_port_number_here]:7777 --name  plex-for-channels ghcr.io/jgomez177/plex-for-channels
