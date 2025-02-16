@@ -863,7 +863,6 @@ class Client:
             for channel in channels: output_xml.append(channel)
         for programme in programmes: output_xml.append(programme)
 
-
         out_channels_list = [elem for elem in  output_xml.findall("channel")]
         out_programmes_list = sorted(output_xml.findall("programme"), key=lambda p: p.get("channel"))
         output_xml.clear()
@@ -950,11 +949,10 @@ class Client:
             shutil.rmtree(input_folder)
         return output_root
 
-
     def epg(self, args=None):
         update_today_epg = self.update_today_epg
         num_of_cached = 4
-        days_of_data = 1
+        days_of_data = 7
 
         print(f"[INFO - {self.client_name.upper()}] EPG: Updating Channel Data")
         channel_cache, error = self.channels(args)
@@ -968,18 +966,8 @@ class Client:
         today = datetime.now(desired_timezone)
         dt_date = today
         yesterday_date = (today + timedelta(days=-1)).strftime("%Y-%m-%d")
-        yesterday_file = f'{yesterday_date}_epg.xml'
+        yesterday_file = f'{yesterday_date}_media.xml'
         yesterday_file_path = Path(f'{self.data_path}/{yesterday_file}')
-        date_media_file = f'{yesterday_date}_media.xml'
-        date_media_file_path = Path(f'{self.data_path}/{date_media_file}')
-
-        try:
-            date_media_file_path.unlink()
-            print(f"[NOTIFICATION - {self.client_name.upper()}] {date_media_file} deleted.")
-        except FileNotFoundError:
-            print(f"[WARNING - {self.client_name.upper()}] File {date_media_file} does not exist")
-        except PermissionError:
-            print(f"[ERROR - {self.client_name.upper()}] Permission denied: Unable to delete {date_media_file}")
 
         try:
             yesterday_file_path.unlink()
@@ -994,7 +982,7 @@ class Client:
             dt_date = today + timedelta(days=i)
             date = dt_date.strftime("%Y-%m-%d")
             print(f'[NOTIFICATION - {self.client_name.upper()}] Collect data for {date}')
-            date_file = f'{date}_epg.xml'
+            date_file = f'{date}_media.xml'
             date_file_path = Path(f'{self.data_path}/{date_file}')
             if date_file_path.exists():
                 print(f'[NOTIFICATION - {self.client_name.upper()}] {date_file} exists')
