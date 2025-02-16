@@ -780,6 +780,7 @@ class Client:
             output_xml.append(programme)
 
     def generate_epg_style(self, station_dict, epg_xml_data, output_xml):
+        start_time = time.time()
         batch_size = 100  # Number of video elements processed per batch
         tv_items = list(epg_xml_data.iterfind(".//tv"))
         num_tv_items = sum(1 for _ in epg_xml_data.iterfind(".//tv"))
@@ -816,6 +817,8 @@ class Client:
                     # **Force Garbage Collection after each batch**
                     gc.collect()
 
+        elapsed_time = time.time() - start_time
+        print(f'[DEBUG - {self.client_name.upper()}] Generate EPG Style completed {stations_completed}: Elapsed time: {elapsed_time:.2f} seconds.')
         return output_xml
                 
     def process_station(self, station, date, epg_channels):
@@ -982,6 +985,7 @@ class Client:
         unique_channels = set()
         channel_elements = []
 
+        start_time = time.time()
         # Open the output file in write mode with streaming support
         with open(main_epg, "wb") as f_out:
             f_out.write(b'<?xml version="1.0" ?>\n')
@@ -1015,14 +1019,18 @@ class Client:
             # Close the root element in the output file
             f_out.write(b'</tv>')
         
-        print(f"[INFO - {self.client_name.upper()}] EPG FIle Created")
+        # print(f"[INFO - {self.client_name.upper()}] EPG FIle Created")
+        elapsed_time = time.time() - start_time
+        print(f'[DEBUG - {self.client_name.upper()}] EPG FIle Created Elapsed time: {elapsed_time:.2f} seconds.')
 
+        start_time = time.time()
         # **GZIP Compression Step**
         gzip_file = main_epg + ".gz"
         with open(main_epg, "rb") as f_in, gzip.open(gzip_file, "wb") as f_out:
             shutil.copyfileobj(f_in, f_out)
 
-        print(f"[INFO - {self.client_name.upper()}] Compressed EPG FIle Created")
+        elapsed_time = time.time() - start_time
+        print(f'[DEBUG - {self.client_name.upper()}] Compressed EPG FIle Created Elapsed time: {elapsed_time:.2f} seconds.')
         return
 
     def rebuild_epg(self):
