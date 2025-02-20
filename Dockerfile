@@ -1,5 +1,6 @@
 FROM python:3.12-alpine3.20
 
+
 EXPOSE 7777/tcp
 
 ENV PYTHONUNBUFFERED=1
