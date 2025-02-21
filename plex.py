@@ -30,12 +30,6 @@ class Client:
                           "dfw": "76.203.9.148",
                           "nyc": "85.254.181.50",
                           "la": "76.81.9.69",
-                          "uk": "178.238.11.6",
-                          "ca": "192.206.151.131", 
-                          "mx":  "200.68.128.83",
-                          "es":  "88.26.241.248",
-                          "au":  "110.33.122.75",
-                          "nz":  "203.86.207.83",
                         }
         self.headers = {
                         'Accept': 'application/json, text/plain, */*',
@@ -150,7 +144,7 @@ class Client:
 
         body_text = f'<p class="title is-4">{provider.capitalize()} Playlist</p>'
 
-        options = '<span class="tag is-link is-light is-medium is-rounded mb-5">Multiple Region parameters can be used with comma seperator. Example: playlist.m3u?regions=local,ca</span>'
+        options = '<span class="tag is-link is-light is-medium is-rounded mb-5">Multiple Region parameters can be used with comma seperator. Example: playlist.m3u?regions=local,la</span>'
         options += '<div class="columns is-multiline is-variable is-5">'
         for elem in local_x_forward:
             options += ''
@@ -443,7 +437,7 @@ class Client:
                     tmsid_custom_dict[row['id']] = row
 
         tmsid_dict.update(tmsid_custom_dict)
-        print(json.dumps(tmsid_dict, indent=2))
+        # print(json.dumps(tmsid_dict, indent=2))
 
         filtered_tmsid = {k: v for k, v in tmsid_dict.items() if v.get("tmsid")}
 
