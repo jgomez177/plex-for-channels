@@ -5,8 +5,8 @@ import os, importlib, schedule, time
 from gevent import monkey
 monkey.patch_all()
 
-version = "4.03a"
-updated_date = "Feb. 21, 2025"
+version = "4.04"
+updated_date = "Feb. 27, 2025"
 
 # Retrieve the port number from env variables
 # Fallback to default if invalid or unspecified

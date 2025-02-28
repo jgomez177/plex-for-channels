@@ -1043,9 +1043,14 @@ class Client:
         if originally_available_at:
             originally_available_at.split("T")[0].replace("-", "")
         video_type = video.attrib.get("type", "").lower()
+        genres = [escape(genre.attrib.get("tag")) for genre in video.findall("Genre")]
+            
 
         if video_type == "movie":
-            title = escape(f'{video.attrib.get("title", "")} ({video.attrib.get("year", "")})')
+            if any(genre.lower() == "news" for genre in genres):
+                title = escape(f'{video.attrib.get("title", "")}')
+            else:
+                title = escape(f'{video.attrib.get("title", "")} ({video.attrib.get("year", "")})')
             subtitle, parent_index, index, grandparent_art = None, None, None, None
         else:
             title = escape(video.attrib.get("grandparentTitle", "Unknown Title"))
@@ -1056,8 +1061,6 @@ class Client:
 
         content_rating = escape(video.attrib.get("contentRating", "NR"))
         desc = escape(video.attrib.get("summary", ""))
-
-        genres = [escape(genre.attrib.get("tag")) for genre in video.findall("Genre")]
 
         for media in video.findall("Media"):
             begins_at = media.get("beginsAt")
@@ -1073,11 +1076,12 @@ class Client:
 
             for genre in genres:
                 programme += f'<category>{genre}</category>'
+                  
 
             if grandparent_art:
                 programme += f'<icon src="{grandparent_art}" />'
             if originally_available_at:
-                programme += f'<date>{originally_available_at}</date>'
+                programme += f'<date>{originally_available_at[:10].replace("-", "")}</date>'
             if parent_index and index:
                 programme += f'<episode-num system="onscreen">S{parent_index}E{index}</episode-num>'
                 programme += f'<episode-num system="xmltv_ns">{int(parent_index)-1}.{int(index)-1}.</episode-num>'
