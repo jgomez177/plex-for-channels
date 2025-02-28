@@ -563,7 +563,6 @@ class Client:
                     return channels_by_geo, error
             else:
                 print(f"[INFO - {self.client_name.upper()}:channels] Refreshing Channel Listing")
-                return channels_by_geo, error
         else:
             print(f"[INFO - {self.client_name.upper()}:channels] Building Channel Listing")
         channels_by_geo, error = self.generate_channels_by_geo(args, geo_list)
