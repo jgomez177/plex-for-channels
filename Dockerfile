@@ -10,8 +10,6 @@ WORKDIR /app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir --disable-pip-version-check --no-compile -r requirements.txt
 
-COPY pywsgi.py ./
-COPY plex.py ./
-COPY plex_tmsid.csv/ ./
+COPY *.py ./
 
 CMD ["python3","pywsgi.py"]

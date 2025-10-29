@@ -5,8 +5,9 @@ import os, importlib, schedule, time
 from gevent import monkey
 monkey.patch_all()
 
-version = "4.04"
-updated_date = "Feb. 27, 2025"
+version = "5.0.0"
+updated_date = "Oct. 29, 2025"
+base_list = ['plex']
 
 # Retrieve the port number from env variables
 # Fallback to default if invalid or unspecified
@@ -18,7 +19,19 @@ except:
 
 # instance of flask application
 app = Flask(__name__)
-provider_list = ['plex']
+
+try:
+    p_list = [item.lower() for item in (os.environ.get("PLIST")).split(',')]
+except:
+    p_list = base_list
+
+if len(p_list) == 0:
+    p_list = base_list
+
+
+provider_list = p_list
+
+print(f'[INFO - MAIN] Using the following modules: {", ".join(p.upper() for p in provider_list)}')
 
 providers = {}
 for provider in provider_list:
@@ -110,8 +123,8 @@ def build_epg(provider):
 @app.route("/<provider>/watch/<id>")
 def watch(provider, id):
     video_url, err = providers[provider].generate_video_url(id)
-    if err: return "Error", 500, {'X-Tuner-Error': err}
-    if not video_url:return "Error", 500, {'X-Tuner-Error': 'No Video Stream Detected'}
+    if err: return f"Error {err}", 500, {'X-Tuner-Error': err}
+    if not video_url:return "Error - No Video Stream", 500, {'X-Tuner-Error': 'No Video Stream Detected'}
     # print(f'[INFO] {video_url}')
     return (redirect(video_url))
 

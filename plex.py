@@ -201,6 +201,7 @@ class Client:
     
     def generate_m3u(self, provider, listings, gracenote, channel_id_type):
         local_token_keychain = self.token_keychain.copy()
+        # print(json.dumps(listings, indent=2))
 
         m3u = "#EXTM3U\r\n\r\n"
         for s in listings:
@@ -395,55 +396,49 @@ class Client:
         return genres
     
     def update_gracenote_tmsids(self, listing):
-        plex_tmsid_url = "https://raw.githubusercontent.com/jgomez177/plex-for-channels/main/plex_tmsid.csv"
-        plex_custom_tmsid = 'plex_data/plex_custom_tmsid.csv'
-
-        session = requests.Session()
-        try:
-            # print(f'[INFO - {self.client_name.upper()}] Call {local_client_name} Genre API')
-            response = session.get(plex_tmsid_url, timeout=300)
-        except requests.ConnectionError as e:
-            error = f"Connection Error. {str(e)}"
-            print(f'[ERROR - {self.client_name.upper()}] {error}')
-            print(f'[ERROR - {self.client_name.upper()}] Unable to access TMSID Data. No changes made.') 
-            return listing
-        finally:
-            # print(f'[INFO - {self.client_name.upper()}] Close {local_client_name} Genre API session')
-            session.close()
-            del session
-            gc.collect()
-
-        # Check if request was successful
-        if response.status_code == 200:
-            # Read in the CSV data
-            reader = csv.DictReader(response.text.splitlines())
-        else:
-            print(f'[ERROR - {self.client_name.upper()}] {response.status_code}: Unable to access TMSID Data. No changes made.') 
-            return listing
-
+        plex_custom_tmsid = f'data/tmsid/plex_tmsid.csv'
+        plex_tmsid_url = f"https://raw.githubusercontent.com/jgomez177/plex-for-channels/main/{plex_custom_tmsid}"
 
         tmsid_dict = {}
-        tmsid_custom_dict = {}
-
-        for row in reader:
-            tmsid_dict[row['id']] = row
-
 
         if os.path.exists(plex_custom_tmsid):
             # File exists, open it
+            print(f"[INFO - - {self.client_name.upper()}] Opening Custom TMSID File")
             with open(plex_custom_tmsid, mode='r') as file:
                 reader = csv.DictReader(file)
                 for row in reader:
-                    tmsid_custom_dict[row['id']] = row
+                    tmsid_dict[row['id']] = row
+        else:
+            session = requests.Session()
+            try:
+                # print(f'[INFO - {self.client_name.upper()}] Call {local_client_name} Genre API')
+                response = session.get(plex_tmsid_url, timeout=300)
+            except requests.ConnectionError as e:
+                error = f"Connection Error. {str(e)}"
+                print(f'[ERROR - {self.client_name.upper()}] {error}')
+                print(f'[ERROR - {self.client_name.upper()}] Unable to access TMSID via {url}') 
+            finally:
+                # print(f'[INFO - {self.client_name.upper()}] Close {local_client_name} Genre API session')
+                session.close()
+                del session
+                gc.collect()
 
-        tmsid_dict.update(tmsid_custom_dict)
-        # print(json.dumps(tmsid_dict, indent=2))
+
+
+            # Check if request was successful
+            if response.status_code == 200:
+                # Read in the CSV data
+                reader = csv.DictReader(response.text.splitlines())
+                for row in reader:
+                    tmsid_dict[row['id']] = row
+            else:
+                print(f'[ERROR - {self.client_name.upper()}] {response.status_code}: Unable to access TMSID Data.') 
 
         filtered_tmsid = {k: v for k, v in tmsid_dict.items() if v.get("tmsid")}
-
         print(f'[INFO - {self.client_name.upper()}] Updating TMSID for {len(filtered_tmsid)} items')
         for elem in listing:
-            key = listing.get(elem).get('id')
+            key = listing.get(elem).get('gridKey')
+            #print(key)
 
             if (tmsid_data := filtered_tmsid.get(key)):
                 update_data = {'tmsid': tmsid_data['tmsid']}
@@ -591,7 +586,7 @@ class Client:
             return stations
 
         if response.status_code != 200:
-            print(f'[ERROR - {self.client_name.upper()}] HTTP Failure {response.status_code} for {geo_code}/{genre_slug}: {response.text}')
+            print(f'[ERROR - {self.client_name.upper()}] HTTP Failure {response.status_code} for {geo_code}/{genre_slug}')
             return stations
         
         resp = response.json()
@@ -654,6 +649,15 @@ class Client:
                     stations.append(new_item)
 
         return stations
+
+    def strip_illegal_characters(self, xml_string):
+        # Define a regular expression pattern to match illegal characters
+        illegal_char_pattern = re.compile(r'[\x00-\x08\x0b\x0c\x0e-\x1f]')
+
+        # Replace illegal characters with an empty string
+        clean_xml_string = illegal_char_pattern.sub('', xml_string)
+
+        return clean_xml_string
 
     def read_epg_from_api(self, date, station):
         # print(f"[DEBUG - {self.client_name.upper()}:read_epg_from_api] Begin Function {station.get('gridKey')} {station.get('geo_code')}")
@@ -1047,19 +1051,19 @@ class Client:
 
         if video_type == "movie":
             if any(genre.lower() == "news" for genre in genres):
-                title = escape(f'{video.attrib.get("title", "")}')
+                title = escape(f'{self.strip_illegal_characters(video.attrib.get("title", ""))}')
             else:
-                title = escape(f'{video.attrib.get("title", "")} ({video.attrib.get("year", "")})')
+                title = escape(f'{self.strip_illegal_characters(video.attrib.get("title", ""))} ({video.attrib.get("year", "")})')
             subtitle, parent_index, index, grandparent_art = None, None, None, None
         else:
             title = escape(video.attrib.get("grandparentTitle", "Unknown Title"))
-            subtitle = escape(video.attrib.get("title", "Unknown Subtitle"))
+            subtitle = escape(self.strip_illegal_characters(video.attrib.get("title", "Unknown Subtitle")))
             parent_index = video.attrib.get("parentIndex")
             index = video.attrib.get("index")
             grandparent_art = escape(video.attrib.get("grandparentArt", ""))
 
         content_rating = escape(video.attrib.get("contentRating", "NR"))
-        desc = escape(video.attrib.get("summary", ""))
+        desc = escape(self.strip_illegal_characters(video.attrib.get("summary", "")))
 
         for media in video.findall("Media"):
             begins_at = media.get("beginsAt")
