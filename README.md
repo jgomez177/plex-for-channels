@@ -1,10 +1,11 @@
 # Linear Channel Collection
 
-Current version: **5.0.0**
+Current version: **5.1.0**
 
 # About
 Generates M3U playlists and XMLTV EPG files for the following linear platforms:
  - Plex
+ - FreeLiveSports
 
 If you like this and other linear containers that I have created, please consider supporting my work.
 

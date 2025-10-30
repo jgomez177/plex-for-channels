@@ -1,746 +1,668 @@
-name,slug,id,callSign,tmsid,time_shift
-365BLK,365blk,6745dca72832b870acf53220,365BLKF,169857,
-AsianCrush,asiancrush,5eea605474085f0040ddc767,ACRUSH,130620,
-AccuWeather NOW,accuweather-now-2,6151d74593dbf246f0843f01,ACUWNW,120551,
-ALF,alf,62d1ecc8e44d39da220722aa,ALF,89311,
-All Weddings We TV,all-weddings-we-tv,60de0520281b17002cd1d4c4,ALLWED,117227,
-AMC en Español,amc-en-espanol,62d1efa6c33948ea4ceedbcf,AMCNESP,125090,
-Stories by AMC,stories-by-amc,5fc705e2a2236e002d69f3ba,AMCPRES,115539,
-AMC Thrillers,amc-thrillers,5fc705e2a2236e002d69f36d,AMCRSH,115678,
-ANIME x HIDIVE,anime-x-hidive-2,63dea56a2a2abb171ff6dadf,ANIMEH,132816,
-BBC News (North America),bbc-news-north-america,646fab0e43d6d6838db81a6a,BBCWDE,101443,
-Bloomberg TV,bloomberg-tv-2,61d73ab0a7b7c7f703418516,BLOOM4K,114666,
-Bounce XL,bouncexl,623d9b0370560b72147a994a,BOUNSTR,120372,
-CBC News,cbc-news-international,64c91830ea7db2f52688c52c,CBCINT,124721,
-Cheddar,cheddar-news,5f6b8e5900b0950040d0f2af,CHEDSTR,101103,
-Stingray Classica Stream,stingray-classica-stream,62d7f68fb19cbf65dc7bef7d,CLA008A,122326,
-Comedy Dynamics,comedy-dynamics,5efe1de5e0b3f5003f5d9f76,COMCLN,115447,
-Court TV,court-tv,6245d867ddf1ba983d5b8bf8,COURTST,123605,
-Curiosity NOW,curiosity-now-5,64831c8be3541c909e96d240,CURINOW,123667,
-Dog Whisperer,dog-whisperer,652a8b001b5c74bc83cf727c,DOGWHSP,147688,
-Dove,dove-channel,5efe1de8e0b3f5003f5d9f91,DOVESTR,110480,
-The Ed Sullivan Show,the-ed-sullivan-show,640205c68ecb41f2d89d5814,EDSSHOW,135306,
-El Rey Rebel,el-rey-rebel,6335ad3170dc93c71ab5ce09,ELREYST,124328,
-FanDuel TV Extra,fanduel-tv-extra-2,64e9f17c7511e20e999d6c34,FDTVX,145517,
-FOX SOUL,fox-soul,6377e8c513bb6b1757e14693,FOXSOUL,119212,
-Farscape,farscape,635195e9ccee3e1547a8831a,FSCAPE,130175,
-Fubo Sports Network,fubo-sports-network,5fc705f68aba71002d8b7b37,FUBOSNX,106100,
-FUEL TV,fuel-tv-4,62d15f16001c04178f555e40,FUEL,116115,
-FOX Weather,fox-weather,6351b29cb940534786b2ec17,FWX,121307,
-9 Story Presents: Garfield and Friends,9-story-presents-garfield-and-friends,6745dca72832b870acf5321f,GFDNFRD,155811,
-The Grio,grio-ott,5fe27da18cdd46002d85efed,GRIOOTT,116018,
-Grit Xtra,grit-xtra,62b45f15b4508e0eedacdf25,GRITX,124040,
-GameTVGO,gametvgo-2,64d2bdf1b18b113e0c610113,GTVGO,165441,
-GUSTOTV,gusto-tv,5f8746eabd529300418246d9,GUSTOTV,111140,
-HBCUGO SPORTS,hbcugo-sports,631a212e82b744e0309aa56e,HBCUGO,128535,
-Home.Made.Nation,home-made-nation,5f74cf82ffbe690040689f47,HMN,113673,
-IFC Films Picks,ifc-films-picks,5fc705eb052f6f002ef46057,IFCFILM,115677,
-Slightly Off IFC,slightly-off-ifc,5fc705eea2236e002d69f5ae,IFCOFF,116019,
-Ion Mystery,ion-mystery,62b45f15b4508e0eedacdf26,IMYSSTR,123651,
-Infamous TV,mob-tv,61fb10e8fe90430654c57530,INFMSTV,122376,
-ION Plus,ion-plus-streaming,627e347795b0f50af26d78f9,IONPSTR,117518,
-ION,ion-streaming,624c37af6281708eabbbe26b,IONSTR,122912,
-Laff More,laff-more,648095b14e104622d093d902,LAFFTV,137609,
-Court TV Legendary Trials,court-tv-legendary-trials,648095ad190e97d15c3470e9,LEGTRI,137506,
-LiveNOW from FOX,livenow-from-fox,6377ea0e13bb6b1757e14695,LIVENOW,119219,
-Lone Star,lone-star,6196c9241d310bf925e02616,LS,,
-Midnight Pulp,midnight-pulp,5ef4e1b40d9ad000423c4427,MPULP,124312,
-MSG SportsZone,msg-sportszone,63b5df3f27159bc9de3062aa,MSGZONE,132782,
-MotorTrend FAST TV,motortrend-fast-tv,6373bfe48e2036e4410ddb82,MTFAST,126737,
-Nashville,nashville,6087ff3ae99ff1002ce1465b,NASH,118859,
-NBC News NOW,nbc-news-now,5fc70600dd53a6002d8f93ca,NBCNN,114174,
-Stingray Naturescape,stingray-naturescape,60d324f59adce5002c41dbc5,NESCAPP,115729,
-NESN NATION,nesn-nation,6759a32270e41582b1b7a236,NESNNAT,166712,
-NFL Channel,nfl-channel,61e805952502a7a6fa84d70f,NFLDC1,121705,
-Non-Stop '90s,non-stop-90s,65bd5a538314c24e11553543,NS90S,151830,
-Outlaw,outlaw,66213052abd90e037ccd1fe4,OUTLW,157277,
-TODAY All Day,today-all-day,5fc70600598c41002da3dd39,PK20,114138,
-So... Real,so-real,5f0ff262d71dcb00449ec012,REALSTR,114871,
-RetroCrush,retrocrush,5ef4e1b40d9ad000423c442a,RRCRUSH,119355,
-REVOLT Mixtape,revolt-mixtape-2,634aa92e543c280baa13d91d,RVLTMXT,129774,
-Screambox TV,screambox-tv,641db53c2f7a0fca29488c99,SBOXTV,116607,
-Scares by Shudder,scares-by-shudder-3,650b38f490baad1963ad96f9,SBSHUDD,145846,
-Scripps News,newsy,5fc705dda2236e002d69f211,SCNEWST,120010,
-Stingray Greatest Holiday Hits,stingray-greatest-holiday-hits,61aa97d4113e1e5137fd5325,SM047D,113306,
-Stingray Karaoke,stingray-karaoke-5,5fc705daa2236e002d69f108,SMUS67,110657,
-Qello Concerts,qello-concerts,5fe27da28c198b002d179199,SMUS68,113296,
-SportsGrid,sportsgrid,5ef11485d33ab9004048a1ca,SPOGRID,112732,
-The Bob Ross Channel,the-bob-ross-channel,5efe1de6e0b3f5003f5d9f88,TBRCSTR,114491,
-Tastemade,tastemade,5ef51c802ddee5003f1c0225,TMFRE16,107076,
-The Walking Dead Universe,the-walking-dead-universe-2,5fc705ff2f220e002d5e6bce,TWDU,115540,
-Vevo 2K,vevo-2k,615593004054ee0a9771147a,VV2K,121125,
-Vevo '70s,vevo-70s-2,61559303fa828e7f1a0ccfbd,VV70,121122,
-Vevo '80s,vevo-80s,615700a23a4a316ad53ad716,VV80,121123,
-Vevo '90s,vevo-90s,61559301bcb11028da48b065,VV90,121124,
-Vevo Country,vevo-country,632997b7b73f82d6e2ad3b68,VVC,120902,
-Vevo Hip-Hop,vevo-hip-hop,632997b7f79ba3e1368f8b97,VVHH,120900,
-Vevo Pop,vevo-pop,616743c63727d6d85751802a,VVP,115694,
-All Reality We TV,all-reality-we-tv,5fc705ff2f220e002d5e6bec,WEREAL,115679,
-Paranormal Files,paranormal-files,65e87f35335524a69e8e0ce0,XPLPF,147639,
-Yu-Gi-Oh!,yu-gi-oh-6,6617f52f0049fcb8e2b0d5b8,YUGIOH,155772,
-Euronews,euronews,60089d90f682a3002c348299,,19039,
-KMGH,kmgh,6578a9dcfb1a19389c93fc7b,,33903,
-Smooth Jazz,smooth-jazz,62ee784852f7d73061eec493,,45219,
-Soul Storm,soul-storm,61aaa17a784a2161d3caf801,,67563,
-Hip-Hop/R&B,hip-hop-randb,62ee7ae2271f393d2d9f709e,,67564,
-Easy Listening,easy-listening,62ee76b5271f393d2d9f709a,,67573,
-Nothin' But 90s,nothin-but-90s,62f13eeded056a1db9ef3d54,,68620,
-The Spa,the-spa,62f11395586633e88e3a3274,,68632,
-Éxitos del Momento,exitos-del-momento,62efba6588a16bb7d6b6fb58,,68639,
-Y2K,y2k,62ee72cc271f393d2d9f7098,,68686,
-TRACE Urban,trace-urban,6322658be67cf9cd9011fcda,,71760,
-Clic,clic,6469502df73356567a64ce8e,,92197,
-Euro Hits,euro-hits,62ee74af52f7d73061eec491,,95855,
-Corazón,corazon,64694d52f73356567a64ce8c,,100594,
-Azteca Internacional,azteca-internacional,646d06c9b09f13b2d8af68d8,,100599,
-Estrella TV,estrella-tv,60089d98f682a3002c34829f,,102236,
-CBS News,cbs-news,6571f43a1d2aae780d597196,,104846,
-CBS Sports HQ,cbs-sports-hq-2,657107dc56226238740fcc2d,,108919,
-Law & Crime,law-and-crime,5eea605674085f0040ddc79d,,109553,
-Entertainment Tonight,entertainment-tonight,6578bb741a12778a8550d158,,110291,
-Shout! TV,shout-tv,60d4edd6b2fdec002c141127,,111132,
-PursuitUP,pursuitup,63628eb88e4b18ca22f897dc,,112487,
-Electric Now,electric-now,5f170d61b898490041b49360,,112797,
-Alien Nation by DUST,alien-nation-by-dust-2,63d6f799a9e88ee909e7ee21,,112881,
-Hit List,hit-list,61aaa014784a2161d3caf7fd,,113299,
-Hot Country,hot-country,61aa9e73784a2161d3caf7f9,,113300,
-Alternative,alternative,62efbb8652f7d73061eec498,,113301,
-Pop Adult,pop-adult,62ee7992271f393d2d9f709c,,113302,
-Classic Rock,classic-rock,61aaa0cc784a2161d3caf7ff,,113303,
-Remember the ‘80s,remember-the-80s,61aa9f50784a2161d3caf7fb,,113304,
-Flashback 70s,flashback-70s,62f15810a3ffe928ef806c75,,113308,
-Unity in Black by kweliTV,unity-in-black-by-kwelitv,666357257ce166787145c6ab,,113388,
-TRACE Latina,trace-latina,63226c03e67cf9cd9011fcdf,,113402,
-BUZZR,buzzr,66a2d71b0b91165254efdb40,,113452,
-Yahoo Finance,yahoo-finance,5f170f01b898490041b49dd1,,113674,
-Crime 360,crime-360,5f74cf7effbe690040689f41,,113780,1
-MST3K,mst3k,60d4eddbb2fdec002c141133,,113781,
-Stadium,stadium,5f6142d2fc6ce20041ec3c92,,113991,
-Outside,outside,629e522ed1bc5f1b16c6b98d,,114313,
-Movie Music by Stingray,movie-music-by-stingray,62fbf197c67d52bddf74cc87,,114642,
-Stingray DJAZZ,stingray-djazz,62fc0150c67d52bddf74cc89,,114647,
-Johnny Carson TV,johnny-carson-tv,60d4edd6b2fdec002c141123,,115370,
-So Yummy,soyummy,6041643175c115002dc5125d,,115674,
-Today's K-Pop,todays-k-pop,62ee6eae271f393d2d9f7096,,115709,
-MOVIESPHERE,moviesphere,5fb84bc1b7ad2d002dcb735f,,115944,
-Xtreme Outdoor by HISTORY,xtreme-outdoor-by-history,5f74cf7effbe690040689f3e,,116101,
-Game Show Central,game-show-central,5eea605574085f0040ddc782,,116474,-5
-News 12 New York,news-12-new-york,5fc6f3a62b6f7b002e77ffaa,,116946,
-BACKSTAGE,backstage,608aec5fa09205002da4f28f,,117060,
-Estrella News,estrella-news,60089d97f682a3002c34829b,,117478,
-The Design Network,the-design-network,5f0641d3e8ffda004033b16e,,118087,
-Tiny House Nation,tiny-house-nation,63c1e176f0f132afc3afbab0,,118456,
-Ryan and Friends,ryan-and-friends,5f91c4ea96a391002df9a664,,118462,
-pocket.watch Game-On,pocket-watch-game-on,5f91c4ea96a391002df9a661,,118464,
-MagellanTV NOW,magellantv-now,5f5132e262fe160040f26bf2,,119209,
-Nosey,nosey,5f0ff262d71dcb00449ec015,,119233,-5
-beIN Sports Xtra en Español,bein-sports-xtra-en-espanol,64a8903d273b89c4e7396553,,119661,
-Antiques Roadshow UK,antiques-roadshow-uk,630902bf0417b7074a4ad95c,,120073,-5
-BBC Home & Garden,bbc-home-and-garden,6308eda9ac9983739c8a29bb,,120074,-5
-BBC Food,bbc-food,630905af0417b7074a4ad95e,,120076,-5
-Classic Doctor Who,classic-doctor-who,63068b870bbec3b06755a0ee,,120086,-5
-Choppertown,choppertown,5ef11487d33ab9004048a1d3,,120283,
-beIN SPORTS XTRA,bein-sports-xtra,60a53634126de9002e694bc4,,120375,
-Are We There Yet?,are-we-there-yet,612919784f53e1002c9aa219,,120377,
-Billiard TV,billiard-tv,6334a8e48a7b2a349d903b8c,,120469,
-This Old House,this-old-house,62e3232ca105dea9c400e9fe,,120480,
-Baywatch,baywatch,63e63f20abacad42ed3d1acf,,120491,
-Hi-YAH!,hi-yah,5f64c4ef35f612003f6ffe30,,120790,
-True Crime Now,true-crime-now,61ae679103baf19077bbf933,,120802,
-Newsmax2,newsmax2,5fb81660b7ad2d002dcb7335,,121162,
-The Pet Collective,the-pet-collective-2,5f170d61b898490041b49369,,121165,
-Holiday Movie Favorites by Lifetime,holiday-movie-favorites-by-lifetime,63c1e47ef0f132afc3afbab2,,121308,
-Waypoint TV,waypoint-tv,5fd115b8b7ef8d002dcf1817,,121424,
-Maverick Black Cinema,maverick-black-cinema,5ef4e1b40d9ad000423c4430,,121534,-5
-Supermarket Sweep,supermarket-sweep,64b719768ec13d5dcb7e6bb4,,121598,
-The Archive,the-archive,5eea605674085f0040ddc7a0,,121651,
-Real Crime,real-crime-2,636d9d2d4ea1109a7d205a70,,121656,
-History Hit,history-hit,5f74cf83ffbe690040689f50,,121657,
-The Price is Right,the-price-is-right,63e63d26abacad42ed3d1acd,,121659,
-MAVTV Select,mavtv-select,5f0641d0e8ffda004033aff4,,121708,
-Don't Tell The Bride,dont-tell-the-bride,635847d0d3a668f1cafc1f9d,,121714,
-REELZ Famous & Infamous,reelz-famous-and-infamous,64f0d3ddc2bc9b9001d46ea4,,121781,
-Caught in Providence,caught-in-providence,61ddcdc03c12aa1e5d320aaf,,121881,
-Wanted: Dead or Alive,wanted-dead-or-alive,61ddcc6023daf618ed44c29f,,122082,
-i24NEWS Updates,i24news-updates,61e9af453508a50f84213dd6,,122275,
-Portlandia,portlandia,61d735fea7b7c7f703418512,,122435,
-Swerve Combat,swerve-combat,61f04d2bb01a6e8df3f72902,,122436,
-Midsomer Murders,midsomer-murders,63d6fc71a9e88ee909e7ee23,,122437,-5
-People are Awesome,people-are-awesome-2,5f0ff263d71dcb00449ec021,,122524,
-WildEarth,wildearth,60d4edddb2fdec002c141135,,122534,2
-True History,true-history,614398a08f30fa61e0da7c97,,122536,
-The Carol Burnett Show,the-carol-burnett-show,60d4edd6b2fdec002c141125,,122609,
-USA TODAY,usa-today-news,60df3e18541143002f3b8607,,122855,
-CineLife,cinelife,616df1e90dfa27ee465797fa,,122969,
-CBS News Colorado,cbs-news-colorado-2,6571f5b31d2aae780d597198,,123120,
-AXS TV NOW,axs-tv-now,606605549dbfca002d2ae875,,123156,
-Torque Presented By History,torque-presented-by-history,63c1e64df0f132afc3afbab4,,123423,
-Perform by Lifetime,perform-by-lifetime,63c1ddfaf0f132afc3afbaae,,123424,-5
-Ax Men by History,ax-men-by-history,63c1ec0e0aa23f984207af82,,123425,-5
-Ice Road Truckers,ice-road-truckers,63c97610187b3c9f3581fdf6,,123426,-5
-Crime ThrillHer,crime-thrillher,63c97b45187b3c9f3581fdfb,,123427,1
-Crimes Cults Killers,crimes-cults-killers,63c97410187b3c9f3581fdf4,,123430,
-UnXplained Zone,unxplained-zone,63c9773e187b3c9f3581fdf8,,123431,-5
-Deal Zone Presented By History,deal-zone-presented-by-history,63c9724c5feb7b9655cb1950,,123432,1
-Modern Marvels by History,modern-marvels-by-history,63c97da7187b3c9f3581fdfd,,,
-Degrassi,degrassi,636d5aa3dc2c550b145ed422,,123455,-5
-Bloomberg Originals,bloomberg-originals,61d73c3ca7b7c7f703418518,,123870,
-GoUSA TV,gousa-tv-3,654d5db7ff9919cc3e31e961,,123897,
-ALLBLK Gems,allblk-gems,628bb0eafcb403aa62d2317d,,124177,
-TED,ted,62ab5aabbb869dd0df6a3487,,124221,-5
-PokerGO,pokergo,64ac687b4192b4e1bab96279,,124268,
-The Jamie Oliver Channel,the-jamie-oliver-channel,64b7170c4612b1f48e9ad31e,,124329,
-Love Stories TV,love-stories-tv,64e4351f200cd2f67473e0d2,,124581,-5
-Racing America,racing-america,61a945156547ba4d6d238dc9,,124630,
-Women's Sports Network,womens-sports-network,630fa9e577ec3866def38fa2,,124636,
-TRACE Brazuca,trace-brazuca,6329474265c8569187176338,,124749,
-ACCDN,accdn,5f8ee3727c75fa002d9e47c1,,124806,
-Great British Menu,great-british-menu,64704596e536e0faaf10be9b,,124931,
-Anger Management,anger-management,6303ca568a01b5d4dae57d0e,,125128,
-Places & Spaces,places-and-spaces,64b7139c8ec13d5dcb7e6bb2,,125151,
-ACL Cornhole TV,acl-cornhole-tv-2,63504925a97bd70eaef54f01,,125196,
-Pac-12 Insider,pac-12-insider,646c0dfbfb58444e4e1e262d,,125214,
-LOL! Network,lol-network-2,628ea9fcffe4cec6361f5310,,125215,-5
-RCN Más,rcn-mas,6244f2d33ef43121e567cf13,,125383,
-VR+,vr,65a1d3996475bf522f9256e3,,125419,
-Sleuth,sleuth,63fe77c753dd274874c49c42,,126323,
-Top Gear,top-gear,6308f121ac9983739c8a29bd,,126329,
-Dance Moms by Lifetime,dance-moms-by-lifetime,63ec13cb290593c3fc279f48,,126369,
-4UV,4uv,64149a3c238e21f260e7844c,,126373,
-Military Heroes Presented By History,military-heroes-presented-by-history,63ec15d6290593c3fc279f4a,,126439,
-Pasión Latina,pasion-latina,5f5132e362fe160040f26c18,,126569,
-Toon Goggles,toon-goggles-2,5f170d60b898490041b49359,,126634,
-TG Junior,tg-junior-2,5f170d64b898490041b4938f,,126670,
-WeatherSpy,weatherspy-2,5f0ff266d71dcb00449ec030,,127141,-5
-At Home with Family Handyman,at-home-with-family-handyman,632270e3e67cf9cd9011fce1,,127174,
-Western Bound,western-bound,62316e8eb9d292cb4ad7499f,,127279,
-PFL MMA,pfl-mma,643f0ecd76de2b4015ae6c01,,127399,
-FamilyTime,family-time,614b82e2fda2ea37754acbb8,,127467,
-LOL! Stand Up,lol-stand-up,620462434ebc6b3b9a8aed94,,128018,-5
-Love Nature,love-nature,60995eb136c72d002da7bbcb,,128066,
-Gravitas Documentaries,gravitas-documentaries,6291409aa0ed9c2b6ae63bae,,128068,
-Gravitas Adrenaline,gravitas-adrenaline,629141f6a0ed9c2b6ae63bb0,,128069,
-Unexplained,unexplained,62913be9a0ed9c2b6ae63bac,,128143,
-PBS Nature,pbs-nature,63506e7747b2355a27e76e7f,,128391,
-The Hill TV,the-hill-tv,62c4a65788737d6edc1a3626,,128492,
-Dark Matter TV,dark-matter-tv,5eea605674085f0040ddc7a6,,128542,
-Antiques Road Trip,antiques-road-trip,6348adc71159f6a5ce819b85,,128545,
-PBS Antiques Roadshow,pbs-antiques-roadshow,6348ac7090b96ef5e0eb3288,,128546,
-Matched Married Meet,matched-married-meet,63ec126f9866d8d2120ac75b,,129047,-6
-Unbeaten,unbeaten,633239caa6615514fb78ecf3,,129048,
-NHRA TV,nhra-tv,60aeb5cd87f9b1002ce12323,,129130,
-Cold Case Files by A&E,cold-case-files-by-aande,63f693a3fff2b53dc9ddc8f4,,129137,
-INWONDER,inwonder,6668b2b5e4f56766e556a413,,129477,
-Documentary+,documentary-3,62f42e6cad0081c6ef405723,,129672,-5
-Canela Cinema,canela-cinema,64fba5f3214cf8b3b54b5ecc,,129777,
-Canela Telenovelas,canela-telenovelas,64e6df6e4a5e9b4cedc6d529,,129781,
-Canela Deportes,canela-deportes,64fba7b6bb3e0baa5dcc0949,,129783,
-Real Stories,real-stories,5f74cf83ffbe690040689f4a,,131072,
-Wonder,wonder,5f74cf83ffbe690040689f4d,,131073,
-Real Life,real-families,5fd9089d102006002d33c0fc,,131074,
-Real Wild,real-wild,63584a0cf8e2be1350f802a4,,131075,
-Reuters TV,reuters-tv,5eea71d65252710041e0ccbc,,131221,
-The Biggest Loser,the-biggest-loser,6515ff231fc969615e69d170,,131259,
-GLORY Kickboxing,glory-kickboxing,63f914bffe2c3d32e1a7929f,,131359,
-Desi Play TV,desi-play-tv,634dddc8a319c6df243f521f,,131393,
-Duck Dynasty,duck-dynasty,63f688faf615dc7d3f9071f7,,131429,
-Overtime,overtime,62a388865440744efae8e243,,131737,
-Gardening with Monty Don,gardening-with-monty-don,63d6f9b67c3070b6e06e0aad,,131923,
-Shemaroo Bollywood,shemaroo-bollywood,62d1a58e520656fda09e609d,,132109,
-Estrella Games,estrella-games,64fb9149bb3e0baa5dcc0944,,132456,
-Cine EstrellaTV,cine-estrellatv,64fb8ec0214cf8b3b54b5ec8,,132491,
-CraftsyTV,craftsytv,6365779dde08f8eec6c3f21f,,132607,
-PickleTV,pickletv,63ec0b739866d8d2120ac759,,132608,
-Wired2Fish,wired2fish,608a2c722957c9002c6a617b,,132644,
-CampusLore Sports,campuslore-sports,6216ae22c3bbca2de8704f65,,132647,-5
-Tribeca Channel,tribeca-channel,60ede94f7da2ef002c55ce9b,,132888,
-SPEEDVISION,speedvision,6349ed0eb1adc4cfa571fd37,,132889,
-Love Pets,love-pets,63fe7d7eb6312779f56504d3,,133153,
-FailArmy,failarmy,5eea605574085f0040ddc791,,133321,
-Nosey Escándalos,nosey-escandalos,6154a863e3e4d9577f96b31a,,133658,-5
-CBS Sports Golazo Network,cbs-sports-golazo-network-2,6571186d9a46917c0a8f2ddd,,133691,
-Trailer Park Boys: The SwearNet Show,trailer-park-boys-the-swearnet-show,6348b2cb1159f6a5ce819b89,,133939,
-Drag Race Universe,drag-race-universe,63fe878ab6312779f56504e1,,133972,
-Always Funny,always-funny,5ef11486d33ab9004048a1cd,,134109,
-Real Disaster Channel,real-disaster-channel,64275805efc65caa7e9514d6,,134159,
-Crime & Justice,crime-and-justice,64224b7a7e28069f56b5d894,,134160,
-Property & Reno,property-and-reno,6427568defc65caa7e9514d4,,134161,
-AfroLandTV,afrolandtv,60e737a4ebef9d002c4d0a0c,,134197,-6
-SPIN,spin,64e4084bb5fc5e016613edd4,,134855,
-The Rifleman,the-rifleman,64f123008d44f2871135a905,,134959,
-OuterSphere by Lionsgate,outersphere-by-lionsgate,641496bf238e21f260e7844a,,135167,
-Celebrity Name Game,celebrity-name-game,640205c40e1daf16b299567e,,135168,
-HerSphere by Lionsgate,hersphere-by-lionsgate,644c4bc17472b186783f35a0,,135378,
-History & Warfare Now,history-and-warfare-now,635c5c6ac3585aefbd236576,,135379,
-Space Science Now,space-science-now-2,63616d4c9fdbf7808e22baee,,135380,
-BritBox Mysteries,britbox-mysteries,639a0b83812b6c1429f7acd1,,135385,-5
-BBC Earth,bbc-earth,6414a73254c537d12d8073d7,,151422,
-OUTtv Proud,outtv-proud,64aed1e9c6085b5faf20ee1f,,135510,
-Confess by Nosey,confess-by-nosey,6438ee5a83766488c3bc9d4d,,135516,
-Transformers,transformers,644a675d5b1d51b6a8d18607,,135518,
-Power Rangers,power-rangers,644a69895b1d51b6a8d18609,,135575,
-Dungeons & Dragons Adventures,dungeons-and-dragons-adventures,653d9d28d3e2e30d889226be,,135576,
-Fifth Gear (UK),fifth-gear-uk,64106a1075be345a863fe0d7,,135674,
-The World Poker Tour,the-world-poker-tour-2,66ad6b4fcb5d3b7fb5011c2f,,135701,
-Vice News,vice-news,635ff8bb66f96b46951ab7f3,,135717,
-VICE,vice-2,62c47062085f5c338b9c6360,,135718,
-OnDemandChina,ondemandchina,60d4edd7b2fdec002c14112b,,136273,-5
-Beyond Belief,beyond-belief-2,64f101b1c4b308f2fe3e7c0c,,136406,-3
-Always Funny en Español,always-funny-en-espanol,5ef4e1b10d9ad000423c4421,,136735,
-Autopista al Cielo,autopista-al-cielo,6449369eb3ff17382cae5811,,137067,
-Hell's Kitchen & Kitchen Nightmares,hells-kitchen-and-kitchen-nightmares,6449369eb3ff17382cae580c,,137068,
-Dick Van Dyke,dick-van-dyke,6449369eb3ff17382cae5801,,137069,
-FilmRise British TV,filmrise-british-tv,6449369eb3ff17382cae5808,,137070,
-FilmRise Películas Gratis,filmrise-peliculas-gratis,6449369eb3ff17382cae57fc,,137071,
-Forensic Files,forensic-files,6449369f243fbe342a9c0b4d,,137072,
-FilmRise Sci-Fi,filmrise-sci-fi,6449369eb3ff17382cae580d,,137073,
-FilmRise True Crime,filmrise-true-crime,646e489b58898bf3be94b325,,137074,
-FilmRise Anime,filmrise-anime,6449369eb3ff17382cae5819,,137075,
-FilmRise Series Gratis,filmrise-series-gratis,6449369eb3ff17382cae5803,,137077,
-Dr. G: Medical Examiner,dr-g-medical-examiner,6449369eb3ff17382cae5807,,137078,
-FilmRise Kids,filmrise-kids,6449369eb3ff17382cae57ff,,137079,
-Heartland,heartland,6449369eb3ff17382cae5806,,137080,
-FilmRise Crímenes Verdaderos,filmrise-crimenes-verdaderos,6449369f243fbe342a9c0b4e,,137081,
-FilmRise Concursos de Cocina,filmrise-concursos-de-cocina,6449369eb3ff17382cae5802,,137082,
-Unsolved Mysteries,unsolved-mysteries,6449369eb3ff17382cae5816,,137083,
-FilmRise Western,filmrise-western,6449369eb3ff17382cae57fd,,137085,
-Free Movies Plus,free-movies-plus,636d46934ea1109a7d205a55,,137352,
-T2,t2,65944d40cbc51b25e5070a18,,137752,
-party tyme karaoke,party-tyme-karaoke,5eea605674085f0040ddc7ac,,137854,
-Ghost Hunters Channel,ghost-hunters-channel,64e405b42b16ff56feb98444,,137994,-5
-Sweet Escapes,sweet-escapes,66a1acc577649467da169f0c,,138027,
-Crime Scenes,crime-scenes,66a2bfe594b6a49cb5054d75,,138028,
-At the Movies,at-the-movies,66a2c1370b91165254efdb3c,,138029,
-Ghosts Are Real,ghosts-are-real,66a294d3e1a2934adfe851f5,,138030,
-How To,how-to,66a1aa319101f360242499a8,,138031,
-Mysterious Worlds,mysterious-worlds,66a1af9677649467da169f12,,138032,
-Unique Lives,unique-lives,66a1ac4877649467da169f0a,,138033,
-Paws & Claws,paws-and-claws,66a2818ce1a2934adfe851e5,,138036,
-ElectricNOW en Español,electricnow-en-espanol,6434540bf43c8cfbfdc6e600,,138244,
-Family Feud Classic,family-feud-classic,64b710b44612b1f48e9ad31a,,138686,
-Ninja Kidz TV,ninja-kidz-tv,627ec46a92d8e6a705784bd1,,138773,-5
-ÚN TV,un-tv,65f0de01046e6131ecc31845,,140180,
-Zona Investigación,zona-investigacion,65f0da6f046e6131ecc31841,,140181,
-Cine y Series,cine-y-series-2,65f0e049046e6131ecc31847,,140182,
-FOX Sports,fox-sports,659f04ef27ae392d2e204695,,141469,
-Silent Witness|New Tricks,silent-witnessornew-tricks,656235425dbccec83a87b645,,141825,
-BBC Sci-Fi,bbc-sci-fi,65622ac05dbccec83a87b641,,141826,
-BBC Game Shows,bbc-game-shows,656229e4b7d737841f30a4fb,,141827,
-BBC Comedy,bbc-comedy,65622fb65dbccec83a87b643,,141828,
-BBC Travel,bbc-travel,65622eddb7d737841f30a4fd,,141829,
-PBS Food,pbs-food,650299cdec4e38daa56e9c7c,,142107,
-Mythical 24/7,mythical-24-7,650b5bb3f4b2d9579946a500,,142109,
-AKC.tv,akc-tv,63e6381d8895074ec6c78b16,,144550,
-Saborear TV,saborear-tv,64f0d9a7c2bc9b9001d46ea6,,144963,
-Oro TV,oro-tv,64f0db77c2bc9b9001d46eaa,,144965,
-Lawless,lawless,654a6d313713a28d9f0b917f,,145442,
-Judge Faith,judge-faith,5f5132da62fe160040f26b5b,,145519,
-TV One Crime & Justice,tv-one-crime-and-justice,65282a6091e77473f1a44ff2,,145680,
-Ebony TV by Lionsgate,ebony-tv-by-lionsgate,6533de63bd43e1c8b1865152,,146144,
-ZenLIFE by Stingray,zenlife-by-stingray,6642a07d0e0ec7b4ce5eb294,,146460,
-PickleballTV,pickleballtv,6583507e0938f2993a23375c,,146769,
-Court Sports Network,court-sports-network,652875586425fdb1f32d2169,,146962,
-JAIL,jail,6448ba1baf92c31f4a190c27,,147152,-5
-Combat War Channel,combat-war-channel,65e87f35335524a69e8e0ce1,,147642,
-WAPA+,wapa,66e0d0c4f70549a9bc1eceb0,,148054,
-Car Chase,car-chase,6605be856b034eec533c49ee,,148202,
-"Todo Novelas, más Pasiones",todo-novelas-mas-pasiones,65257cdf65486aca7aa77716,,148511,
-Todo Cine,todo-cine,644c446d7472b186783f359e,,148558,
-Say Yes to the Dress,say-yes-to-the-dress,66a1ae9e77649467da169f0e,,149117,
-TMZ,tmz,63e2ca44203bafbef831a152,,149408,
-iNDIEFLIX,indieflix,650b645a526c4c68cd9d02b8,,149696,
-Stingray Holidayscapes,stingray-holidayscapes,654eb862dde2222e8ba551f1,,149883,
-Love Quest,love-quest,6515fa752ff655e77635c626,,149920,-5
-Strongman Champions,strongman-champions,644b13a3a1c0a5b2024c8403,,150219,
-Dog the Bounty Hunter,dog-the-bounty-hunter,66428faa5116d565e63ae32a,,150981,
-Hot Ones,hot-ones-2,6582a1316b91be4547aa153c,,151230,
-World's Most Evil Killers,worlds-most-evil-killers,65829ef26b91be4547aa153a,,151232,
-Cheaters en Español,cheaters-en-espanol,65623e0eb7d737841f30a4ff,,151233,
-The FBI Files,the-fbi-files,6582a024a90606db3c841b1b,,151234,
-Todo Crimen,todo-crimen,666e236ace73ed6023b55a17,,151306,
-Mi Casa,mi-casa,666e1c83d91d13cb4c8cbb71,,151308,
-Buen Viaje,buen-viaje,666e15a3ce73ed6023b55a0f,,151309,
-Naturaleza,naturaleza,666e2178d91d13cb4c8cbb75,,151311,
-Operation Repo,operation-repo,6578e7b5eef129f30fb38df7,,151312,
-Scream Factory TV,scream-factory-tv,6351991cccee3e1547a8831e,,151829,-8
-Startalk TV,startalk-tv,664292a80e0ec7b4ce5eb28c,,152030,
-NitroCircusTV,nitrocircustv,656fb665cb7e8e6a9bc3f36c,,152974,
-Surfer,surfer,656fbbd6dbcce28c3a41741b,,152976,
-Popular Science,popular-science,656fb850cb7e8e6a9bc3f36e,,152977,
-Team Liquid,team-liquid,656fb965cb7e8e6a9bc3f370,,152978,
-Monster Jam,monster-jam,6615885e1eabecf2c9d56495,,153411,
-Wild West TV,wild-west-tv,660df9e0e7dcb14697880bfb,,153591,
-Crime Scene TV,crime-scene-tv,6615360a8423b8d7e61a099c,,154612,
-Go Wild,go-wild,6615360a8423b8d7e61a099b,,154613,
-Cheaters,cheaters,64f115ad2173e54397ce0d40,,154615,
-Highway to Heaven,highway-to-heaven-2,64f1177d79fd56092f9061bf,,154616,
-Women Behind Bars,women-behind-bars,6502891e8ebe90c9ed73f7a0,,154619,
-Sonic The Hedgehog,sonic-the-hedgehog,6615522e50e81fa51eb0df60,,154621,
-Strawberry Shortcake,strawberry-shortcake,6615522e50e81fa51eb0df62,,154622,
-Teletubbies,teletubbies,6615522e50e81fa51eb0df61,,154623,
-Beyond Paranormal,beyond-paranormal,64d2c6acb18b113e0c61012a,,155534,
-Journy,journy,5f5132df62fe160040f26bc2,,155568,
-123GO!,123go,63eecb32ac23d1ee072087cb,,156196,
-5-Minute Crafts,5-minute-crafts,63894c1965b848bf2c8a7800,,156197,
-The Asylum,the-asylum,6627ab12580825e8a7bc4f04,,156201,
-Miramax Movie Channel,miramax-movie-channel,661fca34414d94009d1206ec,,157054,
-National Lampoon,national-lampoon,661fcbcf414d94009d1206ee,,157057,
-Death Valley Days,death-valley-days,6674b68af04cf4bb9233c916,,157393,
-The Boat Show,the-boat-show,5efe1de6e0b3f5003f5d9f82,,157506,
-Deal Or No Deal,deal-or-no-deal-2,6516023b1fc969615e69d172,,157901,
-Rig TV,rig-tv,66a2d97c94b6a49cb5054d77,,157959,
-Nash Bridges,nash-bridges,6668b69889c051b3733f9b60,,158128,
-The Conners,the-conners,6668b7a5e4f56766e556a415,,158129,
-DREAD TV,dread-tv-2,64a04b8a261d597ce8b4c9ec,,158635,
-CW Forever,cw-forever,66635fc0ca7b22f4c3a2d743,,159704,
-CW Gold,cw-gold,66635e41ca7b22f4c3a2d741,,159705,
-BET x Tyler Perry Comedy,bet-x-tyler-perry-comedy,66635c20ca7b22f4c3a2d73f,,159706,
-BET x Tyler Perry Drama,bet-x-tyler-perry-drama,66635b07ca7b22f4c3a2d73d,,159707,
-Mysteria,mysteria,664294d20e0ec7b4ce5eb28e,,160863,
-Hello Inspo,hello-inspo,664296050e0ec7b4ce5eb290,,160930,
-Dr. Phil,dr-phil,66e4cbef38de9754b6b13e90,,161356,
-TVB Pearl Drama,tvb-pearl-drama,65621947b7d737841f30a4f7,,161669,
-Spark TV Light & Love,spark-tv,614a11bfa6f839154ee3306d,,161702,
-Z Nation,z-nation,66ce3e009ac0b1441b19ca29,,163834,
-A Touch of Frost,a-touch-of-frost,6674b595f04cf4bb9233c914,,163839,
-Glewed TV,glewed-tv,5eea605474085f0040ddc76d,,,
-Wu Tang Collection,wu-tang-collection,5eea605474085f0040ddc770,,,
-KidsFlix,kidsflix,5eea605574085f0040ddc797,,,
-Kidoodle TV,kidoodle-tv,5eea605574085f0040ddc79a,,,
-Popstar! TV,popstar-tv,5ef11487d33ab9004048a1d6,,,
-Revry,revry,5ef11487d33ab9004048a1d9,,,
-Gravitas Movies,gravitas-movies,5efe1de7e0b3f5003f5d9f8e,,,
-Cooking Panda,cooking-panda,5f07e9fdf313eb0041bbecda,,,
-Judge Nosey,judge-nosey,5f0ff262d71dcb00449ec018,,,
-SKWAD,skwad-2,5f170d62b898490041b49374,,,
-RevryNews,revrynews,5f458dded93f4a0041cb1f63,,,
-Runtime,runtime,5f47b0b87cb6a400422f9146,,,
-Runtime Español,runtime-espanol,5f5132e362fe160040f26c15,,,
-Humor Mill,humor-mill,5fd115b7b7ef8d002dcf1814,,,
-24 Hour Free Movies,24-hour-free-movies,5fd115bab7ef8d002dcf181d,,,
-Hard Knocks,hard-knocks,5fd115bdb7ef8d002dcf1820,,,
-FreeTV Live,freetv-live,6018913ea15130002b28418f,,,
-FreeTV Hits,freetv-hits,6018913ea15130002b284191,,,
-FreeTV Saber Más,freetv-saber-mas,6018913ea15130002b284195,,,
-FreeTV Sureño,freetv-sureno,6018913fa15130002b284197,,,
-FreeTV Drama,freetv-drama,60240f57676235002df19f47,,,
-FreeTV Familia,freetv-familia,60240f57676235002df19f49,,,
-FreeTV Acción,freetv-accion,60240f58676235002df19f4b,,,
-Motorvision TV,motorvision-tv,603fb593a99efc002dbf90e4,,,
-Freebie TV,freebie-tv,604bf68f499957002d574f45,,,
-FTF Sports,for-the-fans,605a309dc5acdc002c7a20aa,,,
-TNA Wrestling Channel,tna-wrestling-channel,606605549dbfca002d2ae873,,,
-Fight Network,fight-network,606605549dbfca002d2ae877,,,
-The Preview Channel,the-preview-channel,608083444363b700366942df,,,
-FreeTV Estelar,freetv-estelar-2,608b7095a09205002da4f293,,,
-GoTraveler,gotraveler,60a53634126de9002e694bc2,,,
-Poker Night TV,poker-night-tv,60afc726623f2f002c5bb49f,,,
-Qwest TV,qwest-tv,60b0f65c0c8ffb002c821a75,,,
-NEW K-POP,new-k-id,60d4edd7b2fdec002c14112d,,,
-Rakuten Viki,rakuten-viki,60d4edd8b2fdec002c14112f,,,
-NEW K.MOVIES,new-k-movies,60d4eddab2fdec002c141131,,,
-BABY SHARK TV,baby-shark-tv,60d4eddeb2fdec002c141137,,,
-Toony Planet,toony-planet,60d4eddfb2fdec002c141139,,,
-YG TV,yg-tv,60d4ede2b2fdec002c14113b,,,
-Made In Hollywood,made-in-hollywood-2,60db63d29ec966002c9ea6f0,,,
-MHz Now,mhz-now,611152a48f945c002c40021a,,,
-More U,more-u,6112a9139894c8002c6cb87f,,,
-Camp Spoopy,camp-spoopy,6164a963766ab4f9f57e81b1,,,
-SLOPES,slopes,616df1be2cf008a748c8cb53,,,
-FreeTV Horror,freetv-horror,617afafd7ab406f93af02607,,,
-Discover Film,discover-film,618198fe4e1b6764011b046a,,,
-America the Beautiful,america-the-beautiful,6182cd0df4e62961d9c2ccf6,,,
-Eddie's Wonderland,eddies-wonderland-us,618ab1f175913b296fbe56db,,,
-COMMUNE,commune,618adcbb6769b2b0bcc4c17f,,,
-Music Legends,music-legends,6196c8c01d310bf925e02615,,,
-Trailers From Hell,trailers-from-hell,61d738b5a7b7c7f703418514,,,
-XFC TV,xfc-tv,621670feab2095ca85353ad4,,,
-CINEPRIDE,cinepride-2,62167144ab2095ca85353ad6,,,
-Watch it SCREAM,watch-it-scream-2,621671d05abdd3d5556a1baf,,,
-Watch it Kid,watch-it-kid-2,621672612c2627c068e73ad6,,,
-Galxy TV,galxy-tv-2,621672e42c2627c068e73ad8,,,
-FrightFlix,frightflix-2,621674502c2627c068e73ada,,,
-El Conflicto TV,el-conflicto-tv-2,621674f168c966be92737ce6,,,
-Surf Now TV,surf-now-tv,6227c215c9f485cc7afe8c41,,,
-Unidentified,unidentified,6227d1d2c9f485cc7afe8c44,,,
-BlackPix,blackpix-2,62280644c9f485cc7afe8c48,,,
-Samuel Goldwyn Channel,samuel-goldwyn-channel,6233ee9222dcc1d9a93916b6,,,
-Samuel Goldwyn Classics,samuel-goldwyn-classics,6233ef13ce37cac7a278664b,,,
-FreeTV Banda,freetv-banda,623954128ed2b3b15baecb2c,,,
-Very New Mexico by KOAT,very-new-mexico-by-koat,624416c4cc4140a6505193e2,,,
-Hallmark Movies & More,hallmark-movies-and-more,6244cf3c742b0d58cd4f2514,,,
-Samuel Goldwyn International,samuel-goldwyn-international,624604480e3d6a85f19e37f1,,,
-Local Now Denver,local-now-denver,62a24da3f7d323d4cc893224,,,
-Local Now Downtown Denver,local-now-downtown-denver,62aa647bb5520790e10654a8,,,
-Local Now Aurora,local-now-aurora,62ab793578aca8f235bab1a2,,,
-Local Now Washington Park,local-now-washington-park,62ab8e67746f38834a14c2ff,,,
-Local Now Stapleton,local-now-stapleton,62ab906ab77449ade84f3a01,,,
-Sonic TV,sonic-tv,62ba4aaff663580a7238f327,,,
-Fite 24/7,fite-24-7,62c8a2d2d774648bcc76a116,,,
-Impossible - Quiz Show,impossible-quiz-show,6308fa9c0417b7074a4ad959,,,
-Christmas Plus,christmas-plus-2,634700569d64afa6830d1521,,,
-Bigtime - Películas Gratis,bigtime-peliculas-gratis,6348969190b96ef5e0eb327a,,,
-Grjngo - Western Movies,grjngo-western-movies,63489a771159f6a5ce819b7b,,,
-Moconomy - Economía y Finanzas,moconomy-economia-y-finanzas,63489e1390b96ef5e0eb3280,,,
-Grjngo - Películas Del Oeste,grjngo-peliculas-del-oeste,63489eff90b96ef5e0eb3282,,,
-Moconomy - Economy & Finance Infotainment,moconomy-economy-and-finance-infotainment,63489fcd1159f6a5ce819b7d,,,
-ARTFLIX - Movie Classics,artflix-movie-classics,6348a10d1159f6a5ce819b7f,,,
-ARTFLIX - Películas Clásicas,artflix-peliculas-clasicas,6348a34c1159f6a5ce819b81,,,
-Bigtime - Free Movies,bigtime-free-movies,6348a4f190b96ef5e0eb3286,,,
-Pitufo TV,pitufo-tv,639ba57d3f4612cc150a5723,,,
-Jubao,jubao,639baa971a12420ff66ae7b1,,,
-"Funny Or Die, Inc.",funny-or-die-inc,63d08694ab0965e49583e3b2,,,
-Brat TV,brat-tv,63d6f6c5a9e88ee909e7ee1f,,,
-FreeTV Drama Vault,freetv-drama-vault,63d84f7715431f0798dd6b66,,,
-FreeTV Fantasy,freetv-fantasy,63d9496e137315d10db2c806,,,
-FreeTV Crime,freetv-crime,63d94c5f137315d10db2c808,,,
-FreeTV Action,freetv-action,63d94f1e137315d10db2c80b,,,
-FreeTV Family,freetv-family,63d9509f137315d10db2c80d,,,
-FreeTV Horror,freetv-horror-2,63d954cc308687c7d9baa667,,,
-CombaTV,combatv,63f0ca427b78030ed9990309,,,
-Motorsport.tv,motorsport-tv,6408c82eebb23ab878e8ddbb,,,
-Anger Management en español,anger-management-en-espanol,64149ba2d02609d8a7127ee8,,,
-MyTime Movie Network,mytime-movie-network-3,644875d7af92c31f4a190bc2,,,
-Robot Wars by Mech+,robot-wars-by-mech,6470477fe536e0faaf10be9d,,,
-Just For Laughs Gags,just-for-laughs-gags,64704954e536e0faaf10be9f,,,
-Cops en Español,cops-en-espanol,6477b95b7ba9c0d593859bfc,,,
-FashionTV,fashiontv,6490c01f3b3ce9e1aaad95be,,,
-WITZ-Comedy TV,witz-comedy-tv,6490d0a03b3ce9e1aaad95c0,,,
-Ideas En 5 Minutos,ideas-en-5-minutos,64a355697d24564fba37bab8,,,
-Nolly Africa HD,nolly-africa-hd,64b1e1217d4037206787f384,,,
-Novelisima,novelisima,64d4e82ac5d4668c9cb7b5df,,,
-Aliwko,aliwko,64d4ee537b323f6abbd19e59,,,
-Misterios sin Resolver,misterios-sin-resolver,64d79408e5f67b0fab47ff24,,,
-Travel Escapes,travel-escapes,64e437ba7ef2bf9f66b42615,,,
-Cine de Horror,cine-de-horror,64e6e2f04a5e9b4cedc6d52b,,,
-Cine en Español,cine-en-espanol,64e6e46f27a915f9b5184e9a,,,
-World's Wildest Police Videos,worlds-wildest-police-videos,64f124818d44f2871135a907,,,
-Canela Clásicos,canela-clasicos,64fba469bb3e0baa5dcc0947,,,
-WipeoutXtra,wipeoutxtra,6515fb621fc969615e69d16e,,,
-McLeods Daughters,mcleods-daughters,6515fd4f2ff655e77635c628,,,
-Fear Factor,fear-factor,651600fb2ff655e77635c62a,,,
-Mansa Mix,mansa-mix,65282d2615c307b5dfda8bc4,,,
-Fork & Flight,fork-and-flight,6529ad9dc8221fe0db66c0b3,,120989,
-Investigation,investigation,6529b08ece8f0608a50194b5,,,
-The Librarians,the-librarians,654a8041fa75888bea239718,,,
-TruBlu,trublu,65621e98b7d737841f30a4f9,,,
-The World Poker Tour,the-world-poker-tour-3,656fa24bdbcce28c3a417415,,,
-Kidz Bop TV,kidz-bop-tv,656fb124cb7e8e6a9bc3f36a,,,
-C4 en Alerta,c4-en-alerta,65b1568052aa31b8f64da064,,,
-Made It Myself TV,made-it-myself-tv,65b80306e5cf85050598aba4,,,
-Hallmark en Español,hallmark-en-espanol,65d7b3d2278ed4498289c34b,,,
-Movieitaly Channel,movieitaly-channel,65d90ec99c7a6da8c3ce57eb,,,
-Cricket Gold,cricket-gold,65e0c8c6d899afe817b9d224,,,
-EarthXtra,earthxtra,65f0cae2046e6131ecc3183f,,,
-PBS Retro,pbs-retro,65fb337f00433c8a0799ce98,,,
-80's Sitcom Flashback,80s-sitcom-flashback,65fca98c60dc164e8f272332,,,
-MLB,mlb,65fee252a398630d5911337d,,,
-Plex24,plex24,66180428e06c9878b6d9d76c,,,
-Spark TV Luz y Amor,spark-tv-luz-y-amor,661d6a8db518ef381a85ed60,,,
-Grace & Frankie,grace-and-frankie,6650f18018c60f45135012fa,,,
-FIFA+,fifa-4,66628d4a8dfc36b8c8a399c4,,,
-GREAT! comedy,great-comedy,6668c7f889c051b3733f9b63,,,
-Ice Pilots NWT,ice-pilots-nwt,666e1820ce73ed6023b55a11,,,
-Ice Pilots NWT (en español),ice-pilots-nwt-en-espanol,666e192cd91d13cb4c8cbb6b,,,
-Jade Fever,jade-fever,666e1a2bce73ed6023b55a13,,,
-La Fiebre del Jade,la-fiebre-del-jade,666e1af3d91d13cb4c8cbb6d,,,
-Prime Suspect,prime-suspect,6674b780f04cf4bb9233c918,,,
-The Doctor Blake Mysteries,the-doctor-blake-mysteries,6674b983f04cf4bb9233c91b,,,
-Unspeakable,unspeakable,6674baf1a9c715b93ca6ca90,,,
-Untold Stories of the ER,untold-stories-of-the-er,6674bc83a9c715b93ca6ca92,,,
-LATV,latv,6685a97b59703916799193a5,,,
-Weeds,weeds,66915d35086cb6d46eae12c8,,,
-Get.Factual,get-factual,6699937717c9985deeb74e39,,,
-Welcome Home,welcome-home,66a1abb19101f360242499aa,,,
-Love & Marriage,love-and-marriage,66a1b02777649467da169f14,,,
-Family Unscripted,family-unscripted,66a2b6ebf7180d8d2ca77f5e,,,
-Bizarre Foods with Andrew Zimmern,bizarre-foods-with-andrew-zimmern,66a2b83ef7180d8d2ca77f60,,,
-Family Feud,family-feud,66a2d1390b91165254efdb3e,,,
-Mr. Bean,mr-bean,66a2e7fe94b6a49cb5054d7b,,,
-Designated Survivor,designated-survivor,66aa9b7fd8fc59729226073e,,,
-CNN Originals,cnn-originals,66ad6025cb5d3b7fb5011c2d,,,
-MythBusters,mythbusters,66b133a8a9ef8c41ec0841aa,,,
-Nip/Tuck,nip-tuck,66b13485a9ef8c41ec0841ac,,,
-Horror Stories,horror-stories,66b136d2a9ef8c41ec0841ae,,,
-Primetime Soaps,primetime-soaps,66b13a1f4893b3d48c72db19,,,
-Hit Sitcoms,hit-sitcoms,66b13b29a9ef8c41ec0841b0,,,
-B/R Sports Network,b-r-sports-network,66b140354893b3d48c72db1b,,,
-No Reservations,no-reservations,66b141e2a9ef8c41ec0841b2,,,
-The Jim Rome Show,the-jim-rome-show,66b2a9acc0ebb601ab4b1e73,,,
-CNN Headlines,cnn-headlines,66b4fcc2530e39ea2ee79545,,114958,
-Action Hollywood Movies,action-hollywood-movies,66be944f8711311880995280,,,
-RCM,rcm,66bfb17c144c201b8b61c10d,,,
-UFC,ufc,66ccac69fdf9cd3a568ef135,,,
-Naturaleza Salvaje,naturaleza-salvaje,66ccb35278822c7edc4b6e01,,,
-Corner Gas,corner-gas-2,66ce3cf459062698a13c39df,,,
-Continuum,continuum,66ce3ef09ac0b1441b19ca2b,,,
-The Sherlock Holmes Channel,the-sherlock-holmes-channel,66ce3fc059062698a13c39e1,,,
-FilmRise Action,filmrise-action-2,66ea0504c24d95b51b7cd189,,,
-FilmRise Classic TV,filmrise-classic-tv-2,66ea07049502c5778b828d3f,,,
-FilmRise Free Movies,filmrise-free-movies-3,66ea085d9502c5778b828d41,,,
-FilmRise Horror,filmrise-horror-2,66ea09a39502c5778b828d43,,,
-Drool,drool,66ea0e029502c5778b828d45,,,
-Horror by ALTER,horror-by-alter,66f5a92352c50d2f62020f38,,,
-Hunter,hunter-2,66f6b6baac1a1890ef197a4b,,,
-21 Jump Street,21-jump-street-2,66f6b947515e742745f5ca34,,,
-Willow Sports,willow-sports,66fbf9cf128ab3f65b259bcb,,,
-PLL Network,pll-network-2,66fbfd67bde73c589ab2af42,,,
-Iron Chef,iron-chef-2,6707cfa5da81682f2d1e6837,,,
-Iron Chef en español,iron-chef-en-espanol,6707d20ab87b5cf57ac33c95,,,
-Kim's Convenience,kims-convenience,6707d359da81682f2d1e683c,,,
-Sheriffs: El Dorado County,sheriffs-el-dorado-county,6707dc42da81682f2d1e6846,,,
-The Kids in the Hall,the-kids-in-the-hall,670858335b42d01c9391e325,,,
-The Ellen Channel,the-ellen-channel,67182addd5b18813f9d0f1b6,,,
-My Little Pony,my-little-pony,67182cd9d321899c5dc8a00c,,,
-Vidas Extremas,vidas-extremas,671833e8d321899c5dc8a00e,,,
-Mr. Bean Live Action,mr-bean-live-action,671a924b79fce6628115432c,,,
-Barney and Friends,barney-and-friends,671c1743128bc4121f80aef5,,,
-TuWarner,tuwarner,671c1a95572427bfa1eb7ecb,,,
-Construcciones Asombrosas,construcciones-asombrosas,671c1c8f572427bfa1eb7ecd,,,
-Bodas +,bodas,671c1df4572427bfa1eb7ecf,,,
-Aventura,aventura,671c1f46572427bfa1eb7ed1,,,
-TuDiscovery,tudiscovery,671c2065128bc4121f80aef8,,,
-Expedientes Sobrenaturales,expedientes-sobrenaturales,671c21f5128bc4121f80aefa,,,
-Crimen,crimen,671c2353572427bfa1eb7ed3,,,
-CNÑ XPRESS,cnn-xpress,671c246e572427bfa1eb7ed5,,,
-The Doctors,the-doctors,6720271c727d52d7a0e0b495,,,
-The Martha Stewart Channel,the-martha-stewart-channel,672948f0297d4ea7584a2e13,,,
-The Emeril Lagasse Channel,the-emeril-lagasse-channel,67294a601055ef3897c73477,,,
-FLOU Detonación,flou-detonacion,673675909564224797d5b598,,,
-Butaca TV,butaca-tv-2,67367a2d9564224797d5b59c,,,
-Hot Wheels Action,hot-wheels-action,67448316c583cfbd5f0e1d99,,,
-Barbie and Friends by Mattel,barbie-and-friends-by-mattel,674487c3c583cfbd5f0e1da9,,,
-Animation+,animation,674f6a6cf44561420465f9f3,,,
-Ghost Show and Friends,ghost-show-and-friends,6751ec5863fb26e9b8c42e84,,,
-The Outpost,the-outpost-2,6762ec6a4a292357428c1b59,,,
-Cirque du Soleil,cirque-du-soleil,67642f277c5e3b38af72dcdb,CIDUS,167590,
-The Ring,the-ring,6765b16d1f7ab3b17306b128,,172491
-FRANCE 24,france-24,678fe7959407a53556d3e8eb,,70130
-Triton Poker,triton-poker,678fe95d389daa346544d501,,153526
-Dateline,dateline,5fc70600598c41002da3dd19,PK12,113957,
-SNL Vault,snl-vault,5fc70600598c41002da3dd34,PK3,113678,
-NBC Sports NOW,nbc-sports-now,5fc70600598c41002da3dd43,PK22,114140,
-GOLFPASS,golfpass,5fc706038aba71002d8b7c8e,PK24,114142,
-LX Home Streaming,lx-home-streaming,645a5a1e4dc67ffc42d36558,LXHSTR,126864,
-E! Keeping Up,e-keeping-up,645e328e3ea1d2d705ef8ab2,EKEEPUP,138393,
-Bravo Vault,bravo-vault,645e328fb164db00b4547f05,BRVVLT,138400,
-Top Chef Vault,top-chef-vault,645e328fd47e81979471c88d,TCVLT,138398,
-Real Housewives Vault,real-housewives-vault,645f840b361156ab4214e28d,RHLVT,138455,
-American Crimes,american-crimes,6467891c73e5e029428f0e16,ACRM,138396,
-Oxygen True Crime Archives,oxygen-true-crime-archives,6467891c73e5e029428f0e18,OXYTCA,138585,
-Telemundo Romance,telemundo-romance,6478acb5c83f56da796f166d,TLMDROM,138528,
-Telemundo al Dia,telemundo-al-dia,6478acb5c83f56da796f166f,TLMDDIA,138526,
-Telemundo Acción,telemundo-accion,6478acb5c83f56da796f1670,TLMDACC,138527,
-Million Dollar Listing Vault,million-dollar-listing-vault,670694b4836808fbb1561c91,MDLV,164081,
-Storage Wars by A&E,storage-wars-by-aande-2,67a37720786c8a28ae4965bb,STOWAR,172207,
-CBC News,cbc-news-explore,647f8d22a2fc3fadb4721685-6403c7a95baf3d46d1103770,CBCNEWS,122185,
-Radio-Canada INFO,radio-canada-info,647f8d22a2fc3fadb4721685-65b28dd28f05102bce4a790f,RCINFO,122186,
-CBC Comedy,cbc-comedy,647f8d22a2fc3fadb4721685-65b28dd28f05102bce4a7910,CBCCMDY,146608,
-Local Now Dallas,local-now-dallas,629fe6c5da7402141255417f,,,
-Local Now Vegas,local-now-vegas,62a25520d95f6a0c0146cc88,,,
-Local Now Albuquerque,local-now-albuquerque,62a78c0e3ccfe207c22a5e62,,,
-Local Now Plano,local-now-plano,62aa5327b5520790e1065498,,,
-Local Now DeSoto,local-now-desoto,62ab6ec278aca8f235bab181,,,
-Local Now Roswell New Mexico,local-now-roswell-new-mexico,62ab88f4746f38834a14c2f2,,,
-Local Now Irving,local-now-irving,62ab8c0fb77449ade84f39f0,,,
-KTNV,ktnv,6577ae41ae30e4a5bfdc19bb,,,
-CBS News Texas,cbs-news-texas,659712165dbaa285a54e89d4,,,
-Mattel Jr.,mattel-jr,674486a3c583cfbd5f0e1da7,,,
-Tennis+,tennis,6761f91555e174e95ccc4e4c,,,
-Zee BollyWorld,zee-bollyworld,678287e75fe5e4eb1e030c65,,,
-DP World Tour,dp-world-tour,67858517d3749c9bdd4d2ecf,,,
-ONE Championship TV,one-championship-tv,6785867ad3749c9bdd4d2ed1,,,
-Pam Grier's Soul Flix,pam-griers-soul-flix,678819cadb8f0c5dc195cf50,PGSOULX,171699,
-Creator Television,creator-television,67884bd6d37f2fd48d6220db,,,
-Shades of Black,shades-of-black,67a1421f114554261db9e459,,,
-Game & Fish TV,game-and-fish-tv,67a147a7114554261db9e45d,,,
-Lucha Plus,lucha-plus,67a1a8ef2358ef4dd5c3018e,,,
-Modern Innovations by History,modern-innovations-by-history,67ae8ad1a9b2dfa7f83e17d6,,,
-Toon Goggles,toon-goggles,647f8d22a2fc3fadb4721685-5eea605574085f0040ddc794,,,
-SKWAD,skwad,647f8d22a2fc3fadb4721685-5f12332eeca6a20040b328e5,,,
-TG Junior,tg-junior,647f8d22a2fc3fadb4721685-5f123330eca6a20040b328e8,,,
-FailArmy,failarmy-2,647f8d22a2fc3fadb4721685-5f170d62b898490041b4936e,,,
-The World Poker Tour,the-world-poker-tour,647f8d22a2fc3fadb4721685-5f6b8e7900b0950040d0f2b2,,,
-Euronews Español,euronews-espanol,647f8d22a2fc3fadb4721685-60089d97f682a3002c34829d,,,
-GoUSA TV,gousa-tv,647f8d22a2fc3fadb4721685-60a9d105d162b9002d05a60c,,,
-Documentary+,documentary,647f8d22a2fc3fadb4721685-614e286b2bac097ffd6fd6ab,,,
-Eddie's Wonderland,eddies-wonderland-non-us,647f8d22a2fc3fadb4721685-618ab2f275913b296fbe56dd,,,
-Journy,journy-ca,647f8d22a2fc3fadb4721685-61f0489a3f2259f988094ddb,,,
-Unidentified,unidentified-2,647f8d22a2fc3fadb4721685-6227e0765e753e6288a86f2f,,,
-Lift Ticket,lift-ticket,647f8d22a2fc3fadb4721685-62280162c9f485cc7afe8c46,,,
-BlackPix,blackpix,647f8d22a2fc3fadb4721685-622805c85e753e6288a86f31,,,
-Euronews Portuguese,euronews-portuguese,647f8d22a2fc3fadb4721685-6245cd154f27f4e9c76d67e9,,,
-Euronews Deutsch,euronews-deutsch,647f8d22a2fc3fadb4721685-6245efe9f137de43897ea1ae,,,
-Euronews Italiano,euronews-italiano,647f8d22a2fc3fadb4721685-6245f13093b402a3d1097789,,,
-COPS,cops,647f8d22a2fc3fadb4721685-626c1753ffda6789d20a452e,,,
-FUEL TV,fuel-tv-3,647f8d22a2fc3fadb4721685-62ffc5cfa6cad6f2991745c2,,,
-Space Science Now,space-science-now,647f8d22a2fc3fadb4721685-635c61cc797a33fa4193cc93,,,
-HauntTV,haunttv,647f8d22a2fc3fadb4721685-646c0794fb58444e4e1e2629,,,
-Homeful,homeful,647f8d22a2fc3fadb4721685-646c0b34432016306ec0a086,,,
-Total Crime,total-crime,647f8d22a2fc3fadb4721685-646c0cdcfb58444e4e1e262b,,,
-American Pickers Channel,american-pickers-channel,647f8d22a2fc3fadb4721685-64879f0908027d8957214048,,,
-SportsGrid,sportsgrid-2,647f8d22a2fc3fadb4721685-6490e78518a55242eea95999,,,
-True Crime Now,true-crime-now-2,647f8d22a2fc3fadb4721685-64e43b37200cd2f67473e0d4,,,
-MagellanTV NOW,magellantv-now-3,647f8d22a2fc3fadb4721685-650b5ea1b2413c46bf584d84,,,
-History & Warfare Now,history-and-warfare-now-2,647f8d22a2fc3fadb4721685-650b60deb2413c46bf584d86,,,
-Property Brothers Channel,property-brothers-channel,647f8d22a2fc3fadb4721685-652857f46425fdb1f32d20dc,,,
-Adventure Earth,adventure-earth-2,647f8d22a2fc3fadb4721685-6533e27abd43e1c8b1865154,,,
-Super Channel Hearties,super-channel-hearties,647f8d22a2fc3fadb4721685-657dd21dc7a367074887310a,,,
-Super Channel Uncovered,super-channel-uncovered,647f8d22a2fc3fadb4721685-657dee4038169fe9de6571b8,,,
-Hell's Kitchen,hells-kitchen,647f8d22a2fc3fadb4721685-65829d90a90606db3c841b19,,,
-Hardcore Pawn,hardcore-pawn,647f8d22a2fc3fadb4721685-65847c56d60830ce4d4f303a,,,
-Bloomberg Originals,bloomberg-originals-2,647f8d22a2fc3fadb4721685-6598b92d3c32e5b40440d6c2,,,
-Bloomberg TV,bloomberg-tv-3,647f8d22a2fc3fadb4721685-6598baa010cb8b7793c6b3f8,,,
-FilmRise Horror,filmrise-horror,647f8d22a2fc3fadb4721685-65ddf33acf4a43f7017f31c3,,,
-FilmRise Action,filmrise-action,647f8d22a2fc3fadb4721685-65ddf33acf4a43f7017f31c4,,,
-FilmRise Free Movies,filmrise-free-movies,647f8d22a2fc3fadb4721685-65ddf33c7e7be0a1106cd1bb,,,
-FilmRise Canadien,filmrise-canadien,647f8d22a2fc3fadb4721685-65ddf33c7e7be0a1106cd1bc,,,
-Fresh Movies,fresh-movies,647f8d22a2fc3fadb4721685-65de8ca640b20047b79df1c9,,,
-CBS News Canada,cbs-news-canada,647f8d22a2fc3fadb4721685-65e179f8d581830d25124e1d,,,
-Survivorman on Plex,survivorman-on-plex,647f8d22a2fc3fadb4721685-65e89d8b982674772f6f1a55,,,
-FilmRise Made In Canada,filmrise-made-in-canada,647f8d22a2fc3fadb4721685-65e9d0ad8fe4ef7053c3c873,,,
-FilmRise Classic TV,filmrise-classic-tv,647f8d22a2fc3fadb4721685-65e9d0ad8fe4ef7053c3c874,,,
-The Wicked Tuna Channel,the-wicked-tuna-channel-2,647f8d22a2fc3fadb4721685-6623c335ed4918437ed56ec0,,,
-FilmRise Western,filmrise-western-2,647f8d22a2fc3fadb4721685-6627ab12580825e8a7bc4f05,,,
-FilmRise Sci-Fi,filmrise-sci-fi-8,647f8d22a2fc3fadb4721685-6627ab12580825e8a7bc4f06,,,
-Tastemade,tastemade-7,647f8d22a2fc3fadb4721685-66311d1a707bae70101ec757,,,
-FIFA+,fifa-11,647f8d22a2fc3fadb4721685-666292508dfc36b8c8a399ca,,,
-MOVIESPHERE,moviesphere-6,647f8d22a2fc3fadb4721685-6663510e7ce166787145c6a9,,,
-Bon Voyage,bon-voyage,647f8d22a2fc3fadb4721685-666e10bece73ed6023b55a0d,,,
-Go Xplorer,go-xplorer,647f8d22a2fc3fadb4721685-666e16f9d91d13cb4c8cbb69,,,
-Life+Style,lifestyle,647f8d22a2fc3fadb4721685-666e1bc2d91d13cb4c8cbb6f,,,
-Bridezillas,bridezillas,647f8d22a2fc3fadb4721685-66842dd7cd6f1d394094115b,,,
-Deal Or No Deal,deal-or-no-deal-3,647f8d22a2fc3fadb4721685-66855a2a714fe577eb7db920,,,
-TSN The Ocho,tsn-the-ocho,647f8d22a2fc3fadb4721685-6685bf522deb7f424133b087,,,
-Corner Gas,corner-gas,647f8d22a2fc3fadb4721685-6685bff32deb7f424133b089,,,
-CTV Gridlock,ctv-gridlock,647f8d22a2fc3fadb4721685-6685c08ab53e3bc0fd169e1b,,,
-CTV Laughs,ctv-laughs,647f8d22a2fc3fadb4721685-6685c10e2deb7f424133b08b,,,
-CTV News,ctv-news,647f8d22a2fc3fadb4721685-6685c1a1b53e3bc0fd169e1d,,,
-The Mightiest by CTV,the-mightiest-by-ctv,647f8d22a2fc3fadb4721685-6685c23d2deb7f424133b08d,,,
-CTV @Home,ctv-home,647f8d22a2fc3fadb4721685-6685c2e02deb7f424133b08f,,,
-Les débatteurs Noovo,les-debatteurs-noovo,647f8d22a2fc3fadb4721685-668d3bc6aa19f3bf5ee4fd1a,,,
-Ça c’est drôle,ca-cest-drole,647f8d22a2fc3fadb4721685-668d3ca7164d5df264c08d2b,,,
-Noovo Cinéma,noovo-cinema,647f8d22a2fc3fadb4721685-668d3d9c164d5df264c08d2d,,,
-Three's Company,threes-company,647f8d22a2fc3fadb4721685-66a2dcfa0b91165254efdb42,,,
-The Price is Right Drew Carey,the-price-is-right-drew-carey,647f8d22a2fc3fadb4721685-66a2de240b91165254efdb44,,,
-Let's Make a Deal,lets-make-a-deal,647f8d22a2fc3fadb4721685-66a2df930b91165254efdb46,,,
-Project Runway,project-runway,647f8d22a2fc3fadb4721685-66a2e57a0b91165254efdb4a,,,
-TRACE UK,trace-uk,647f8d22a2fc3fadb4721685-66be8cd4871131188099527e,,,
-UFC,ufc-2,647f8d22a2fc3fadb4721685-66ccae1a78822c7edc4b6df1,,,
-REVOLT Mixtape,revolt-mixtape,647f8d22a2fc3fadb4721685-66fd3873216b603e031725fa,,,
-Western Bound,western-bound-2,647f8d22a2fc3fadb4721685-66fd3a76216b603e031725fc,,,
-Tiny House Nation,tiny-house-nation-2,647f8d22a2fc3fadb4721685-671bedfa128bc4121f80aeec,,,
-Modern Marvels,modern-marvels,647f8d22a2fc3fadb4721685-671beef2128bc4121f80aeef,,,
-Flipping Nation,flipping-nation,647f8d22a2fc3fadb4721685-671bf04b128bc4121f80aef1,,,
-Ax Men,ax-men,647f8d22a2fc3fadb4721685-671bf11d572427bfa1eb7c51,,,
-Dance Moms,dance-moms,647f8d22a2fc3fadb4721685-672917e07f55143b23b66c4b,,,
-Dog the Bounty Hunter,dog-the-bounty-hunter-2,647f8d22a2fc3fadb4721685-6729199a7f55143b23b66c4d,,,
-Duck Dynasty,duck-dynasty-2,647f8d22a2fc3fadb4721685-67291bde7f55143b23b66c4f,,,
-Intervention,intervention,647f8d22a2fc3fadb4721685-67291ed37f55143b23b66c51,,,
-Evolution Earth,evolution-earth,647f8d22a2fc3fadb4721685-67291fdbc1edbd1509fb9d11,,,
-Little Women: LA,little-women-la,647f8d22a2fc3fadb4721685-6729212fc1edbd1509fb9d13,,,
-CTV Gets Real,ctv-gets-real,647f8d22a2fc3fadb4721685-673baa653686582f958dadf0,,,
-Spark TV Light & Love,spark-tv-light-and-love,647f8d22a2fc3fadb4721685-673d2a870d39ac306d6f2ceb,,,
-The Outpost,the-outpost,647f8d22a2fc3fadb4721685-675b42090074283b4ef1e563,,,
-Murdoch Mysteries,murdoch-mysteries,647f8d22a2fc3fadb4721685-67900a32f9dd14c1a7b5032b,,,
-Heartland,heartland-2,647f8d22a2fc3fadb4721685-679425abf343fe9fe16c47a7,,,
+name,slug,plex_slug,id,callSign,tmsid,time_shift,notes,notes2,notes3
+365BLK,365blk,plex-365blk,6745dca72832b870acf53220,365BLKF,169857,,,0,0
+Acorn TV Mysteries,acorn-tv-mysteries-2,plex-acorn-tv-mysteries-2,6848269efd17cd629e5df2e9,ACNMYST,180558,,,0,1
+American Crimes,american-crimes,plex-american-crimes,6467891c73e5e029428f0e16,ACRM,138396,,,0,8
+AsianCrush,asiancrush,plex-asiancrush,5eea605474085f0040ddc767,ACRUSH,130620,,,0,0
+AccuWeather NOW,accuweather-now-2,plex-accuweather-now-2,6151d74593dbf246f0843f01,ACUWNW,120551,,,0,0
+ALF,alf,plex-alf,62d1ecc8e44d39da220722aa,ALF,89311,,,0,1
+All Weddings We TV,all-weddings-we-tv,plex-all-weddings-we-tv,60de0520281b17002cd1d4c4,ALLWED,117227,,,0,1
+AMC en Español,amc-en-espanol,plex-amc-en-espanol,62d1efa6c33948ea4ceedbcf,AMCNESP,125090,,,0,1
+AMC Thrillers,amc-thrillers,plex-amc-thrillers,5fc705e2a2236e002d69f36d,AMCRSH,115678,,,0,8
+ANIME x HIDIVE,anime-x-hidive-2,plex-anime-x-hidive-2,63dea56a2a2abb171ff6dadf,ANIMEH,132816,,,0,0
+AXS TV Now,axs-tv-now,plex-axs-tv-now,606605549dbfca002d2ae875,AXSTNST,123156,,,0,0
+BBC News (North America),bbc-news-north-america,plex-bbc-news-north-america,646fab0e43d6d6838db81a6a,BBCWDE,101443,,,0,0
+Bounce XL,bouncexl,plex-bouncexl,623d9b0370560b72147a994a,BOUNSTR,120372,,,0,0
+Bravo Vault,bravo-vault,plex-bravo-vault,645e328fb164db00b4547f05,BRVVLT,138400,,,0,8
+Caso Cerrado,telemundo-romance,plex-telemundo-romance,6478acb5c83f56da796f166d,CASOCER,138528,,,0,1
+CBC News,cbc-news-international,plex-cbc-news-international,64c91830ea7db2f52688c52c,CBCINT,124721,,,0,0
+Cheddar,cheddar-news,plex-cheddar-news,5f6b8e5900b0950040d0f2af,CHEDSTR,101103,,,0,0
+Cirque du Soleil,cirque-du-soleil,plex-cirque-du-soleil,67642f277c5e3b38af72dcdb,CIDUS,167590,,,0,0
+Stingray Classica Stream,stingray-classica-stream,plex-stingray-classica-stream,62d7f68fb19cbf65dc7bef7d,CLA008A,122326,,,0,0
+Comedy Dynamics,comedy-dynamics,plex-comedy-dynamics,5efe1de5e0b3f5003f5d9f76,COMCLN,115447,,,0,8
+Court TV,court-tv,plex-court-tv,6245d867ddf1ba983d5b8bf8,COURTST,123605,,,0,0
+Curiosity NOW,curiosity-now-5,plex-curiosity-now-5,64831c8be3541c909e96d240,CURINOW,123667,,,0,0
+Dog Whisperer,dog-whisperer,plex-dog-whisperer,652a8b001b5c74bc83cf727c,DOGWHSP,147688,,,0,0
+Dove,dove-channel,plex-dove-channel,5efe1de8e0b3f5003f5d9f91,DOVESTR,110480,,,0,0
+EarthXtra,earthxtra,plex-earthxtra,65f0cae2046e6131ecc3183f,EARTHXT,175889,,,0,0
+The Ed Sullivan Show,the-ed-sullivan-show,plex-the-ed-sullivan-show,640205c68ecb41f2d89d5814,EDSSHOW,135306,,,0,1
+E! Keeping Up,e-keeping-up,plex-e-keeping-up,645e328e3ea1d2d705ef8ab2,EKEEPUP,138393,,,0,0
+El Rey Rebel,el-rey-rebel,plex-el-rey-rebel,6335ad3170dc93c71ab5ce09,ELREYST,124328,,,0,0
+FanDuel TV Extra,fanduel-tv-extra-2,plex-fanduel-tv-extra-2,64e9f17c7511e20e999d6c34,FDTVX,145517,,,0,0
+Fight Network,fight-network,plex-fight-network,606605549dbfca002d2ae877,FIGHTNS,123170,,,0,1
+Farscape,farscape,plex-farscape,635195e9ccee3e1547a8831a,FSCAPE,130175,,,0,0
+Fubo Sports Network,fubo-sports-network,plex-fubo-sports-network,5fc705f68aba71002d8b7b37,FUBOSNX,121984,,106100,0,0
+FUEL TV,fuel-tv-4,plex-fuel-tv-4,62d15f16001c04178f555e40,FUEL,116115,,,0,0
+FOX Weather,fox-weather,plex-fox-weather,6351b29cb940534786b2ec17,FWX,121307,,,0,0
+9 Story Presents: Garfield and Friends,9-story-presents-garfield-and-friends,plex-9-story-presents-garfield-and-friends,6745dca72832b870acf5321f,GFDNFRD,155811,,,0,1
+The Grio,grio-ott,plex-grio-ott,5fe27da18cdd46002d85efed,GRIOOTT,116018,,,0,0
+Grit Xtra,grit-xtra,plex-grit-xtra,62b45f15b4508e0eedacdf25,GRITX,124040,,,0,0
+GameTVGO,gametvgo-2,plex-gametvgo-2,64d2bdf1b18b113e0c610113,GTVGO,165441,,,0,1
+GUSTOTV,gusto-tv,plex-gusto-tv,5f8746eabd529300418246d9,GUSTOTV,111140,,,0,0
+HBCUGO SPORTS,hbcugo-sports,plex-hbcugo-sports,631a212e82b744e0309aa56e,HBCUGO,128535,,,0,0
+Home.Made.Nation,home-made-nation,plex-home-made-nation,5f74cf82ffbe690040689f47,HMN,113673,,,0,1
+IFC Films Picks,ifc-films-picks,plex-ifc-films-picks,5fc705eb052f6f002ef46057,IFCFILM,115677,,,0,0
+Slightly Off IFC,slightly-off-ifc,plex-slightly-off-ifc,5fc705eea2236e002d69f5ae,IFCOFF,116019,,,0,8
+TNA Wrestling Channel,tna-wrestling-channel,plex-tna-wrestling-channel,606605549dbfca002d2ae873,IMPACTW,121991,,,0,1
+Ion Mystery,ion-mystery,plex-ion-mystery,62b45f15b4508e0eedacdf26,IMYSSTR,123651,,,0,0
+ION Plus,ion-plus-streaming,plex-ion-plus-streaming,627e347795b0f50af26d78f9,IONPSTR,117518,,,0,0
+ION,ion-streaming,plex-ion-streaming,624c37af6281708eabbbe26b,IONSTR,122912,,,0,0
+Telemundo Texas,telemundo-texas,plex-telemundo-texas,6478acb5c83f56da796f1671,KTMDF,136700,,,0,1
+NBC 5 Dallas Fort Worth News,nbc-5-dallas-fort-worth-news,plex-nbc-5-dallas-fort-worth-news,64511fb8b1345b8656370295,KXASSTR,124035,,,0,1
+Laff More,laff-more,plex-laff-more,648095b14e104622d093d902,LAFFTV,137609,,,0,0
+Love After Lockup We TV,love-after-lockup-we-tv,plex-love-after-lockup-we-tv,684059c5f36ba25bbd7fb81d,LALU,185538,,,0,1
+Court TV Legendary Trials,court-tv-legendary-trials,plex-court-tv-legendary-trials,648095ad190e97d15c3470e9,LEGTRI,137506,,,0,1
+LiveNOW from FOX,livenow-from-fox,plex-livenow-from-fox,6377ea0e13bb6b1757e14695,LIVENOW,119219,,,0,8
+Lone Star,lone-star,plex-lone-star,6196c9241d310bf925e02616,LS,115226,,,0,1
+LX Home Streaming,lx-home-streaming,plex-lx-home-streaming,645a5a1e4dc67ffc42d36558,LXHSTR,126864,,,0,0
+Million Dollar Listing Vault,million-dollar-listing-vault,plex-million-dollar-listing-vault,670694b4836808fbb1561c91,MDLV,164081,,,0,1
+Midnight Pulp,midnight-pulp,plex-midnight-pulp,5ef4e1b40d9ad000423c4427,MPULP,124312,,,0,1
+MSG SportsZone,msg-sportszone,plex-msg-sportszone,63b5df3f27159bc9de3062aa,MSGZONE,132782,,,0,0
+MotorTrend FAST TV,motortrend-fast-tv,plex-motortrend-fast-tv,6373bfe48e2036e4410ddb82,MTFAST,126737,,,0,0
+Nashville,nashville,plex-nashville,6087ff3ae99ff1002ce1465b,NASH,118859,,,0,1
+NBC News NOW,nbc-news-now,plex-nbc-news-now,5fc70600dd53a6002d8f93ca,NBCNN,114174,,,0,0
+Stingray Naturescape,stingray-naturescape,plex-stingray-naturescape,60d324f59adce5002c41dbc5,NESCAPP,115729,,,0,0
+NESN NATION,nesn-nation,plex-nesn-nation,6759a32270e41582b1b7a236,NESNNAT,166712,,,0,0
+NFL Channel,nfl-channel,plex-nfl-channel,61e805952502a7a6fa84d70f,NFLDC1,121705,,,0,0
+Noticias Telemundo AHORA,noticias-telemundo-ahora,plex-noticias-telemundo-ahora,6478acb5c83f56da796f166c,NOTIAA,138525,,,0,1
+Non-Stop '90s,non-stop-90s,plex-non-stop-90s,65bd5a538314c24e11553543,NS90S,151830,,,0,0
+Outlaw,outlaw,plex-outlaw,66213052abd90e037ccd1fe4,OUTLW,157277,,,0,1
+Oxygen True Crime Archives,oxygen-true-crime-archives,plex-oxygen-true-crime-archives,6467891c73e5e029428f0e18,OXYTCA,138585,,,0,0
+Pam Grier's Soul Flix,pam-griers-soul-flix,plex-pam-griers-soul-flix,678819cadb8f0c5dc195cf50,PGSOULX,171699,,,0,1
+Dateline,dateline,plex-dateline,5fc70600598c41002da3dd19,PK12,113957,,,0,0
+TODAY All Day,today-all-day,plex-today-all-day,5fc70600598c41002da3dd39,PK20,114138,,,0,0
+NBC Sports NOW,nbc-sports-now,plex-nbc-sports-now,5fc70600598c41002da3dd43,PK22,114140,,,0,0
+GOLFPASS,golfpass,plex-golfpass,5fc706038aba71002d8b7c8e,PK24,114142,,,0,8
+SNL Vault,snl-vault,plex-snl-vault,5fc70600598c41002da3dd34,PK3,113678,,,0,0
+So... Real,so-real,plex-so-real,5f0ff262d71dcb00449ec012,REALSTR,114871,,,0,8
+Real Housewives Vault,real-housewives-vault,plex-real-housewives-vault,645f840b361156ab4214e28d,RHLVT,138455,,,0,8
+RetroCrush,retrocrush,plex-retrocrush,5ef4e1b40d9ad000423c442a,RRCRUSH,119355,,,0,0
+Screambox TV,screambox-tv,plex-screambox-tv,641db53c2f7a0fca29488c99,SBOXTV,116607,,,0,1
+Scares by Shudder,scares-by-shudder-3,plex-scares-by-shudder-3,650b38f490baad1963ad96f9,SBSHUDD,145846,,,0,1
+Scripps News,newsy,plex-newsy,5fc705dda2236e002d69f211,SCNEWST,120010,,,0,8
+Stingray Greatest Hits,stingray-greatest-hits,plex-stingray-greatest-hits,61aa97d4113e1e5137fd5325,SM047D,113306,,,0,1
+Stingray Karaoke,stingray-karaoke-5,plex-stingray-karaoke-5,5fc705daa2236e002d69f108,SMUS67,110657,,,0,0
+Qello Concerts,qello-concerts,plex-qello-concerts,5fe27da28c198b002d179199,SMUS68,113296,,,0,0
+SportsGrid,sportsgrid,plex-sportsgrid,5ef11485d33ab9004048a1ca,SPOGRID,112732,,,0,8
+Storage Wars by A&E,storage-wars-by-aande-2,plex-storage-wars-by-aande-2,67a37720786c8a28ae4965bb,STOWAR,172207,,,0,0
+The Bob Ross Channel,the-bob-ross-channel,plex-the-bob-ross-channel,5efe1de6e0b3f5003f5d9f88,TBRCSTR,114491,,,0,1
+Telemundo Acción,telemundo-accion,plex-telemundo-accion,6478acb5c83f56da796f1670,TLMDACC,138527,,,0,1
+Telemundo al Dia,telemundo-al-dia,plex-telemundo-al-dia,6478acb5c83f56da796f166f,TLMDDIA,138526,,,0,1
+Tastemade,tastemade,plex-tastemade,5ef51c802ddee5003f1c0225,TMFRE16,112480,,107076,0,0
+The Walking Dead Espanol,the-walking-dead-espanol-2,plex-the-walking-dead-espanol-2,6848269efd17cd629e5df2ea,TWDEPLU,172381,,,0,1
+The Walking Dead Universe,the-walking-dead-universe-2,plex-the-walking-dead-universe-2,5fc705ff2f220e002d5e6bce,TWDU,115540,,,0,8
+All Reality We TV,all-reality-we-tv,plex-all-reality-we-tv,5fc705ff2f220e002d5e6bec,WEREAL,115679,,,0,1
+Paranormal Files,paranormal-files,plex-paranormal-files,65e87f35335524a69e8e0ce0,XPLPF,147639,,,0,0
+Yu-Gi-Oh!,yu-gi-oh-6,plex-yu-gi-oh-6,6617f52f0049fcb8e2b0d5b8,YUGIOH,155772,,,0,0
+123GO!,123go,plex-123go,63eecb32ac23d1ee072087cb,,156196,,,0,1
+4UV,4uv,plex-4uv,64149a3c238e21f260e7844c,,126373,,,0,1
+5-Minute Crafts,5-minute-crafts,plex-5-minute-crafts,63894c1965b848bf2c8a7800,,156197,,,0,1
+A Touch of Frost,a-touch-of-frost,plex-a-touch-of-frost,6674b595f04cf4bb9233c914,,163839,,,0,1
+A&E Crime 360,aande-crime-360,plex-aande-crime-360,5f74cf7effbe690040689f41,,113780,,,0,2
+Éxitos del Momento,exitos-del-momento,plex-exitos-del-momento,62efba6588a16bb7d6b6fb58,,68639,,,0,0
+ACCDN,accdn,plex-accdn,5f8ee3727c75fa002d9e47c1,,124806,,,0,0
+ACL Cornhole TV,acl-cornhole-tv-2,plex-acl-cornhole-tv-2,63504925a97bd70eaef54f01,,125196,,,0,1
+AfroLandTV,afrolandtv,plex-afrolandtv,60e737a4ebef9d002c4d0a0c,,134197,-6,,0,1
+Alien Nation by DUST,alien-nation-by-dust-2,plex-alien-nation-by-dust-2,63d6f799a9e88ee909e7ee21,,112881,,,0,0
+ALLBLK Gems,allblk-gems,plex-allblk-gems,628bb0eafcb403aa62d2317d,,124177,,,0,0
+Alternative,alternative,plex-alternative,62efbb8652f7d73061eec498,,113301,,67568,0,0
+Always Funny,always-funny,plex-always-funny,5ef11486d33ab9004048a1cd,,134109,,,0,1
+Always Funny en Español,always-funny-en-espanol,plex-always-funny-en-espanol,5ef4e1b10d9ad000423c4421,,136735,,,0,1
+Anger Management,anger-management,plex-anger-management,6303ca568a01b5d4dae57d0e,,125128,,,0,1
+Antiques Road Trip,antiques-road-trip,plex-antiques-road-trip,6348adc71159f6a5ce819b85,,128545,,,0,1
+Antiques Roadshow UK,antiques-roadshow-uk,plex-antiques-roadshow-uk,630902bf0417b7074a4ad95c,,120073,-5,,0,1
+Are We There Yet?,are-we-there-yet,plex-are-we-there-yet,612919784f53e1002c9aa219,,120377,,,0,0
+ÚN TV,un-tv,plex-un-tv,65f0de01046e6131ecc31845,,140180,,,0,1
+At Home with Family Handyman,at-home-with-family-handyman,plex-at-home-with-family-handyman,632270e3e67cf9cd9011fce1,,127174,,,0,0
+At the Movies,at-the-movies,plex-at-the-movies,66a2c1370b91165254efdb3c,,138029,,170368,0,0
+Autopista al Cielo,autopista-al-cielo,plex-autopista-al-cielo,6449369eb3ff17382cae5811,,137067,,,0,1
+Ax Men by History,ax-men-by-history,plex-ax-men-by-history,63c1ec0e0aa23f984207af82,,123425,-5,,0,1
+Azteca Internacional,azteca-internacional,plex-azteca-internacional,646d06c9b09f13b2d8af68d8,,100599,,,0,1
+BACKSTAGE,backstage,plex-backstage,608aec5fa09205002da4f28f,,117060,,,0,0
+Baywatch,baywatch,plex-baywatch,63e63f20abacad42ed3d1acf,,120491,,,0,1
+BBC Comedy,bbc-comedy,plex-bbc-comedy,65622fb65dbccec83a87b643,,141828,,,0,1
+BBC Earth,bbc-earth,plex-bbc-earth,6414a73254c537d12d8073d7,,151422,,135387,0,8
+BBC Food,bbc-food,plex-bbc-food,630905af0417b7074a4ad95e,,120076,-5,,0,1
+BBC Game Shows,bbc-game-shows,plex-bbc-game-shows,656229e4b7d737841f30a4fb,,141827,,,0,1
+BBC Home & Garden,bbc-home-and-garden,plex-bbc-home-and-garden,6308eda9ac9983739c8a29bb,,120074,-5,,0,1
+BBC Sci-Fi,bbc-sci-fi,plex-bbc-sci-fi,65622ac05dbccec83a87b641,,141826,,,0,1
+BBC Travel,bbc-travel,plex-bbc-travel,65622eddb7d737841f30a4fd,,141829,,,0,1
+beIN SPORTS XTRA,bein-sports-xtra,plex-bein-sports-xtra,60a53634126de9002e694bc4,,120375,,,0,0
+beIN Sports Xtra en Español,bein-sports-xtra-en-espanol,plex-bein-sports-xtra-en-espanol,64a8903d273b89c4e7396553,,119661,,,0,0
+BET x Tyler Perry Comedy,bet-x-tyler-perry-comedy,plex-bet-x-tyler-perry-comedy,66635c20ca7b22f4c3a2d73f,,159706,,,0,0
+BET x Tyler Perry Drama,bet-x-tyler-perry-drama,plex-bet-x-tyler-perry-drama,66635b07ca7b22f4c3a2d73d,,159707,,,0,0
+Beyond Belief,beyond-belief-2,plex-beyond-belief-2,64f101b1c4b308f2fe3e7c0c,,136406,-3,,0,1
+Beyond Paranormal,beyond-paranormal,plex-beyond-paranormal,64d2c6acb18b113e0c61012a,,155534,,,0,0
+Billiard TV,billiard-tv,plex-billiard-tv,6334a8e48a7b2a349d903b8c,,120469,,,0,0
+BritBox Mysteries,britbox-mysteries,plex-britbox-mysteries,639a0b83812b6c1429f7acd1,,135385,-5,,0,1
+Buen Viaje,buen-viaje,plex-buen-viaje,666e15a3ce73ed6023b55a0f,,151309,,,0,1
+BUZZR,buzzr,plex-buzzr,66a2d71b0b91165254efdb40,,113452,,,0,0
+Canela.TV Deportes,canela-tv-deportes,plex-canela-tv-deportes,64fba7b6bb3e0baa5dcc0949,,129783,,,0,2
+Canela.TV Hollywood y Más,canela-tv-hollywood-y-mas,plex-canela-tv-hollywood-y-mas,64fba5f3214cf8b3b54b5ecc,,129777,,,0,2
+Canela.TV Narco-Drama,canela-tv-narco-drama,plex-canela-tv-narco-drama,64e6df6e4a5e9b4cedc6d529,,129781,,,0,2
+Canela.TV Pasión Latina,canela-tv-pasion-latina,plex-canela-tv-pasion-latina,5f5132e362fe160040f26c18,,126569,,,0,2
+Car Chase,car-chase,plex-car-chase,6605be856b034eec533c49ee,,148202,,,0,1
+Caught in Providence,caught-in-providence,plex-caught-in-providence,61ddcdc03c12aa1e5d320aaf,,121881,,,0,1
+CBS News,cbs-news,plex-cbs-news,6571f43a1d2aae780d597196,,104846,,,0,0
+CBS News Colorado,cbs-news-colorado-2,plex-cbs-news-colorado-2,6571f5b31d2aae780d597198,,123120,,,0,0
+CBS Sports Golazo Network,cbs-sports-golazo-network-2,plex-cbs-sports-golazo-network-2,6571186d9a46917c0a8f2ddd,,133691,,,0,0
+CBS Sports HQ,cbs-sports-hq-2,plex-cbs-sports-hq-2,657107dc56226238740fcc2d,,108919,,,0,0
+Celebrity Name Game,celebrity-name-game,plex-celebrity-name-game,640205c40e1daf16b299567e,,135168,,,0,1
+Cheaters,cheaters,plex-cheaters,64f115ad2173e54397ce0d40,,154615,,,0,1
+Cheaters en Español,cheaters-en-espanol,plex-cheaters-en-espanol,65623e0eb7d737841f30a4ff,,151233,,,0,1
+Choppertown,choppertown,plex-choppertown,5ef11487d33ab9004048a1d3,,120283,,,0,1
+Cine EstrellaTV,cine-estrellatv,plex-cine-estrellatv,64fb8ec0214cf8b3b54b5ec8,,132491,,,0,1
+Cine y Series,cine-y-series-2,plex-cine-y-series-2,65f0e049046e6131ecc31847,,140182,,,0,1
+CineLife,cinelife,plex-cinelife,616df1e90dfa27ee465797fa,,122969,,,0,0
+Classic Doctor Who,classic-doctor-who,plex-classic-doctor-who,63068b870bbec3b06755a0ee,,120086,-5,,0,1
+Classic Rock,classic-rock,plex-classic-rock,61aaa0cc784a2161d3caf7ff,,113303,,67567,0,0
+Clic,clic,plex-clic,6469502df73356567a64ce8e,,92197,,,0,1
+CNN Headlines,cnn-headlines,plex-cnn-headlines,66b4fcc2530e39ea2ee79545,,114958,,,0,1
+Cold Case Files by A&E,cold-case-files-by-aande,plex-cold-case-files-by-aande,63f693a3fff2b53dc9ddc8f4,,129137,,,0,8
+Combat War Channel,combat-war-channel,plex-combat-war-channel,65e87f35335524a69e8e0ce1,,147642,,,0,1
+Confess by Nosey,confess-by-nosey,plex-confess-by-nosey,6438ee5a83766488c3bc9d4d,,135516,,,0,1
+Corazón,corazon,plex-corazon,64694d52f73356567a64ce8c,,100594,,,0,1
+Cosmic Frontiers,cosmic-frontiers,plex-cosmic-frontiers,63616d4c9fdbf7808e22baee,,135380,,,0,2
+Court Sports Network,court-sports-network,plex-court-sports-network,652875586425fdb1f32d2169,,146962,,,0,8
+CraftsyTV,craftsytv,plex-craftsytv,6365779dde08f8eec6c3f21f,,132607,,,0,0
+Crime & Justice,crime-and-justice,plex-crime-and-justice,64224b7a7e28069f56b5d894,,134160,,,0,1
+Crime Scene TV,crime-scene-tv,plex-crime-scene-tv,6615360a8423b8d7e61a099c,,154612,,,0,1
+Crime Scenes,crime-scenes,plex-crime-scenes,66a2bfe594b6a49cb5054d75,,138028,,,0,1
+Crime ThrillHer,crime-thrillher,plex-crime-thrillher,63c97b45187b3c9f3581fdfb,,123427,,,0,1
+Crimes Cults Killers,crimes-cults-killers,plex-crimes-cults-killers,63c97410187b3c9f3581fdf4,,123430,,,0,1
+CW Forever,cw-forever,plex-cw-forever,66635fc0ca7b22f4c3a2d743,,159704,,,0,0
+CW Gold,cw-gold,plex-cw-gold,66635e41ca7b22f4c3a2d741,,159705,,,0,0
+Dance Moms by Lifetime,dance-moms-by-lifetime,plex-dance-moms-by-lifetime,63ec13cb290593c3fc279f48,,126369,,,0,1
+Dark Matter TV,dark-matter-tv,plex-dark-matter-tv,5eea605674085f0040ddc7a6,,128542,,,0,0
+Deal Or No Deal,deal-or-no-deal-2,plex-deal-or-no-deal-2,6516023b1fc969615e69d172,,157901,,,0,1
+Deal Zone Presented By History,deal-zone-presented-by-history,plex-deal-zone-presented-by-history,63c9724c5feb7b9655cb1950,,123432,,,0,1
+Death Valley Days,death-valley-days,plex-death-valley-days,6674b68af04cf4bb9233c916,,157393,,,0,1
+Degrassi,degrassi,plex-degrassi,636d5aa3dc2c550b145ed422,,123455,-5,,0,1
+Desi Play TV,desi-play-tv,plex-desi-play-tv,634dddc8a319c6df243f521f,,131393,,,0,1
+Dick Van Dyke,dick-van-dyke,plex-dick-van-dyke,6449369eb3ff17382cae5801,,137069,,,0,0
+Documentary+,documentary-3,plex-documentary-3,62f42e6cad0081c6ef405723,,129672,-5,,0,1
+Dog the Bounty Hunter,dog-the-bounty-hunter,plex-dog-the-bounty-hunter,66428faa5116d565e63ae32a,,150981,,,0,8
+Don't Tell The Bride,dont-tell-the-bride,plex-dont-tell-the-bride,635847d0d3a668f1cafc1f9d,,121714,,,0,1
+DP World Tour,dp-world-tour,plex-dp-world-tour,67858517d3749c9bdd4d2ecf,,167542,,,0,0
+Dr. G: Medical Examiner,dr-g-medical-examiner,plex-dr-g-medical-examiner,6449369eb3ff17382cae5807,,137078,,,0,1
+Dr. Phil,dr-phil,plex-dr-phil,66e4cbef38de9754b6b13e90,,161356,,,0,1
+DREAD TV,dread-tv-2,plex-dread-tv-2,64a04b8a261d597ce8b4c9ec,,158635,,,0,1
+Duck Dynasty by A&E,duck-dynasty-by-aande,plex-duck-dynasty-by-aande,63f688faf615dc7d3f9071f7,,131429,,,0,2
+Dungeons & Dragons Adventures,dungeons-and-dragons-adventures,plex-dungeons-and-dragons-adventures,653d9d28d3e2e30d889226be,,135576,,,0,1
+Easy Listening,easy-listening,plex-easy-listening,62ee76b5271f393d2d9f709a,,67573,,,0,0
+Ebony TV by Lionsgate,ebony-tv-by-lionsgate,plex-ebony-tv-by-lionsgate,6533de63bd43e1c8b1865152,,146144,,,0,0
+Electric Now,electric-now,plex-electric-now,5f170d61b898490041b49360,,112797,,,0,1
+ElectricNOW en Español,electricnow-en-espanol,plex-electricnow-en-espanol,6434540bf43c8cfbfdc6e600,,138244,,,0,1
+Entertainment Tonight,entertainment-tonight,plex-entertainment-tonight,6578bb741a12778a8550d158,,110291,,,0,0
+Estrella Games,estrella-games,plex-estrella-games,64fb9149bb3e0baa5dcc0944,,132456,,,0,1
+Estrella News,estrella-news,plex-estrella-news,60089d97f682a3002c34829b,,117478,,,0,1
+Estrella TV,estrella-tv,plex-estrella-tv,60089d98f682a3002c34829f,,102236,,,0,1
+Euro Hits,euro-hits,plex-euro-hits,62ee74af52f7d73061eec491,,95855,,,0,0
+Euronews,euronews,plex-euronews,60089d90f682a3002c348299,,19039,,,0,1
+FailArmy,failarmy,plex-failarmy,5eea605574085f0040ddc791,,133321,,,0,1
+Family Feud Classic,family-feud-classic,plex-family-feud-classic,64b710b44612b1f48e9ad31a,,138686,,,0,1
+FIFA+,fifa-4,plex-fifa-4,66628d4a8dfc36b8c8a399c4,,168610,,,0,0
+Fifth Gear (UK),fifth-gear-uk,plex-fifth-gear-uk,64106a1075be345a863fe0d7,,135674,,,0,1
+FilmRise Anime,filmrise-anime,plex-filmrise-anime,6449369eb3ff17382cae5819,,137075,,,0,1
+FilmRise British TV,filmrise-british-tv,plex-filmrise-british-tv,6449369eb3ff17382cae5808,,137070,,,0,1
+FilmRise Concursos de Cocina,filmrise-concursos-de-cocina,plex-filmrise-concursos-de-cocina,6449369eb3ff17382cae5802,,137082,,,0,1
+FilmRise Crímenes Verdaderos,filmrise-crimenes-verdaderos,plex-filmrise-crimenes-verdaderos,6449369f243fbe342a9c0b4e,,137081,,,0,1
+FilmRise Kids,filmrise-kids,plex-filmrise-kids,6449369eb3ff17382cae57ff,,137079,,,0,1
+FilmRise Películas Gratis,filmrise-peliculas-gratis,plex-filmrise-peliculas-gratis,6449369eb3ff17382cae57fc,,137071,,,0,1
+FilmRise Sci-Fi,filmrise-sci-fi,plex-filmrise-sci-fi,6449369eb3ff17382cae580d,,137073,,,0,1
+FilmRise Series Gratis,filmrise-series-gratis,plex-filmrise-series-gratis,6449369eb3ff17382cae5803,,137077,,,0,1
+FilmRise True Crime,filmrise-true-crime,plex-filmrise-true-crime,646e489b58898bf3be94b325,,137074,,,0,1
+FilmRise Western,filmrise-western,plex-filmrise-western,6449369eb3ff17382cae57fd,,137085,,,0,1
+Flashback 70s,flashback-70s,plex-flashback-70s,62f15810a3ffe928ef806c75,,113308,,67565,0,0
+Forensic Files,forensic-files,plex-forensic-files,6449369f243fbe342a9c0b4d,,137072,,,0,1
+Fork & Flight,fork-and-flight,plex-fork-and-flight,6529ad9dc8221fe0db66c0b3,,120989,,,0,8
+FOX Sports,fox-sports,plex-fox-sports,659f04ef27ae392d2e204695,,141469,,,0,0
+FRANCE 24,france-24,plex-france-24,678fe7959407a53556d3e8eb,,70130,,,0,0
+Free Movies Plus,free-movies-plus,plex-free-movies-plus,636d46934ea1109a7d205a55,,137352,,,0,1
+Game Show Central,game-show-central,plex-game-show-central,5eea605574085f0040ddc782,,116474,-5,,0,1
+Gardening with Monty Don,gardening-with-monty-don,plex-gardening-with-monty-don,63d6f9b67c3070b6e06e0aad,,131923,,,0,1
+Ghost Hunters Channel,ghost-hunters-channel,plex-ghost-hunters-channel,64e405b42b16ff56feb98444,,137994,-5,,0,1
+Ghosts Are Real,ghosts-are-real,plex-ghosts-are-real,66a294d3e1a2934adfe851f5,,138030,,169310,0,0
+GLORY Kickboxing,glory-kickboxing,plex-glory-kickboxing,63f914bffe2c3d32e1a7929f,,131359,,,0,1
+Go Wild,go-wild,plex-go-wild,6615360a8423b8d7e61a099b,,154613,,,0,8
+GoUSA TV,gousa-tv-3,plex-gousa-tv-3,654d5db7ff9919cc3e31e961,,123897,,,0,1
+Great British Menu,great-british-menu,plex-great-british-menu,64704596e536e0faaf10be9b,,124931,,,0,1
+Hell's Kitchen & Kitchen Nightmares,hells-kitchen-and-kitchen-nightmares,plex-hells-kitchen-and-kitchen-nightmares,6449369eb3ff17382cae580c,,137068,,,0,1
+HerSphere by Lionsgate,hersphere-by-lionsgate,plex-hersphere-by-lionsgate,644c4bc17472b186783f35a0,,135378,,,0,0
+Highway to Heaven,highway-to-heaven-2,plex-highway-to-heaven-2,64f1177d79fd56092f9061bf,,154616,,,0,1
+Hip-Hop/R&B,hip-hop-randb,plex-hip-hop-randb,62ee7ae2271f393d2d9f709e,,67564,,,0,0
+History & Warfare,history-and-warfare-3,plex-history-and-warfare-3,635c5c6ac3585aefbd236576,,135379,,,0,2
+History Hit,history-hit,plex-history-hit,5f74cf83ffbe690040689f50,,121657,,,0,0
+Hit List,hit-list,plex-hit-list,61aaa014784a2161d3caf7fd,,113299,,67555,0,0
+Hi-YAH!,hi-yah,plex-hi-yah,5f64c4ef35f612003f6ffe30,,120790,,,0,0
+Hot Country,hot-country,plex-hot-country,61aa9e73784a2161d3caf7f9,,113300,,67557,0,0
+Hot Ones,hot-ones-2,plex-hot-ones-2,6582a1316b91be4547aa153c,,151230,,,0,1
+How To,how-to,plex-how-to,66a1aa319101f360242499a8,,138031,,169315,0,0
+Ice Road Truckers,ice-road-truckers,plex-ice-road-truckers,63c97610187b3c9f3581fdf6,,123426,-5,,0,1
+INWONDER,inwonder,plex-inwonder,6668b2b5e4f56766e556a413,,129477,,,0,0
+JAIL,jail,plex-jail,6448ba1baf92c31f4a190c27,,147152,-5,,0,1
+Johnny Carson TV,johnny-carson-tv,plex-johnny-carson-tv,60d4edd6b2fdec002c141123,,115370,,,0,1
+Journy,journy,plex-journy,5f5132df62fe160040f26bc2,,155568,,,0,0
+Judge Faith,judge-faith,plex-judge-faith,5f5132da62fe160040f26b5b,,145519,,,0,1
+KMGH,kmgh,plex-kmgh,6578a9dcfb1a19389c93fc7b,,33903,,,0,0
+Law & Crime,law-and-crime,plex-law-and-crime,5eea605674085f0040ddc79d,,109553,,,0,8
+Lawless,lawless,plex-lawless,654a6d313713a28d9f0b917f,,145442,,,0,1
+LOL! Network,lol-network-2,plex-lol-network-2,628ea9fcffe4cec6361f5310,,125215,-5,,0,1
+Love Nature,love-nature,plex-love-nature,60995eb136c72d002da7bbcb,,128066,,,0,0
+Love Pets,love-pets,plex-love-pets,63fe7d7eb6312779f56504d3,,133153,,,0,0
+MagellanTV Wildest,magellantv-wildest-3,plex-magellantv-wildest-3,5f5132e262fe160040f26bf2,,119209,,,0,2
+Matched Married Meet,matched-married-meet,plex-matched-married-meet,63ec126f9866d8d2120ac75b,,129047,-6,,0,1
+Maverick Black Cinema,maverick-black-cinema,plex-maverick-black-cinema,5ef4e1b40d9ad000423c4430,,121534,-5,,0,1
+Mi Casa,mi-casa,plex-mi-casa,666e1c83d91d13cb4c8cbb71,,151308,,,0,1
+Midsomer Murders,midsomer-murders,plex-midsomer-murders,63d6fc71a9e88ee909e7ee23,,122437,-5,,0,1
+Military Heroes Presented By History,military-heroes-presented-by-history,plex-military-heroes-presented-by-history,63ec15d6290593c3fc279f4a,,126439,,,0,0
+Miramax Movie Channel,miramax-movie-channel,plex-miramax-movie-channel,661fca34414d94009d1206ec,,157054,,,0,0
+Modern Innovations by History,modern-innovations-by-history,plex-modern-innovations-by-history,67ae8ad1a9b2dfa7f83e17d6,,159923,,,0,0
+Modern Marvels by History,modern-marvels-by-history,plex-modern-marvels-by-history,63c97da7187b3c9f3581fdfd,,123433,,,0,0
+Monster Jam,monster-jam,plex-monster-jam,6615885e1eabecf2c9d56495,,153411,,,0,8
+Movie Favorites by Lifetime,movie-favorites-by-lifetime,plex-movie-favorites-by-lifetime,63c1e47ef0f132afc3afbab2,,121308,,,0,2
+Movie Music by Stingray,movie-music-by-stingray,plex-movie-music-by-stingray,62fbf197c67d52bddf74cc87,,114642,,,0,0
+MOVIESPHERE,moviesphere,plex-moviesphere,5fb84bc1b7ad2d002dcb735f,,115944,,,0,0
+MST3K,mst3k,plex-mst3k,60d4eddbb2fdec002c141133,,113781,,,0,1
+My Little Pony,my-little-pony,plex-my-little-pony,67182cd9d321899c5dc8a00c,,173954,,,0,0
+Mysteria,mysteria,plex-mysteria,664294d20e0ec7b4ce5eb28e,,160863,,,0,1
+Mysterious Worlds,mysterious-worlds,plex-mysterious-worlds,66a1af9677649467da169f12,,138032,,169313,0,0
+Mythical 24/7,mythical-24-7,plex-mythical-24-7,650b5bb3f4b2d9579946a500,,142109,,,0,1
+Nash Bridges,nash-bridges,plex-nash-bridges,6668b69889c051b3733f9b60,,158128,,,0,0
+National Lampoon,national-lampoon,plex-national-lampoon,661fcbcf414d94009d1206ee,,157057,,,0,0
+Naturaleza,naturaleza,plex-naturaleza,666e2178d91d13cb4c8cbb75,,151311,,,0,1
+Newsmax2,newsmax2,plex-newsmax2,5fb81660b7ad2d002dcb7335,,121162,,,0,1
+NHRA TV,nhra-tv,plex-nhra-tv,60aeb5cd87f9b1002ce12323,,129130,,,0,0
+Ninja Kidz TV,ninja-kidz-tv,plex-ninja-kidz-tv,627ec46a92d8e6a705784bd1,,138773,-5,,0,1
+NitroCircusTV,nitrocircustv,plex-nitrocircustv,656fb665cb7e8e6a9bc3f36c,,152974,,,0,1
+Nosey,nosey,plex-nosey,5f0ff262d71dcb00449ec015,,119233,-5,,0,1
+Nosey Escándalos,nosey-escandalos,plex-nosey-escandalos,6154a863e3e4d9577f96b31a,,133658,-5,,0,1
+Nothin' But 90s,nothin-but-90s,plex-nothin-but-90s,62f13eeded056a1db9ef3d54,,68620,,,0,0
+Operation Repo,operation-repo,plex-operation-repo,6578e7b5eef129f30fb38df7,,151312,,,0,1
+Oro TV,oro-tv,plex-oro-tv,64f0db77c2bc9b9001d46eaa,,144965,,,0,1
+OuterSphere by Lionsgate,outersphere-by-lionsgate,plex-outersphere-by-lionsgate,641496bf238e21f260e7844a,,135167,,,0,0
+Outside,outside,plex-outside,629e522ed1bc5f1b16c6b98d,,114313,,,0,8
+OUTtv Proud,outtv-proud,plex-outtv-proud,64aed1e9c6085b5faf20ee1f,,135510,,,0,0
+Overtime,overtime,plex-overtime,62a388865440744efae8e243,,131737,,,0,1
+Pac-12 Insider,pac-12-insider,plex-pac-12-insider,646c0dfbfb58444e4e1e262d,,125214,,,0,8
+party tyme karaoke,party-tyme-karaoke,plex-party-tyme-karaoke,5eea605674085f0040ddc7ac,,137854,,,0,1
+Paws & Claws,paws-and-claws,plex-paws-and-claws,66a2818ce1a2934adfe851e5,,138036,,169312,0,0
+PBS Antiques Roadshow,pbs-antiques-roadshow,plex-pbs-antiques-roadshow,6348ac7090b96ef5e0eb3288,,128546,,,0,1
+PBS Food,pbs-food,plex-pbs-food,650299cdec4e38daa56e9c7c,,142107,,,0,0
+PBS Nature,pbs-nature,plex-pbs-nature,63506e7747b2355a27e76e7f,,128391,,,0,0
+People are Awesome,people-are-awesome-2,plex-people-are-awesome-2,5f0ff263d71dcb00449ec021,,122524,,,0,1
+Perform by Lifetime,perform-by-lifetime,plex-perform-by-lifetime,63c1ddfaf0f132afc3afbaae,,123424,-5,,0,1
+PFL MMA,pfl-mma,plex-pfl-mma,643f0ecd76de2b4015ae6c01,,127399,,,0,1
+PickleballTV,pickleballtv,plex-pickleballtv,6583507e0938f2993a23375c,,146769,,,0,1
+PickleTV,pickletv,plex-pickletv,63ec0b739866d8d2120ac759,,132608,,,0,1
+Places & Spaces,places-and-spaces,plex-places-and-spaces,64b7139c8ec13d5dcb7e6bb2,,125151,,,0,0
+pocket.watch Game-On,pocket-watch-game-on,plex-pocket-watch-game-on,5f91c4ea96a391002df9a661,,118464,,,0,1
+PokerGO,pokergo,plex-pokergo,64ac687b4192b4e1bab96279,,124268,,,0,1
+Pop Adult,pop-adult,plex-pop-adult,62ee7992271f393d2d9f709c,,113302,,67558,0,0
+Popular Science,popular-science,plex-popular-science,656fb850cb7e8e6a9bc3f36e,,152977,,,0,8
+Portlandia,portlandia,plex-portlandia,61d735fea7b7c7f703418512,,122435,,,0,8
+Power Rangers,power-rangers,plex-power-rangers,644a69895b1d51b6a8d18609,,135575,,,0,1
+Property & Reno,property-and-reno,plex-property-and-reno,6427568defc65caa7e9514d4,,134161,,,0,0
+PursuitUP,pursuitup,plex-pursuitup,63628eb88e4b18ca22f897dc,,112487,,,0,8
+RACER Select,racer-select,plex-racer-select,5f0641d0e8ffda004033aff4,,121708,,,0,2
+Racing America,racing-america,plex-racing-america,61a945156547ba4d6d238dc9,,124630,,,0,0
+RCN Más,rcn-mas,plex-rcn-mas,6244f2d33ef43121e567cf13,,125383,,,0,1
+Real Crime,real-crime-2,plex-real-crime-2,636d9d2d4ea1109a7d205a70,,121656,,,0,1
+Real Disaster Channel,real-disaster-channel,plex-real-disaster-channel,64275805efc65caa7e9514d6,,134159,,,0,0
+Real Wild,real-wild,plex-real-wild,63584a0cf8e2be1350f802a4,,131075,,,0,1
+REELZ Famous & Infamous,reelz-famous-and-infamous,plex-reelz-famous-and-infamous,64f0d3ddc2bc9b9001d46ea4,,121781,,,0,0
+Remember the ‘80s,remember-the-80s,plex-remember-the-80s,61aa9f50784a2161d3caf7fb,,113304,,67566,0,0
+Rig TV,rig-tv,plex-rig-tv,66a2d97c94b6a49cb5054d77,,157959,,,0,1
+Ryan and Friends,ryan-and-friends,plex-ryan-and-friends,5f91c4ea96a391002df9a664,,118462,,,0,1
+Saborear TV,saborear-tv,plex-saborear-tv,64f0d9a7c2bc9b9001d46ea6,,144963,,,0,1
+Say Yes to the Dress,say-yes-to-the-dress,plex-say-yes-to-the-dress,66a1ae9e77649467da169f0e,,149117,,,0,1
+Scream Factory TV,scream-factory-tv,plex-scream-factory-tv,6351991cccee3e1547a8831e,,151829,-8,,0,1
+Shemaroo Bollywood,shemaroo-bollywood,plex-shemaroo-bollywood,62d1a58e520656fda09e609d,,132109,,,0,1
+Shout! TV,shout-tv,plex-shout-tv,60d4edd6b2fdec002c141127,,111132,,,0,8
+Silent Witness|New Tricks,silent-witnessornew-tricks,plex-silent-witnessornew-tricks,656235425dbccec83a87b645,,141825,,,0,1
+Smooth Jazz,smooth-jazz,plex-smooth-jazz,62ee784852f7d73061eec493,,45219,,,0,0
+So Yummy,soyummy,plex-soyummy,6041643175c115002dc5125d,,115674,,,0,0
+Sonic The Hedgehog,sonic-the-hedgehog,plex-sonic-the-hedgehog,6615522e50e81fa51eb0df60,,154621,,,0,1
+Soul Storm,soul-storm,plex-soul-storm,61aaa17a784a2161d3caf801,,67563,,,0,0
+Spark TV Light & Love,spark-tv,plex-spark-tv,614a11bfa6f839154ee3306d,,161702,,,0,1
+SPEEDVISION,speedvision,plex-speedvision,6349ed0eb1adc4cfa571fd37,,132889,,,0,0
+SPIN,spin,plex-spin,64e4084bb5fc5e016613edd4,,134855,,,0,1
+Sports Illustrated TV,sports-illustrated-tv,plex-sports-illustrated-tv,6216ae22c3bbca2de8704f65,,132647,-5,,0,2
+Stadium,stadium,plex-stadium,5f6142d2fc6ce20041ec3c92,,113991,,,0,0
+Startalk TV,startalk-tv,plex-startalk-tv,664292a80e0ec7b4ce5eb28c,,152030,,,0,0
+Stingray DJAZZ,stingray-djazz,plex-stingray-djazz,62fc0150c67d52bddf74cc89,,114647,,,0,0
+Stingray Holidayscapes,stingray-holidayscapes,plex-stingray-holidayscapes,654eb862dde2222e8ba551f1,,149883,,,0,1
+Strawberry Shortcake,strawberry-shortcake,plex-strawberry-shortcake,6615522e50e81fa51eb0df62,,154622,,,0,0
+Strongman Champions,strongman-champions,plex-strongman-champions,644b13a3a1c0a5b2024c8403,,150219,,,0,1
+Supermarket Sweep,supermarket-sweep,plex-supermarket-sweep,64b719768ec13d5dcb7e6bb4,,121598,,,0,1
+Surf Cinema,surf-cinema,plex-surf-cinema,656fbbd6dbcce28c3a41741b,,152976,,,0,2
+Sweet Escapes,sweet-escapes,plex-sweet-escapes,66a1acc577649467da169f0c,,138027,,169611,0,0
+Swerve Combat,swerve-combat,plex-swerve-combat,61f04d2bb01a6e8df3f72902,,122436,,,0,8
+TED,ted,plex-ted,62ab5aabbb869dd0df6a3487,,124221,-5,,0,1
+Teletubbies,teletubbies,plex-teletubbies,6615522e50e81fa51eb0df61,,154623,,,0,1
+Tennis Channel 2,tennis-channel-2,plex-tennis-channel-2,65944d40cbc51b25e5070a18,,137752,,,0,2
+TG Junior,tg-junior-2,plex-tg-junior-2,5f170d64b898490041b4938f,,126670,,,0,1
+The Asylum,the-asylum,plex-the-asylum,6627ab12580825e8a7bc4f04,,156201,,,0,1
+The Biggest Loser,the-biggest-loser,plex-the-biggest-loser,6515ff231fc969615e69d170,,131259,,,0,1
+The Boat Show,the-boat-show,plex-the-boat-show,5efe1de6e0b3f5003f5d9f82,,157506,,,0,1
+The Carol Burnett Show,the-carol-burnett-show,plex-the-carol-burnett-show,60d4edd6b2fdec002c141125,,122609,,,0,1
+The Conners,the-conners,plex-the-conners,6668b7a5e4f56766e556a415,,158129,,,0,1
+The Design Network,the-design-network,plex-the-design-network,5f0641d3e8ffda004033b16e,,118087,,,0,0
+The FBI Files,the-fbi-files,plex-the-fbi-files,6582a024a90606db3c841b1b,,151234,,,0,1
+The Hill TV,the-hill-tv,plex-the-hill-tv,62c4a65788737d6edc1a3626,,128492,,,0,0
+The Jamie Oliver Channel,the-jamie-oliver-channel,plex-the-jamie-oliver-channel,64b7170c4612b1f48e9ad31e,,124329,,,0,8
+The Osbournes,the-osbournes,plex-the-osbournes,6515fa752ff655e77635c626,,149920,-5,,0,2
+The Pet Collective,the-pet-collective-2,plex-the-pet-collective-2,5f170d61b898490041b49369,,121165,,,0,8
+The Price is Right,the-price-is-right,plex-the-price-is-right,63e63d26abacad42ed3d1acd,,121659,,,0,8
+The Reuters 60,the-reuters-60,plex-the-reuters-60,5eea71d65252710041e0ccbc,,131221,,,0,2
+The Rifleman,the-rifleman,plex-the-rifleman,64f123008d44f2871135a905,,134959,,,0,0
+The Spa,the-spa,plex-the-spa,62f11395586633e88e3a3274,,68632,,,0,0
+The World Poker Tour,the-world-poker-tour-2,plex-the-world-poker-tour-2,66ad6b4fcb5d3b7fb5011c2f,,135701,,,0,1
+This Old House,this-old-house,plex-this-old-house,62e3232ca105dea9c400e9fe,,120480,,,0,0
+Tiny House Nation,tiny-house-nation,plex-tiny-house-nation,63c1e176f0f132afc3afbab0,,118456,,,0,1
+TMZ,tmz,plex-tmz,63e2ca44203bafbef831a152,,149408,,,0,1
+Today's K-Pop,todays-k-pop,plex-todays-k-pop,62ee6eae271f393d2d9f7096,,115709,,,0,0
+Todo Cine,todo-cine,plex-todo-cine,644c446d7472b186783f359e,,148558,,,0,1
+Todo Crimen,todo-crimen,plex-todo-crimen,666e236ace73ed6023b55a17,,151306,,,0,1
+"Todo Novelas, más Pasiones",todo-novelas-mas-pasiones,plex-todo-novelas-mas-pasiones,65257cdf65486aca7aa77716,,148511,,,0,1
+Toon Goggles,toon-goggles-2,plex-toon-goggles-2,5f170d60b898490041b49359,,126634,,,0,1
+Top Gear,top-gear,plex-top-gear,6308f121ac9983739c8a29bd,,126329,,,0,0
+Torque Presented By History,torque-presented-by-history,plex-torque-presented-by-history,63c1e64df0f132afc3afbab4,,123423,,,0,0
+TRACE Brazuca,trace-brazuca,plex-trace-brazuca,6329474265c8569187176338,,124749,,,0,0
+TRACE Latina,trace-latina,plex-trace-latina,63226c03e67cf9cd9011fcdf,,113402,,,0,0
+TRACE Urban,trace-urban,plex-trace-urban,6322658be67cf9cd9011fcda,,71760,,,0,0
+Trailer Park Boys: The SwearNet Show,trailer-park-boys-the-swearnet-show,plex-trailer-park-boys-the-swearnet-show,6348b2cb1159f6a5ce819b89,,133939,,,0,1
+Transformers,transformers,plex-transformers,644a675d5b1d51b6a8d18607,,135518,,,0,0
+Tribeca Channel,tribeca-channel,plex-tribeca-channel,60ede94f7da2ef002c55ce9b,,132888,,,0,1
+Triton Poker,triton-poker,plex-triton-poker,678fe95d389daa346544d501,,153526,,,0,1
+True Crime Now,true-crime-now,plex-true-crime-now,61ae679103baf19077bbf933,,120802,,,0,8
+True History,true-history,plex-true-history,614398a08f30fa61e0da7c97,,122536,,,0,0
+TV One Crime & Justice,tv-one-crime-and-justice,plex-tv-one-crime-and-justice,65282a6091e77473f1a44ff2,,145680,,,0,0
+TVB Pearl Drama,tvb-pearl-drama,plex-tvb-pearl-drama,65621947b7d737841f30a4f7,,161669,,,0,1
+Unbeaten,unbeaten,plex-unbeaten,633239caa6615514fb78ecf3,,129048,,,0,8
+Unique Lives,unique-lives,plex-unique-lives,66a1ac4877649467da169f0a,,138033,,169646,0,1
+Unsolved Mysteries,unsolved-mysteries,plex-unsolved-mysteries,6449369eb3ff17382cae5816,,137083,,,0,1
+UnXplained Zone,unxplained-zone,plex-unxplained-zone,63c9773e187b3c9f3581fdf8,,123431,-5,,0,1
+USA TODAY,usa-today-news,plex-usa-today-news,60df3e18541143002f3b8607,,122855,,,0,0
+VICE,vice-2,plex-vice-2,62c47062085f5c338b9c6360,,135718,,,0,0
+Vice News,vice-news,plex-vice-news,635ff8bb66f96b46951ab7f3,,135717,,,0,0
+VR+,vr,plex-vr,65a1d3996475bf522f9256e3,,125419,,,0,1
+Wanted: Dead or Alive,wanted-dead-or-alive,plex-wanted-dead-or-alive,61ddcc6023daf618ed44c29f,,122082,,,0,8
+WAPA+,wapa,plex-wapa,66e0d0c4f70549a9bc1eceb0,,148054,,,0,0
+Waypoint TV,waypoint-tv,plex-waypoint-tv,5fd115b8b7ef8d002dcf1817,,121424,,,0,8
+WeatherSpy,weatherspy-2,plex-weatherspy-2,5f0ff266d71dcb00449ec030,,127141,-5,,0,1
+Western Bound,western-bound,plex-western-bound,62316e8eb9d292cb4ad7499f,,127279,,,0,0
+Wild West TV,wild-west-tv,plex-wild-west-tv,660df9e0e7dcb14697880bfb,,153591,,,0,0
+WildEarth,wildearth,plex-wildearth,60d4edddb2fdec002c141135,,122534,,,0,1
+Willow Sports,willow-sports,plex-willow-sports,66fbf9cf128ab3f65b259bcb,,164602,,,0,0
+Wired2Fish,wired2fish,plex-wired2fish,608a2c722957c9002c6a617b,,132644,,,0,8
+Women Behind Bars,women-behind-bars,plex-women-behind-bars,6502891e8ebe90c9ed73f7a0,,154619,,,0,1
+Women's Sports Network,womens-sports-network,plex-womens-sports-network,630fa9e577ec3866def38fa2,,124636,,,0,0
+Wonder,wonder,plex-wonder,5f74cf83ffbe690040689f4d,,131073,,,0,0
+World's Most Evil Killers,worlds-most-evil-killers,plex-worlds-most-evil-killers,65829ef26b91be4547aa153a,,151232,,,0,1
+Xtreme Outdoor by HISTORY,xtreme-outdoor-by-history,plex-xtreme-outdoor-by-history,5f74cf7effbe690040689f3e,,116101,,,0,0
+Y2K,y2k,plex-y2k,62ee72cc271f393d2d9f7098,,68686,,,0,0
+Yahoo Finance,yahoo-finance,plex-yahoo-finance,5f170f01b898490041b49dd1,,113674,,,0,1
+Z Nation,z-nation,plex-z-nation,66ce3e009ac0b1441b19ca29,,163834,,,0,0
+ZenLIFE by Stingray,zenlife-by-stingray,plex-zenlife-by-stingray,6642a07d0e0ec7b4ce5eb294,,146460,,,0,0
+Zona Investigación,zona-investigacion,plex-zona-investigacion,65f0da6f046e6131ecc31841,,140181,,,0,1
+21 Jump Street,21-jump-street-2,plex-21-jump-street-2,66f6b947515e742745f5ca34,,,,,1,2
+24 Hour Free Movies,24-hour-free-movies,plex-24-hour-free-movies,5fd115bab7ef8d002dcf181d,,,,,1,2
+50 Cent Action,50-cent-action,plex-50-cent-action,6827b9579beea89c38b6df55,,,,,1,2
+80's Sitcom Flashback,80s-sitcom-flashback,plex-80s-sitcom-flashback,65fca98c60dc164e8f272332,,,,,1,2
+Action Hollywood Movies,action-hollywood-movies,plex-action-hollywood-movies,66be944f8711311880995280,,,,,1,2
+Aliwko,aliwko,plex-aliwko,64d4ee537b323f6abbd19e59,,,,,1,2
+Amasian TV,amasian-tv,plex-amasian-tv,6838eb6a38304666c89d4e3d,,,,,1,2
+American Gladiators by MGM,american-gladiators-by-mgm,plex-american-gladiators-by-mgm,6876f9be20555588ef322221,,,,,1,2
+Ancient Aliens,ancient-aliens,plex-ancient-aliens,68161fa001a9a5584ff27e96,,,,,1,2
+Anger Management en español,anger-management-en-espanol,plex-anger-management-en-espanol,64149ba2d02609d8a7127ee8,,,,,1,2
+Animation+,animation,plex-animation,674f6a6cf44561420465f9f3,,,,,1,2
+Anime 24/7,anime-24-7,plex-anime-24-7,686452b8fbd6d9b449de2be3,,,,,1,2
+Asian Drama,asian-drama,plex-asian-drama,685f27cca7111a932d28f1ae,,,,,1,2
+Aventura,aventura,plex-aventura,671c1f46572427bfa1eb7ed1,,,,,1,2
+BABY SHARK TV,baby-shark-tv,plex-baby-shark-tv,60d4eddeb2fdec002c141137,,,,,1,2
+Barbie and Friends by Mattel,barbie-and-friends-by-mattel,plex-barbie-and-friends-by-mattel,674487c3c583cfbd5f0e1da9,,,,,1,2
+Barney and Friends,barney-and-friends,plex-barney-and-friends,671c1743128bc4121f80aef5,,,,,1,2
+Bassmaster,bassmaster,plex-bassmaster,68caada21fabab6eb2e99331,,,,,1,2
+Bizaar,bizaar,plex-bizaar,689e1f0dd84bfb3d54b6756f,,,,,1,2
+Bizarre Foods with Andrew Zimmern,bizarre-foods-with-andrew-zimmern,plex-bizarre-foods-with-andrew-zimmern,66a2b83ef7180d8d2ca77f60,,,,,1,2
+BlackPix,blackpix-2,plex-blackpix-2,62280644c9f485cc7afe8c48,,,,,1,2
+Bloodline Detectives Hosted by Nancy Grace,bloodline-detectives-hosted-by-nancy-grace,plex-bloodline-detectives-hosted-by-nancy-grace,67cbd119cc5136329877e096,,,,,1,2
+Bloomberg Originals,bloomberg-originals-3,plex-bloomberg-originals-3,68fafe0dae4af1c7478fbeec,,,,,1,2
+Bloomberg TV,bloomberg-tv,plex-bloomberg-tv,68fafc6e558214386ab7ca3a,,,,,1,2
+Bodas +,bodas,plex-bodas,671c1df4572427bfa1eb7ecf,,,,,1,2
+Brat TV,brat-tv,plex-brat-tv,63d6f6c5a9e88ee909e7ee1f,,,,,1,2
+Butaca TV,butaca-tv-2,plex-butaca-tv-2,67367a2d9564224797d5b59c,,,,,1,2
+C4 en Alerta,c4-en-alerta,plex-c4-en-alerta,65b1568052aa31b8f64da064,,,,,1,2
+Camp Spoopy,camp-spoopy,plex-camp-spoopy,6164a963766ab4f9f57e81b1,,,,,1,2
+Canela.TV Clásicos,canela-tv-clasicos,plex-canela-tv-clasicos,64fba469bb3e0baa5dcc0947,,,,,1,2
+CBS News Texas,cbs-news-texas,plex-cbs-news-texas,659712165dbaa285a54e89d4,,,,,1,2
+Chaos on Cam by A&E,chaos-on-cam-by-aande,plex-chaos-on-cam-by-aande,67be3cc41a98aab3729899ba,,,,,1,2
+Cine de Horror,cine-de-horror,plex-cine-de-horror,64e6e2f04a5e9b4cedc6d52b,,,,,1,2
+Cine en Español,cine-en-espanol,plex-cine-en-espanol,64e6e46f27a915f9b5184e9a,,,,,1,2
+Cine Romántico,cine-romantico,plex-cine-romantico,67db0a3892cb453db28ab020,,,,,1,2
+Classic Car Auctions,classic-car-auctions,plex-classic-car-auctions,67c614985908ba2cc8775bf5,,,,,1,2
+CNÑ XPRESS,cnn-xpress,plex-cnn-xpress,671c246e572427bfa1eb7ed5,,,,,1,2
+CNN Originals,cnn-originals,plex-cnn-originals,66ad6025cb5d3b7fb5011c2d,,,,,1,2
+CombaTV,combatv,plex-combatv,63f0ca427b78030ed9990309,,,,,1,2
+Construcciones Asombrosas,construcciones-asombrosas,plex-construcciones-asombrosas,671c1c8f572427bfa1eb7ecd,,,,,1,2
+Continuum,continuum,plex-continuum,66ce3ef09ac0b1441b19ca2b,,,,,1,2
+Cops en Español,cops-en-espanol,plex-cops-en-espanol,6477b95b7ba9c0d593859bfc,,,,,1,2
+Corner Gas,corner-gas-2,plex-corner-gas-2,66ce3cf459062698a13c39df,,,,,1,2
+Cowboy Channel,cowboy-channel,plex-cowboy-channel,680ad9f73f3c406c06d7392b,,,,,1,2
+Creator Television,creator-television,plex-creator-television,67884bd6d37f2fd48d6220db,,,,,1,2
+Cricket Gold,cricket-gold,plex-cricket-gold,65e0c8c6d899afe817b9d224,,,,,1,2
+Crime Beat TV,crime-beat-tv,plex-crime-beat-tv,68c98e7460586565cc56baab,,,,,1,2
+Crimen,crimen,plex-crimen,671c2353572427bfa1eb7ed3,,,,,1,2
+CUT,cut,plex-cut,67c7ba04799b4ecdbb4e9a71,,,,,1,2
+Designated Survivor,designated-survivor,plex-designated-survivor,66aa9b7fd8fc59729226073e,,,,,1,2
+Drool,drool,plex-drool,66ea0e029502c5778b828d45,,,,,1,2
+Dude Perfect,dude-perfect,plex-dude-perfect,68d7f9b53b1f329cea126993,,,,,1,2
+Eddie's Wonderland,eddies-wonderland-us,plex-eddies-wonderland-us,618ab1f175913b296fbe56db,,,,,1,2
+El Conflicto TV,el-conflicto-tv-2,plex-el-conflicto-tv-2,621674f168c966be92737ce6,,,,,1,2
+Expedientes Sobrenaturales,expedientes-sobrenaturales,plex-expedientes-sobrenaturales,671c21f5128bc4121f80aefa,,,,,1,2
+F1 Channel,f1-channel,plex-f1-channel,6896595a58a6658b3d6a501a,,,,,1,2
+Family Feud,family-feud,plex-family-feud,66a2d1390b91165254efdb3e,,,,,1,2
+Family Unscripted,family-unscripted,plex-family-unscripted,66a2b6ebf7180d8d2ca77f5e,,,,,1,2
+FashionTV,fashiontv,plex-fashiontv,6490c01f3b3ce9e1aaad95be,,,,,1,2
+Fear Factor,fear-factor,plex-fear-factor,651600fb2ff655e77635c62a,,,,,1,2
+FilmRise Action,filmrise-action-2,plex-filmrise-action-2,66ea0504c24d95b51b7cd189,,,,,1,2
+FilmRise Classic TV,filmrise-classic-tv-2,plex-filmrise-classic-tv-2,66ea07049502c5778b828d3f,,,,,1,2
+FilmRise Comedy,filmrise-comedy,plex-filmrise-comedy,68db6a852be6c4ceb7947b9a,,,,,1,2
+FilmRise Creators,filmrise-creators,plex-filmrise-creators,68db6b54475aa6420c85f230,,,,,1,2
+FilmRise Drama,filmrise-drama,plex-filmrise-drama,68db6bc5475aa6420c85f232,,,,,1,2
+FilmRise Free Movies,filmrise-free-movies-3,plex-filmrise-free-movies-3,66ea085d9502c5778b828d41,,,,,1,2
+FilmRise Horror,filmrise-horror-2,plex-filmrise-horror-2,66ea09a39502c5778b828d43,,,,,1,2
+FilmRise Music,filmrise-music,plex-filmrise-music,67cbd3318fe3ca436b8b0496,,,,,1,2
+Freebie TV,freebie-tv,plex-freebie-tv,604bf68f499957002d574f45,,,,,1,2
+FreeTV Acción,freetv-accion,plex-freetv-accion,60240f58676235002df19f4b,,,,,1,2
+FreeTV Banda,freetv-banda,plex-freetv-banda,623954128ed2b3b15baecb2c,,,,,1,2
+FreeTV Drama,freetv-drama,plex-freetv-drama,60240f57676235002df19f47,,,,,1,2
+FreeTV Estelar,freetv-estelar-2,plex-freetv-estelar-2,608b7095a09205002da4f293,,,,,1,2
+FreeTV Familia,freetv-familia,plex-freetv-familia,60240f57676235002df19f49,,,,,1,2
+FreeTV Hits,freetv-hits,plex-freetv-hits,6018913ea15130002b284191,,,,,1,2
+FreeTV Horror,freetv-horror,plex-freetv-horror,617afafd7ab406f93af02607,,,,,1,2
+FreeTV Live,freetv-live,plex-freetv-live,6018913ea15130002b28418f,,,,,1,2
+FreeTV Saber Más,freetv-saber-mas,plex-freetv-saber-mas,6018913ea15130002b284195,,,,,1,2
+FreeTV Sureño,freetv-sureno,plex-freetv-sureno,6018913fa15130002b284197,,,,,1,2
+FrightFlix,frightflix-2,plex-frightflix-2,621674502c2627c068e73ada,,,,,1,2
+FTF Sports,for-the-fans,plex-for-the-fans,605a309dc5acdc002c7a20aa,,,,,1,2
+"Funny Or Die, Inc.",funny-or-die-inc,plex-funny-or-die-inc,63d08694ab0965e49583e3b2,,,,,1,2
+Game & Fish TV,game-and-fish-tv,plex-game-and-fish-tv,67a147a7114554261db9e45d,,,,,1,2
+Gata Salvaje,gata-salvaje-2,plex-gata-salvaje-2,67db5c68d66f778a752f8203,,,,,1,2
+Geraldo Rivera,geraldo-rivera,plex-geraldo-rivera,686451cd75b26c0a7c946bcb,,,,,1,2
+Get.Factual,get-factual,plex-get-factual,6699937717c9985deeb74e39,,,,,1,2
+Glewed TV,glewed-tv,plex-glewed-tv,5eea605474085f0040ddc76d,,,,,1,2
+GoTraveler,gotraveler,plex-gotraveler,60a53634126de9002e694bc2,,,,,1,2
+Gravitas Movies,gravitas-movies,plex-gravitas-movies,5efe1de7e0b3f5003f5d9f8e,,,,,1,2
+Green Acres,green-acres,plex-green-acres,689fb2c329e3c9f1368c04a3,,,,,1,2
+Grjngo - Películas Del Oeste,grjngo-peliculas-del-oeste,plex-grjngo-peliculas-del-oeste,63489eff90b96ef5e0eb3282,,,,,1,2
+Grjngo - Western Movies,grjngo-western-movies,plex-grjngo-western-movies,63489a771159f6a5ce819b7b,,,,,1,2
+Hallmark en Español,hallmark-en-espanol,plex-hallmark-en-espanol,65d7b3d2278ed4498289c34b,,,,,1,2
+Hallmark Movies & More,hallmark-movies-and-more,plex-hallmark-movies-and-more,6244cf3c742b0d58cd4f2514,,,,,1,2
+Halloween Plus,halloween-plus,plex-halloween-plus,634700569d64afa6830d1521,,,,,1,2
+Hard Knocks,hard-knocks,plex-hard-knocks,5fd115bdb7ef8d002dcf1820,,,,,1,2
+Highway Thru Hell,highway-thru-hell,plex-highway-thru-hell,6616cbcc0360e123d9f3f366,,,,,1,2
+Hit Sitcoms,hit-sitcoms,plex-hit-sitcoms,66b13b29a9ef8c41ec0841b0,,,,,1,2
+Hong Kong Fight Club,hong-kong-fight-club,plex-hong-kong-fight-club,687e47c33f6f86f29359b2c7,,,,,1,2
+Horror by ALTER,horror-by-alter,plex-horror-by-alter,66f5a92352c50d2f62020f38,,,,,1,2
+Horror Stories,horror-stories,plex-horror-stories,66b136d2a9ef8c41ec0841ae,,,,,1,2
+Hot Wheels Action,hot-wheels-action,plex-hot-wheels-action,67448316c583cfbd5f0e1d99,,,,,1,2
+Humor Mill,humor-mill,plex-humor-mill,5fd115b7b7ef8d002dcf1814,,,,,1,2
+Hunter,hunter-2,plex-hunter-2,66f6b6baac1a1890ef197a4b,,,,,1,2
+Ice Pilots NWT,ice-pilots-nwt,plex-ice-pilots-nwt,666e1820ce73ed6023b55a11,,,,,1,2
+Ice Pilots NWT (en español),ice-pilots-nwt-en-espanol,plex-ice-pilots-nwt-en-espanol,666e192cd91d13cb4c8cbb6b,,,,,1,2
+Ideas En 5 Minutos,ideas-en-5-minutos,plex-ideas-en-5-minutos,64a355697d24564fba37bab8,,,,,1,2
+Impossible - Quiz Show,impossible-quiz-show,plex-impossible-quiz-show,6308fa9c0417b7074a4ad959,,,,,1,2
+In The Heat Of The Night by MGM,in-the-heat-of-the-night-by-mgm,plex-in-the-heat-of-the-night-by-mgm,6876f8e2e50e77c59c8940c0,,,,,1,2
+Investigation,investigation,plex-investigation,6529b08ece8f0608a50194b5,,,,,1,2
+Iron Chef,iron-chef-2,plex-iron-chef-2,6707cfa5da81682f2d1e6837,,,,,1,2
+Iron Chef en español,iron-chef-en-espanol,plex-iron-chef-en-espanol,6707d20ab87b5cf57ac33c95,,,,,1,2
+ITV Deportes,itv-deportes,plex-itv-deportes,688d3402a6fe30698ab42007,,,,,1,2
+Jade Fever,jade-fever,plex-jade-fever,666e1a2bce73ed6023b55a13,,,,,1,2
+Jubao,jubao,plex-jubao,639baa971a12420ff66ae7b1,,,,,1,2
+Judge Nosey,judge-nosey,plex-judge-nosey,5f0ff262d71dcb00449ec018,,,,,1,2
+Just For Laughs Gags,just-for-laughs-gags,plex-just-for-laughs-gags,64704954e536e0faaf10be9f,,,,,1,2
+K-Baseball TV,k-baseball-tv,plex-k-baseball-tv,682dff1fdfc9c452b8f9842a,,,,,1,2
+Kidoodle TV,kidoodle-tv,plex-kidoodle-tv,5eea605574085f0040ddc79a,,,,,1,2
+KidsFlix,kidsflix,plex-kidsflix,5eea605574085f0040ddc797,,,,,1,2
+Kidz Bop TV,kidz-bop-tv,plex-kidz-bop-tv,656fb124cb7e8e6a9bc3f36a,,,,,1,2
+Kim's Convenience,kims-convenience,plex-kims-convenience,6707d359da81682f2d1e683c,,,,,1,2
+KNXV,knxv,plex-knxv,6577ab54f8a8e7d24bc86ed3,,,,,1,2
+KPOP+,kpop,plex-kpop,682e09a8dfc9c452b8f9bd66,,,,,1,2
+KTNV,ktnv,plex-ktnv,6577ae41ae30e4a5bfdc19bb,,,,,1,2
+La Fiebre del Jade,la-fiebre-del-jade,plex-la-fiebre-del-jade,666e1af3d91d13cb4c8cbb6d,,,,,1,2
+LATV,latv,plex-latv,6685a97b59703916799193a5,,,,,1,2
+Lifetime Movies Love & Drama,lifetime-movies-love-and-drama,plex-lifetime-movies-love-and-drama,680adc83ea62ac6a05a626e6,,,,,1,2
+Live PD Presents,live-pd-presents,plex-live-pd-presents,67d06764f14e6c3252dc70eb,,,,,1,2
+Local Now Albuquerque,local-now-albuquerque,plex-local-now-albuquerque,62a78c0e3ccfe207c22a5e62,,,,,1,2
+Local Now Aurora,local-now-aurora,plex-local-now-aurora,62ab793578aca8f235bab1a2,,,,,1,2
+Local Now Dallas,local-now-dallas,plex-local-now-dallas,629fe6c5da7402141255417f,,,,,1,2
+Local Now Denver,local-now-denver,plex-local-now-denver,62a24da3f7d323d4cc893224,,,,,1,2
+Local Now DeSoto,local-now-desoto,plex-local-now-desoto,62ab6ec278aca8f235bab181,,,,,1,2
+Local Now Downtown Denver,local-now-downtown-denver,plex-local-now-downtown-denver,62aa647bb5520790e10654a8,,,,,1,2
+Local Now Flagstaff,local-now-flagstaff,plex-local-now-flagstaff,62aa665a152d10325d5bfb0e,,,,,1,2
+Local Now Irving,local-now-irving,plex-local-now-irving,62ab8c0fb77449ade84f39f0,,,,,1,2
+Local Now Phoenix,local-now-phoenix,plex-local-now-phoenix,629fe7f7da74021412554181,,,,,1,2
+Local Now Plano,local-now-plano,plex-local-now-plano,62aa5327b5520790e1065498,,,,,1,2
+Local Now Roswell New Mexico,local-now-roswell-new-mexico,plex-local-now-roswell-new-mexico,62ab88f4746f38834a14c2f2,,,,,1,2
+Local Now Stapleton,local-now-stapleton,plex-local-now-stapleton,62ab906ab77449ade84f3a01,,,,,1,2
+Local Now Vegas,local-now-vegas,plex-local-now-vegas,62a25520d95f6a0c0146cc88,,,,,1,2
+Local Now Washington Park,local-now-washington-park,plex-local-now-washington-park,62ab8e67746f38834a14c2ff,,,,,1,2
+Los Asesinatos de Midsomer,los-asesinatos-de-midsomer-2,plex-los-asesinatos-de-midsomer-2,682511d9ae4546e02a6ba4f9,,,,,1,2
+Love & Marriage,love-and-marriage,plex-love-and-marriage,66a1b02777649467da169f14,,,,,1,2
+Love Thy Neighbor,love-thy-neighbor,plex-love-thy-neighbor,685f0e1fa7111a932d28f1a6,,,,,1,2
+Lucha Plus,lucha-plus,plex-lucha-plus,67a1a8ef2358ef4dd5c3018e,,,,,1,2
+Made In Hollywood,made-in-hollywood-2,plex-made-in-hollywood-2,60db63d29ec966002c9ea6f0,,,,,1,2
+Made It Myself TV,made-it-myself-tv,plex-made-it-myself-tv,65b80306e5cf85050598aba4,,,,,1,2
+Mattel Jr.,mattel-jr,plex-mattel-jr,674486a3c583cfbd5f0e1da7,,,,,1,2
+McLeods Daughters,mcleods-daughters,plex-mcleods-daughters,6515fd4f2ff655e77635c628,,,,,1,2
+MGM Presents,mgm-presents,plex-mgm-presents,6876fa82e50e77c59c8940c2,,,,,1,2
+MGM Presents: Action,mgm-presents-action,plex-mgm-presents-action,689fb42fba3be0bafe349d33,,,,,1,2
+MGM Presents: Westerns,mgm-presents-westerns,plex-mgm-presents-westerns,689fb8470a486aeba3c7917e,,,,,1,2
+MHz Now,mhz-now,plex-mhz-now,611152a48f945c002c40021a,,,,,1,2
+MI-5,mi-5,plex-mi-5,67f592e6c97eb27725c8855f,,,,,1,2
+Million Dollar Dream Home,million-dollar-dream-home,plex-million-dollar-dream-home,684c2379e32026b0c1f53793,,,,,1,2
+Misterios sin Resolver,misterios-sin-resolver,plex-misterios-sin-resolver,64d79408e5f67b0fab47ff24,,,,,1,2
+More U,more-u,plex-more-u,6112a9139894c8002c6cb87f,,,,,1,2
+MotoGP Channel,motogp-channel,plex-motogp-channel,68b0b0d0f2989364c9c17265,,,,,1,2
+Motorsport.tv,motorsport-tv,plex-motorsport-tv,6408c82eebb23ab878e8ddbb,,,,,1,2
+Motorvision TV,motorvision-tv,plex-motorvision-tv,603fb593a99efc002dbf90e4,,,,,1,2
+Movieitaly Channel,movieitaly-channel,plex-movieitaly-channel,65d90ec99c7a6da8c3ce57eb,,,,,1,2
+Mr. Bean,mr-bean,plex-mr-bean,66a2e7fe94b6a49cb5054d7b,,,,,1,2
+Mr. Bean Live Action,mr-bean-live-action,plex-mr-bean-live-action,671a924b79fce6628115432c,,,,,1,2
+MrBeast,mrbeast,plex-mrbeast,68d15e51c80ec69e0bd8965b,,,,,1,2
+Music Legends,music-legends,plex-music-legends,6196c8c01d310bf925e02615,,,,,1,2
+MythBusters,mythbusters,plex-mythbusters,66b133a8a9ef8c41ec0841aa,,,,,1,2
+MyTime Movie Network,mytime-movie-network-3,plex-mytime-movie-network-3,644875d7af92c31f4a190bc2,,,,,1,2
+Naturaleza Salvaje,naturaleza-salvaje,plex-naturaleza-salvaje,66ccb35278822c7edc4b6e01,,,,,1,2
+NEW K.MOVIES,new-k-movies,plex-new-k-movies,60d4eddab2fdec002c141131,,,,,1,2
+NEW KFOOD,new-kfood,plex-new-kfood,68b9f5a3d60e5dd29263c7ac,,,,,1,2
+NEW K-POP,new-k-id,plex-new-k-id,60d4edd7b2fdec002c14112d,,,,,1,2
+Nip/Tuck,nip-tuck,plex-nip-tuck,66b13485a9ef8c41ec0841ac,,,,,1,2
+No Reservations,no-reservations,plex-no-reservations,66b141e2a9ef8c41ec0841b2,,,,,1,2
+Nolly Africa HD,nolly-africa-hd,plex-nolly-africa-hd,64b1e1217d4037206787f384,,,,,1,2
+Novelisima,novelisima,plex-novelisima,64d4e82ac5d4668c9cb7b5df,,,,,1,2
+ONE Championship TV,one-championship-tv,plex-one-championship-tv,6785867ad3749c9bdd4d2ed1,,,,,1,2
+Paternity Court,paternity-court,plex-paternity-court,6876f82754325376973fd316,,,,,1,2
+PBS Genealogy,pbs-genealogy,plex-pbs-genealogy,6823bfc6e9c807aaef15a7f5,,,,,1,2
+PBS Retro,pbs-retro,plex-pbs-retro,65fb337f00433c8a0799ce98,,,,,1,2
+PBS Travel,pbs-travel,plex-pbs-travel,684c201a3496598cf4003fbc,,,,,1,2
+PeliMex,pelimex,plex-pelimex,67db3546d66f778a752f7eaa,,,,,1,2
+PGA TOUR,pga-tour,plex-pga-tour,68017ed20268b77d02a5f4bd,,,,,1,2
+Pink Panther,pink-panther,plex-pink-panther,6876f76054325376973fd314,,,,,1,2
+Pitufo TV,pitufo-tv,plex-pitufo-tv,639ba57d3f4612cc150a5723,,,,,1,2
+Plex24,plex24,plex-plex24,66180428e06c9878b6d9d76c,,,,,1,2
+PLL Network,pll-network-2,plex-pll-network-2,66fbfd67bde73c589ab2af42,,,,,1,2
+Poker Night TV,poker-night-tv,plex-poker-night-tv,60afc726623f2f002c5bb49f,,,,,1,2
+Popstar! TV,popstar-tv,plex-popstar-tv,5ef11487d33ab9004048a1d6,,,,,1,2
+Preston & Brianna,preston-and-brianna,plex-preston-and-brianna,68e0388d8bbd79d66c631ab4,,,,,1,2
+Prime Suspect,prime-suspect,plex-prime-suspect,6674b780f04cf4bb9233c918,,,,,1,2
+Primetime Soaps,primetime-soaps,plex-primetime-soaps,66b13a1f4893b3d48c72db19,,,,,1,2
+Qwest TV,qwest-tv,plex-qwest-tv,60b0f65c0c8ffb002c821a75,,,,,1,2
+Rakuten Viki,rakuten-viki,plex-rakuten-viki,60d4edd8b2fdec002c14112f,,,,,1,2
+RCM,rcm,plex-rcm,66bfb17c144c201b8b61c10d,,,,,1,2
+RCN Noticias,rcn-noticias-2,plex-rcn-noticias-2,68a8ddec619a0c342c8d6181,,,,,1,2
+Revry,revry-2,plex-revry-2,68c86f0bda79d98d977dc90c,,,,,1,2
+Revry Latinx,revry-latinx,plex-revry-latinx,68c87052da79d98d977dc90e,,,,,1,2
+Robot Wars by Mech+,robot-wars-by-mech,plex-robot-wars-by-mech,6470477fe536e0faaf10be9d,,,,,1,2
+ROMCOM K-Drama,romcom-k-drama,plex-romcom-k-drama,68b9f495fcc3cf129dc29960,,,,,1,2
+Runtime Español,runtime-espanol,plex-runtime-espanol,5f5132e362fe160040f26c15,,,,,1,2
+Samuel Goldwyn Channel,samuel-goldwyn-channel,plex-samuel-goldwyn-channel,6233ee9222dcc1d9a93916b6,,,,,1,2
+Samuel Goldwyn Classics,samuel-goldwyn-classics,plex-samuel-goldwyn-classics,6233ef13ce37cac7a278664b,,,,,1,2
+Shades of Black,shades-of-black,plex-shades-of-black,67a1421f114554261db9e459,,,,,1,2
+Shaun the Sheep and Friends,shaun-the-sheep-and-friends,plex-shaun-the-sheep-and-friends,6876f545e50e77c59c8940be,,,,,1,2
+Sheriffs: El Dorado County,sheriffs-el-dorado-county,plex-sheriffs-el-dorado-county,6707dc42da81682f2d1e6846,,,,,1,2
+Shout! Movies,shout-movies,plex-shout-movies,67ddc2c01d30518241f9249d,,,,,1,2
+SKWAD,skwad-2,plex-skwad-2,5f170d62b898490041b49374,,,,,1,2
+SLOPES,slopes,plex-slopes,616df1be2cf008a748c8cb53,,,,,1,2
+Sonic TV,sonic-tv,plex-sonic-tv,62ba4aaff663580a7238f327,,,,,1,2
+Spark TV Luz y Amor,spark-tv-luz-y-amor,plex-spark-tv-luz-y-amor,661d6a8db518ef381a85ed60,,,,,1,2
+Stargate by MGM,stargate-by-mgm,plex-stargate-by-mgm,686ece9798f4de63d27483b9,,,,,1,2
+Surf Now TV,surf-now-tv,plex-surf-now-tv,6227c215c9f485cc7afe8c41,,,,,1,2
+Teen Wolf by MGM,teen-wolf-by-mgm,plex-teen-wolf-by-mgm,6874409e46d1d8d8348e6b7e,,,,,1,2
+Teleonce America,teleonce-america,plex-teleonce-america,688cf47e324d7b6bc116198d,,,,,1,2
+Tennis+,tennis,plex-tennis,6761f91555e174e95ccc4e4c,,,,,1,2
+That Girl,that-girl,plex-that-girl,68e03664c63d8255360a2cd7,,,,,1,2
+The Addams Family,the-addams-family,plex-the-addams-family,689fb7110a486aeba3c7917c,,,,,1,2
+The Black Effect,the-black-effect,plex-the-black-effect,65282d2615c307b5dfda8bc4,,,,,1,2
+The Bold and the Beautiful,the-bold-and-the-beautiful,plex-the-bold-and-the-beautiful,67d9a3d663c5439aeaf61305,,,,,1,2
+The Doctor Blake Mysteries,the-doctor-blake-mysteries,plex-the-doctor-blake-mysteries,6674b983f04cf4bb9233c91b,,,,,1,2
+The Doctors,the-doctors,plex-the-doctors,6720271c727d52d7a0e0b495,,,,,1,2
+The Ellen Channel,the-ellen-channel,plex-the-ellen-channel,67182addd5b18813f9d0f1b6,,,,,1,2
+The Emeril Lagasse Channel,the-emeril-lagasse-channel,plex-the-emeril-lagasse-channel,67294a601055ef3897c73477,,,,,1,2
+The First 48 by A&E,the-first-48-by-aande,plex-the-first-48-by-aande,681620c4a11533c312abacbe,,,,,1,2
+The Jim Rome Show,the-jim-rome-show,plex-the-jim-rome-show,66b2a9acc0ebb601ab4b1e73,,,,,1,2
+The Kids in the Hall,the-kids-in-the-hall,plex-the-kids-in-the-hall,670858335b42d01c9391e325,,,,,1,2
+The Librarians,the-librarians,plex-the-librarians,654a8041fa75888bea239718,,,,,1,2
+The Martha Stewart Channel,the-martha-stewart-channel,plex-the-martha-stewart-channel,672948f0297d4ea7584a2e13,,,,,1,2
+The New Detectives,the-new-detectives,plex-the-new-detectives,67cbd471cc5136329877e098,,,,,1,2
+The Outer Limits,the-outer-limits,plex-the-outer-limits,689fb59eba3be0bafe349d35,,,,,1,2
+The Outpost,the-outpost-2,plex-the-outpost-2,6762ec6a4a292357428c1b59,,,,,1,2
+The Sherlock Holmes Channel,the-sherlock-holmes-channel,plex-the-sherlock-holmes-channel,66ce3fc059062698a13c39e1,,,,,1,2
+The Wicked Tuna Channel,the-wicked-tuna-channel-2,plex-the-wicked-tuna-channel-2,6623c335ed4918437ed56ec0,,,,,1,2
+The Wiggles,the-wiggles,plex-the-wiggles,68e0371d8bbd79d66c631ab2,,,,,1,2
+The World Poker Tour,the-world-poker-tour-3,plex-the-world-poker-tour-3,656fa24bdbcce28c3a417415,,,,,1,2
+Todo Drama,todo-drama,plex-todo-drama,685f195f6c220c4e9e333a04,,,,,1,2
+Trailers From Hell,trailers-from-hell,plex-trailers-from-hell,61d738b5a7b7c7f703418514,,,,,1,2
+Travel Escapes,travel-escapes,plex-travel-escapes,64e437ba7ef2bf9f66b42615,,,,,1,2
+TruBlu,trublu,plex-trublu,65621e98b7d737841f30a4f9,,,,,1,2
+TuDiscovery,tudiscovery,plex-tudiscovery,671c2065128bc4121f80aef8,,,,,1,2
+UFC,ufc,plex-ufc,66ccac69fdf9cd3a568ef135,,,,,1,2
+Unidentified,unidentified,plex-unidentified,6227d1d2c9f485cc7afe8c44,,,,,1,2
+Unspeakable,unspeakable,plex-unspeakable,6674baf1a9c715b93ca6ca90,,,,,1,2
+Untold Stories of the ER,untold-stories-of-the-er,plex-untold-stories-of-the-er,6674bc83a9c715b93ca6ca92,,,,,1,2
+Very New Mexico by KOAT,very-new-mexico-by-koat,plex-very-new-mexico-by-koat,624416c4cc4140a6505193e2,,,,,1,2
+Vidas Extremas,vidas-extremas,plex-vidas-extremas,671833e8d321899c5dc8a00e,,,,,1,2
+Vive Kanal D Drama,vive-kanal-d-drama,plex-vive-kanal-d-drama,688d32e9a6fe30698ab42005,,,,,1,2
+Watch it SCREAM,watch-it-scream-2,plex-watch-it-scream-2,621671d05abdd3d5556a1baf,,,,,1,2
+Wedotv Amor Piel Salvaje,wedotv-amor-piel-salvaje,plex-wedotv-amor-piel-salvaje,687ffd8e015fe7e375a1a0a6,,,,,1,2
+Weeds & Nurse Jackie,weeds-and-nurse-jackie,plex-weeds-and-nurse-jackie,66915d35086cb6d46eae12c8,,,,,1,2
+Welcome Home,welcome-home,plex-welcome-home,66a1abb19101f360242499aa,,,,,1,2
+Wendy Williams,wendy-williams,plex-wendy-williams,685f0f5c593aba51f211823b,,,,,1,2
+WipeoutXtra,wipeoutxtra,plex-wipeoutxtra,6515fb621fc969615e69d16e,,,,,1,2
+World Billiards TV,world-billiards-tv,plex-world-billiards-tv,68b9f334fc12601028c5651e,,,,,1,2
+World's Wildest Police Videos,worlds-wildest-police-videos,plex-worlds-wildest-police-videos,64f124818d44f2871135a907,,,,,1,2
+Wu Tang Collection,wu-tang-collection,plex-wu-tang-collection,5eea605474085f0040ddc770,,,,,1,2
+Yahoo! Sports Network,yahoo-sports-network,plex-yahoo-sports-network,68b0af6097cf9742e13391a5,,,,,1,2
+Z Nation,z-nation-7,plex-z-nation-7,682512b03d06c8e426a2941a,,,,,1,2
+Zee BollyWorld,zee-bollyworld,plex-zee-bollyworld,678287e75fe5e4eb1e030c65,,,,,1,2

@@ -5,9 +5,9 @@ import os, importlib, schedule, time
 from gevent import monkey
 monkey.patch_all()
 
-version = "5.0.0"
-updated_date = "Oct. 29, 2025"
-base_list = ['plex']
+version = "5.1.0"
+updated_date = "Oct. 30, 2025"
+base_list = ['plex', 'freelivesports']
 
 # Retrieve the port number from env variables
 # Fallback to default if invalid or unspecified

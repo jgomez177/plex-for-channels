@@ -9,11 +9,15 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from xml.sax.saxutils import escape
 
+package_url = 'https://raw.githubusercontent.com/jgomez177/plex-for-channels/main'
+
 class Client:
     def __init__(self):
         self.lock = threading.Lock()
         self.client_name = 'plex'
         self.data_path = f'data/{self.client_name}'
+        self.tmsid_path = f'data/tmsid'
+        self.custom_tmsid = f'{self.tmsid_path}/plex_tmsid.csv'
         self.channels_by_geo_file = Path(f'{self.data_path}/channels_by_geo.json')
         self.sessionAt = 0
         self.session_expires_in = (6 * 60 * 60)
@@ -210,7 +214,7 @@ class Client:
                 m3u += f"#EXTINF:-1 channel-id=\"{provider}-{s.get('id')}\""
             else:
                 m3u += f"#EXTINF:-1 channel-id=\"{provider}-{s.get('slug')}\""
-            m3u += f" tvg-id=\"{s.get('id')}\""
+            m3u += f" tvg-id=\"{s.get('gridKey')}\""
             m3u += f" tvg-chno=\"{s.get('number')}\"" if s.get('number') else ""
             m3u += f" tvg-logo=\"{''.join(map(str, s.get('logo', [])))}\"" if s.get('logo') else ""
             m3u += f" tvg-name=\"{s.get('call_sign')}\"" if s.get('call_sign') else ""
@@ -396,27 +400,27 @@ class Client:
         return genres
     
     def update_gracenote_tmsids(self, listing):
-        plex_custom_tmsid = f'data/tmsid/plex_tmsid.csv'
-        plex_tmsid_url = f"https://raw.githubusercontent.com/jgomez177/plex-for-channels/main/{plex_custom_tmsid}"
+        tmsid_url = f"{package_url}/{self.custom_tmsid}"
 
         tmsid_dict = {}
 
-        if os.path.exists(plex_custom_tmsid):
+        if os.path.exists(self.custom_tmsid):
             # File exists, open it
-            print(f"[INFO - - {self.client_name.upper()}] Opening Custom TMSID File")
-            with open(plex_custom_tmsid, mode='r') as file:
+            print(f"[INFO - {self.client_name.upper()}] Opening Custom TMSID File")
+            with open(self.custom_tmsid, mode='r') as file:
                 reader = csv.DictReader(file)
                 for row in reader:
                     tmsid_dict[row['id']] = row
         else:
+            print(f"[INFO - {self.client_name.upper()}] Opening TMSID via URL")
             session = requests.Session()
             try:
                 # print(f'[INFO - {self.client_name.upper()}] Call {local_client_name} Genre API')
-                response = session.get(plex_tmsid_url, timeout=300)
+                response = session.get(tmsid_url, timeout=300)
             except requests.ConnectionError as e:
                 error = f"Connection Error. {str(e)}"
                 print(f'[ERROR - {self.client_name.upper()}] {error}')
-                print(f'[ERROR - {self.client_name.upper()}] Unable to access TMSID via {url}') 
+                print(f'[ERROR - {self.client_name.upper()}] Unable to access TMSID via {tmsid_url}') 
             finally:
                 # print(f'[INFO - {self.client_name.upper()}] Close {local_client_name} Genre API session')
                 session.close()
