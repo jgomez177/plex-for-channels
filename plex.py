@@ -1001,7 +1001,7 @@ class Client:
                         #print(f"station: {station}")
 
                         if station:
-                            station_id = station.get("id")
+                            station_id = station.get("gridKey")
 
                             # Write channel if not already written
                             if station_id not in written_channels:
