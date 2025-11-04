@@ -9,12 +9,11 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from xml.sax.saxutils import escape
 
-package_url = 'https://raw.githubusercontent.com/jgomez177/plex-for-channels/main'
-
 class Client:
     def __init__(self):
         self.lock = threading.Lock()
         self.client_name = 'plex'
+        self.package_url = 'https://raw.githubusercontent.com/jgomez177/plex-for-channels/main'
         self.data_path = f'data/{self.client_name}'
         self.tmsid_path = f'data/tmsid'
         self.custom_tmsid = f'{self.tmsid_path}/plex_tmsid.csv'
@@ -400,7 +399,7 @@ class Client:
         return genres
     
     def update_gracenote_tmsids(self, listing):
-        tmsid_url = f"{package_url}/{self.custom_tmsid}"
+        tmsid_url = f"{self.package_url}/{self.custom_tmsid}"
 
         tmsid_dict = {}
 
@@ -426,8 +425,6 @@ class Client:
                 session.close()
                 del session
                 gc.collect()
-
-
 
             # Check if request was successful
             if response.status_code == 200:
@@ -1075,7 +1072,7 @@ class Client:
             start_time = datetime.fromtimestamp(int(begins_at), tz=timezone.utc).strftime("%Y%m%d%H%M%S +0000") if begins_at else ""
             stop_time = datetime.fromtimestamp(int(ends_at), tz=timezone.utc).strftime("%Y%m%d%H%M%S +0000") if ends_at else ""
 
-            programme = f'<programme start="{start_time}" stop="{stop_time}" channel="{station.get("id")}">'
+            programme = f'<programme start="{start_time}" stop="{stop_time}" channel="{station.get("gridKey")}">'
             programme += f'<title>{title}</title>'
             if subtitle:
                 programme += f'<sub-title>{subtitle}</sub-title>'

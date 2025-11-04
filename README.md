@@ -1,6 +1,6 @@
 # Linear Channel Collection
 
-Current version: **5.1.1**
+Current version: **5.1.2**
 
 # About
 Generates M3U playlists and XMLTV EPG files for the following linear platforms:

@@ -4,7 +4,6 @@ from datetime import datetime
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
-package_url = 'https://raw.githubusercontent.com/jgomez177/plex-for-channels/main'
 
 class Client:
     def __init__(self):
@@ -13,6 +12,7 @@ class Client:
         self.session_expires_in = 86400
         self.freelivesports_resp = []
         self.client_name = 'freelivesports'
+        self.package_url = 'https://raw.githubusercontent.com/jgomez177/plex-for-channels/main'
         self.data_path = f'data/{self.client_name}'
         self.tmsid_path = f'data/tmsid'
         self.custom_tmsid = f'{self.tmsid_path}/freelivesports_tmsid.csv'
@@ -80,7 +80,7 @@ class Client:
         return(f'{body_text}{tools}{options}')
 
     def update_gracenote_tmsids(self, listing):
-        tmsid_url = f"{package_url}/{self.custom_tmsid}"
+        tmsid_url = f"{self.package_url}/{self.custom_tmsid}"
 
         tmsid_dict = {}
 
